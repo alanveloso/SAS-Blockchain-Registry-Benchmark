@@ -1,0 +1,39 @@
+test:
+  name: CBSDRegistry-benchmark
+  description: Benchmark for CBSDRegistry smart contract
+  workers:
+    type: local
+    number: 1
+  rounds:
+    - label: registerCBSD
+      txNumber: 1000
+      rateControl:
+        type: fixed-rate
+        opts:
+          tps: 50
+      workload:
+        module: benchmarks/scenario/CBSDRegistry/register.js
+    - label: updateGrantAmount
+      txNumber: 1000
+      rateControl:
+        type: fixed-rate
+        opts:
+          tps: 50
+      workload:
+        module: benchmarks/scenario/CBSDRegistry/updateGrant.js
+    - label: updateStatus
+      txNumber: 1000
+      rateControl:
+        type: fixed-rate
+        opts:
+          tps: 50
+      workload:
+        module: benchmarks/scenario/CBSDRegistry/updateStatus.js
+    - label: getCBSDInfo
+      txNumber: 1000
+      rateControl:
+        type: fixed-rate
+        opts:
+          tps: 50
+      workload:
+        module: benchmarks/scenario/CBSDRegistry/query.js 

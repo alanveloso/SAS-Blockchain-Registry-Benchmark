@@ -1,0 +1,19 @@
+{
+    "caliper": {
+        "blockchain": "ethereum"
+    },
+    "ethereum": {
+        "url": "ws://localhost:8546",
+        "contractDeployerAddress": "0xD1cf9D73a91DE6630c2bb068Ba5fDdF9F0DEac09",
+        "contractDeployerAddressPrivateKey": "0x797c13f7235c627f6bd013dc17fff4c12213ab49abcf091f77c83f16db10e90b",
+        "fromAddressSeed": "0x3f841bf589fdf83a521e55d51afddc34fa65351161eead24f064855fc29c9580",
+        "transactionConfirmationBlocks": 2,
+        "contracts": {
+            "Simplest": {
+                "path": "src/ethereum/Simplest/Simplest.json",
+                "address": "0x588108d3eAB34e94484d7cdA5a1D31804cA96FE7",
+                "abi": [{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"constant":true,"inputs":[],"name":"get","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"internalType":"uint256","name":"_value","type":"uint256"}],"name":"set","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"}]
+            }
+        }
+    }
+} 
