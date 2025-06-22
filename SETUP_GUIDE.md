@@ -156,6 +156,33 @@ test:
           tps: 50
       workload:
         module: benchmarks/scenario/CBSDRegistry/query.js
+
+monitors:
+  resource:
+    - module: docker
+      options:
+        interval: 5
+        containers:
+          - all
+    - module: process
+      options:
+        interval: 3
+        processes:
+          - command: 'node'
+            arguments: 'caliper.js'
+            multiOutput: 'avg'
+    - module: prometheus
+      options:
+        url: "http://localhost:9090"
+        metrics:
+          include: [".*"]
+          queries:
+            - name: Max Memory (MB)
+              query: sum(container_memory_rss{name=~".+"}) by (name)
+              step: 10
+              label: name
+              statistic: max
+              multiplier: 0.000001
 ```
 
 ## 🚀 Execução do Benchmark

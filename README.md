@@ -25,11 +25,17 @@ SAS-Blockchain-Registry-Benchmark/
 │   ├── config.yaml                      # Configuração principal
 │   ├── query.js                         # Workload de consulta
 │   ├── register.js                      # Workload de registro
+│   ├── updateGrant.js                   # Workload de atualização de grant
+│   ├── updateStatus.js                  # Workload de atualização de status
 │   └── utils/                           # Utilitários compartilhados
 ├── networks/besu/1node-clique/          # Rede Ethereum Besu
 │   ├── docker-compose.yml               # Configuração Docker
 │   ├── cbsdnetworkconfig.json           # Configuração da rede
 │   └── data/                            # Dados da blockchain
+├── networks/prometheus-grafana/         # Monitoramento (Opcional)
+│   ├── docker-compose-bare.yaml         # Configuração Prometheus/Grafana
+│   ├── prometheus/                      # Configuração Prometheus
+│   └── grafana/                         # Configuração Grafana
 ├── src/ethereum/CBSDRegistry/           # Contrato inteligente
 │   ├── CBSDRegistry.sol                 # Código fonte Solidity
 │   ├── CBSDRegistry.json                # ABI e bytecode compilado
@@ -89,6 +95,30 @@ npx caliper launch manager \
     --caliper-benchconfig benchmarks/scenario/CBSDRegistry/config.yaml
 ```
 
+### Monitoramento com Prometheus/Grafana (Opcional):
+Para monitoramento avançado de recursos e métricas:
+
+1. **Iniciar Prometheus e Grafana:**
+```bash
+cd networks/prometheus-grafana
+docker-compose -f docker-compose-bare.yaml up -d
+cd ../..
+```
+
+2. **Executar benchmark com monitoramento:**
+```bash
+npx caliper launch manager \
+    --caliper-workspace ./ \
+    --caliper-networkconfig networks/besu/1node-clique/cbsdnetworkconfig.json \
+    --caliper-benchconfig benchmarks/scenario/CBSDRegistry/config.yaml \
+    --caliper-prometheus-gateway http://localhost:9091
+```
+
+3. **Acessar dashboards:**
+- **Grafana**: http://localhost:3000 (admin/admin)
+- **Prometheus**: http://localhost:9090
+- **cAdvisor**: http://localhost:8080 (métricas de containers)
+
 ### Execução por Fases:
 
 1. **Fase de Inicialização:**
@@ -125,12 +155,28 @@ O benchmark gera relatórios detalhados incluindo:
 - **Throughput**: Transações por segundo (TPS)
 - **Latência**: Tempo de resposta das transações
 - **Taxa de Sucesso**: Percentual de transações bem-sucedidas
-- **Uso de Recursos**: CPU, memória e rede
+- **Uso de Recursos**: CPU, memória e rede (com Prometheus)
 
 ### Localização dos Relatórios:
 - **Relatório HTML**: `report.html` (na raiz do projeto)
 - **Logs detalhados**: `workspace/logs/`
 - **Resultados JSON**: `workspace/results/`
+
+### Métricas do Prometheus (se configurado):
+O Caliper envia as seguintes métricas para o Prometheus:
+- `caliper_tps` - Transações por segundo
+- `caliper_latency` - Latência das transações
+- `caliper_send_rate` - Taxa de envio
+- `caliper_txn_submitted` - Transações submetidas
+- `caliper_txn_success` - Transações bem-sucedidas
+- `caliper_txn_failure` - Transações falhadas
+- `caliper_txn_pending` - Transações pendentes
+
+### Métricas de Sistema (cAdvisor):
+- **CPU**: Uso de processador por container
+- **Memória**: Uso de RAM por container
+- **Rede**: Tráfego de rede
+- **Disco**: I/O de disco
 
 ## 🔧 Configurações do Benchmark
 

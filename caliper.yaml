@@ -1,0 +1,10 @@
+caliper:
+  report:
+    path: report.html
+  monitor:
+    enabled: true
+    type: prometheus
+    options:
+      pushgateway: http://localhost:9091
+      job: caliper-benchmark
+      instance: cbsd-registry 
