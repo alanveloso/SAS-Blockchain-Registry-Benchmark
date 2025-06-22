@@ -19,7 +19,7 @@ From the **project root**:
 npx caliper launch manager \
   --caliper-workspace . \
   --caliper-benchconfig benchmarks/scenario/CBSDRegistry/config.yaml \
-  --caliper-networkconfig networks/besu/cbsdnetworkconfig.json
+  --caliper-networkconfig networks/besu/1clique-node/cbsdnetworkconfig.json
 ```
 
 - The `report.html` file will be generated in the project root.
