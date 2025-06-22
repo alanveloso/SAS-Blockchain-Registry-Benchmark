@@ -1,40 +1,45 @@
+simpleArgs: &simple-args
+  numberOfAccounts: &number-of-accounts 50
+  tps: &tps 50
+  workers: &workers 1
+
 test:
   name: CBSDRegistry-benchmark
   description: Benchmark for CBSDRegistry smart contract
   workers:
     type: local
-    number: 1
+    number: *workers
   rounds:
     - label: registerCBSD
-      txNumber: 1000
+      txNumber: *number-of-accounts
       rateControl:
         type: fixed-rate
         opts:
-          tps: 50
+          tps: *tps
       workload:
         module: benchmarks/scenario/CBSDRegistry/register.js
     - label: updateGrantAmount
-      txNumber: 1000
+      txNumber: *number-of-accounts
       rateControl:
         type: fixed-rate
         opts:
-          tps: 50
+          tps: *tps
       workload:
         module: benchmarks/scenario/CBSDRegistry/updateGrant.js
     - label: updateStatus
-      txNumber: 1000
+      txNumber: *number-of-accounts
       rateControl:
         type: fixed-rate
         opts:
-          tps: 50
+          tps: *tps
       workload:
         module: benchmarks/scenario/CBSDRegistry/updateStatus.js
     - label: getCBSDInfo
-      txNumber: 1000
+      txNumber: *number-of-accounts
       rateControl:
         type: fixed-rate
         opts:
-          tps: 50
+          tps: *tps
       workload:
         module: benchmarks/scenario/CBSDRegistry/query.js
 
@@ -44,21 +49,21 @@ monitors:
       options:
         url: "http://localhost:9090"
         metrics:
-          include: ["besu_clique", "cadvisor", "prometheus", "grafana"]
+          include: ["4node-qbft-validator1-1", "4node-qbft-validator2-1", "4node-qbft-validator3-1", "4node-qbft-validator4-1"]
           queries:
             - name: Besu CPU Usage (cores)
-              query: sum(rate(container_cpu_usage_seconds_total{name="besu_clique"}[30s])) by (name)
+              query: sum(rate(container_cpu_usage_seconds_total{name=~"4node-qbft-validator[1-4]-1"}[30s])) by (name)
               step: 10
               label: name
               statistic: avg
             - name: Besu Memory Usage (MB)
-              query: sum(container_memory_usage_bytes{name="besu_clique"}) by (name)
+              query: sum(container_memory_usage_bytes{name=~"4node-qbft-validator[1-4]-1"}) by (name)
               step: 10
               label: name
               statistic: max
               multiplier: 0.000001
             - name: Besu Disk Usage (MB)
-              query: sum(container_fs_usage_bytes{name="besu_clique"}) by (name)
+              query: sum(container_fs_usage_bytes{name=~"4node-qbft-validator[1-4]-1"}) by (name)
               step: 10
               label: name
               statistic: max
