@@ -36,4 +36,60 @@ test:
         opts:
           tps: 50
       workload:
-        module: benchmarks/scenario/CBSDRegistry/query.js 
+        module: benchmarks/scenario/CBSDRegistry/query.js
+
+monitors:
+  resource:
+    - module: prometheus
+      options:
+        url: "http://localhost:9090"
+        metrics:
+          include: ["besu_clique", "cadvisor", "prometheus", "grafana"]
+          queries:
+            - name: Besu CPU Usage (cores)
+              query: sum(rate(container_cpu_usage_seconds_total{name="besu_clique"}[30s])) by (name)
+              step: 10
+              label: name
+              statistic: avg
+            - name: Besu Memory Usage (MB)
+              query: sum(container_memory_usage_bytes{name="besu_clique"}) by (name)
+              step: 10
+              label: name
+              statistic: max
+              multiplier: 0.000001
+            # - name: cAdvisor CPU Usage (cores)
+            #   query: sum(rate(container_cpu_usage_seconds_total{name="cadvisor"}[30s])) by (name)
+            #   step: 10
+            #   label: name
+            #   statistic: avg
+            # - name: cAdvisor Memory Usage (MB)
+            #   query: sum(container_memory_usage_bytes{name="cadvisor"}) by (name)
+            #   step: 10
+            #   label: name
+            #   statistic: max
+            #   multiplier: 0.000001
+            # - name: Prometheus CPU Usage (cores)
+            #   query: sum(rate(container_cpu_usage_seconds_total{name="prometheus"}[30s])) by (name)
+            #   step: 10
+            #   label: name
+            #   statistic: avg
+            # - name: Prometheus Memory Usage (MB)
+            #   query: sum(container_memory_usage_bytes{name="prometheus"}) by (name)
+            #   step: 10
+            #   label: name
+            #   statistic: max
+            #   multiplier: 0.000001
+            # - name: Grafana CPU Usage (cores)
+            #   query: sum(rate(container_cpu_usage_seconds_total{name="grafana"}[30s])) by (name)
+            #   step: 10
+            #   label: name
+            #   statistic: avg
+            # - name: Grafana Memory Usage (MB)
+            #   query: sum(container_memory_usage_bytes{name="grafana"}) by (name)
+            #   step: 10
+            #   label: name
+            #   statistic: max
+            #   multiplier: 0.000001
+        charting:
+          bar:
+            metrics: [all] 
