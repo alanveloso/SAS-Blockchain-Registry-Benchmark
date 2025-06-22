@@ -7,7 +7,7 @@ launch.json
 /log
 
 # No html
-*.html
+-*.html
 
 # No mac files
 .DS_Store
