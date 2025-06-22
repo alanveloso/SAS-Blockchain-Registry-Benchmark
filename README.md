@@ -20,6 +20,8 @@ npx caliper launch manager \
   --caliper-workspace . \
   --caliper-benchconfig benchmarks/scenario/CBSDRegistry/config.yaml \
   --caliper-networkconfig networks/besu/1clique-node/cbsdnetworkconfig.json
+  --caliper-report-format csv \
+  --caliper-report-path results/CBSDRegistry-results.csv
 ```
 
 - The `report.html` file will be generated in the project root.

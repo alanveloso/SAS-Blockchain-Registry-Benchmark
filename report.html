@@ -128,16 +128,28 @@
                 <li>DLT: &nbsp<span style="font-weight: 500;">ethereum</span></li>
                 <li>Name: &nbsp<span style="font-weight: 500;">CBSDRegistry-benchmark</span></li>
                 <li>Description: &nbsp<span style="font-weight: 500;">Benchmark for CBSDRegistry smart contract</span></li>
-                <li>Benchmark Rounds: &nbsp<span style="font-weight: 500;">4</span></li>
+                <li>Benchmark Rounds: &nbsp<span style="font-weight: 500;">16</span></li>
                 <li><a href="#benchmarkInfo">Details</a></li>
             </ul>
             <ul>
                 <h3>&nbspBenchmark results</h3>
                 <li><a href="#benchmarksummary">Summary</a></li>
-                    <li><a href="#registerCBSD">registerCBSD</a></li>
-                    <li><a href="#updateGrantAmount">updateGrantAmount</a></li>
-                    <li><a href="#updateStatus">updateStatus</a></li>
-                    <li><a href="#getCBSDInfo">getCBSDInfo</a></li>
+                    <li><a href="#registerCBSD-low">registerCBSD-low</a></li>
+                    <li><a href="#registerCBSD-mid">registerCBSD-mid</a></li>
+                    <li><a href="#registerCBSD-high">registerCBSD-high</a></li>
+                    <li><a href="#registerCBSD-stress">registerCBSD-stress</a></li>
+                    <li><a href="#updateGrantAmount-low">updateGrantAmount-low</a></li>
+                    <li><a href="#updateGrantAmount-mid">updateGrantAmount-mid</a></li>
+                    <li><a href="#updateGrantAmount-high">updateGrantAmount-high</a></li>
+                    <li><a href="#updateGrantAmount-stress">updateGrantAmount-stress</a></li>
+                    <li><a href="#updateStatus-low">updateStatus-low</a></li>
+                    <li><a href="#updateStatus-mid">updateStatus-mid</a></li>
+                    <li><a href="#updateStatus-high">updateStatus-high</a></li>
+                    <li><a href="#updateStatus-stress">updateStatus-stress</a></li>
+                    <li><a href="#getCBSDInfo-low">getCBSDInfo-low</a></li>
+                    <li><a href="#getCBSDInfo-mid">getCBSDInfo-mid</a></li>
+                    <li><a href="#getCBSDInfo-high">getCBSDInfo-high</a></li>
+                    <li><a href="#getCBSDInfo-stress">getCBSDInfo-stress</a></li>
             </ul>
             <ul>
                 <h3>&nbspSystem under test</h3>
@@ -155,37 +167,73 @@
                     </tr>
 
                     <tr>
-                         <td>registerCBSD</td> <td>1000</td> <td>0</td> <td>50.1</td> <td>99.01</td> <td>3.38</td> <td>49.63</td> <td>8.4</td>
+                         <td>registerCBSD-low</td> <td>100</td> <td>0</td> <td>10.1</td> <td>5.70</td> <td>0.44</td> <td>3.14</td> <td>7.2</td>
                     </tr>
                     <tr>
-                         <td>updateGrantAmount</td> <td>1000</td> <td>0</td> <td>50.1</td> <td>14.79</td> <td>1.06</td> <td>7.48</td> <td>29.6</td>
+                         <td>registerCBSD-mid</td> <td>500</td> <td>0</td> <td>25.1</td> <td>39.84</td> <td>2.25</td> <td>20.54</td> <td>8.5</td>
                     </tr>
                     <tr>
-                         <td>updateStatus</td> <td>1000</td> <td>0</td> <td>50.1</td> <td>15.88</td> <td>1.05</td> <td>8.34</td> <td>29.5</td>
+                         <td>registerCBSD-high</td> <td>1000</td> <td>0</td> <td>50.1</td> <td>98.99</td> <td>3.09</td> <td>49.61</td> <td>8.4</td>
                     </tr>
                     <tr>
-                         <td>getCBSDInfo</td> <td>1000</td> <td>0</td> <td>50.1</td> <td>0.03</td> <td>0.00</td> <td>0.00</td> <td>50.0</td>
+                         <td>registerCBSD-stress</td> <td>1000</td> <td>0</td> <td>17.9</td> <td>63.03</td> <td>0.18</td> <td>24.67</td> <td>8.4</td>
+                    </tr>
+                    <tr>
+                         <td>updateGrantAmount-low</td> <td>100</td> <td>0</td> <td>10.1</td> <td>5.04</td> <td>0.13</td> <td>2.58</td> <td>7.3</td>
+                    </tr>
+                    <tr>
+                         <td>updateGrantAmount-mid</td> <td>500</td> <td>0</td> <td>25.1</td> <td>5.14</td> <td>0.17</td> <td>2.65</td> <td>20.9</td>
+                    </tr>
+                    <tr>
+                         <td>updateGrantAmount-high</td> <td>1000</td> <td>0</td> <td>50.1</td> <td>14.92</td> <td>0.95</td> <td>7.49</td> <td>29.5</td>
+                    </tr>
+                    <tr>
+                         <td>updateGrantAmount-stress</td> <td>1000</td> <td>0</td> <td>18.0</td> <td>5.48</td> <td>0.12</td> <td>2.77</td> <td>17.0</td>
+                    </tr>
+                    <tr>
+                         <td>updateStatus-low</td> <td>100</td> <td>0</td> <td>10.1</td> <td>5.05</td> <td>0.16</td> <td>2.60</td> <td>7.3</td>
+                    </tr>
+                    <tr>
+                         <td>updateStatus-mid</td> <td>500</td> <td>0</td> <td>25.1</td> <td>5.15</td> <td>0.20</td> <td>2.68</td> <td>20.9</td>
+                    </tr>
+                    <tr>
+                         <td>updateStatus-high</td> <td>1000</td> <td>0</td> <td>50.1</td> <td>15.89</td> <td>1.08</td> <td>8.26</td> <td>29.4</td>
+                    </tr>
+                    <tr>
+                         <td>updateStatus-stress</td> <td>1000</td> <td>0</td> <td>17.9</td> <td>5.59</td> <td>0.12</td> <td>2.82</td> <td>17.0</td>
+                    </tr>
+                    <tr>
+                         <td>getCBSDInfo-low</td> <td>100</td> <td>0</td> <td>10.1</td> <td>0.02</td> <td>0.00</td> <td>0.00</td> <td>10.1</td>
+                    </tr>
+                    <tr>
+                         <td>getCBSDInfo-mid</td> <td>500</td> <td>0</td> <td>25.1</td> <td>0.04</td> <td>0.00</td> <td>0.00</td> <td>25.0</td>
+                    </tr>
+                    <tr>
+                         <td>getCBSDInfo-high</td> <td>1000</td> <td>0</td> <td>50.1</td> <td>0.03</td> <td>0.00</td> <td>0.00</td> <td>50.0</td>
+                    </tr>
+                    <tr>
+                         <td>getCBSDInfo-stress</td> <td>1000</td> <td>0</td> <td>18.0</td> <td>0.04</td> <td>0.00</td> <td>0.00</td> <td>18.0</td>
                     </tr>
                 </table>
             </div>
-            <div style="border-bottom: 1px solid #d9d9d9; padding-bottom: 10px;" id="registerCBSD">
-                <h2>Benchmark round: registerCBSD</h2>
+            <div style="border-bottom: 1px solid #d9d9d9; padding-bottom: 10px;" id="registerCBSD-low">
+                <h2>Benchmark round: registerCBSD-low</h2>
                 <p></p>
                 <pre style="overflow: visible;white-space: pre-wrap;max-height:100%;">rateControl:
   type: fixed-rate
   opts:
-    tps: 50
+    tps: 10
 </pre>
-                        <h3>Performance metrics for registerCBSD</h3>
+                        <h3>Performance metrics for registerCBSD-low</h3>
                             <table style="min-width: 100%;">
                                 <tr>
                                      <th>Name</th> <th>Succ</th> <th>Fail</th> <th>Send Rate (TPS)</th> <th>Max Latency (s)</th> <th>Min Latency (s)</th> <th>Avg Latency (s)</th> <th>Throughput (TPS)</th>
                                 </tr>
                                 <tr>
-                                     <td>registerCBSD</td> <td>1000</td> <td>0</td> <td>50.1</td> <td>99.01</td> <td>3.38</td> <td>49.63</td> <td>8.4</td>
+                                     <td>registerCBSD-low</td> <td>100</td> <td>0</td> <td>10.1</td> <td>5.70</td> <td>0.44</td> <td>3.14</td> <td>7.2</td>
                                 </tr>
                             </table>
-                        <h3>Resource utilization for registerCBSD</h3>
+                        <h3>Resource utilization for registerCBSD-low</h3>
                             <h4>Resource monitor: prometheus</h4>
                             <table style="min-width: 100%;">
                                 <tr>
@@ -194,10 +242,10 @@
                                          <th>Metric</th> <th>Prometheus Query</th> <th>Name</th> <th>Value</th>
                                     </tr>
                                     <tr>
-                                         <td>Besu CPU Usage (cores)</td> <td>sum(rate(container_cpu_usage_seconds_total{name&#x3D;&quot;besu_clique&quot;}[30s])) by (name)</td> <td>besu_clique</td> <td>0.215</td>
+                                         <td>Besu CPU Usage (cores)</td> <td>sum(rate(container_cpu_usage_seconds_total{name&#x3D;&quot;besu_clique&quot;}[30s])) by (name)</td> <td>besu_clique</td> <td>0.229</td>
                                     </tr>
                                     <tr>
-                                         <td>Besu Memory Usage (MB)</td> <td>sum(container_memory_usage_bytes{name&#x3D;&quot;besu_clique&quot;}) by (name)</td> <td>besu_clique</td> <td>827</td>
+                                         <td>Besu Memory Usage (MB)</td> <td>sum(container_memory_usage_bytes{name&#x3D;&quot;besu_clique&quot;}) by (name)</td> <td>besu_clique</td> <td>476</td>
                                     </tr>
                                     <tr>
                                          <td>Besu Disk Usage (MB)</td> <td>sum(container_fs_usage_bytes{name&#x3D;&quot;besu_clique&quot;}) by (name)</td> <td>besu_clique</td> <td>88.5</td>
@@ -207,41 +255,41 @@
                             </table>
                             <div class="charting">
                                 <div class="chart">
-                                    <canvas id="PrometheusMonitor_registerCBSD_besu_clique_horizontalBar0">
-                                        <script>plotChart("PrometheusMonitor_registerCBSD_besu_clique_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu CPU Usage (cores)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;besu_clique&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;],&quot;data&quot;:[&quot;0.215&quot;]}]}")</script>
+                                    <canvas id="PrometheusMonitor_registerCBSD-low_besu_clique_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_registerCBSD-low_besu_clique_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu CPU Usage (cores)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;besu_clique&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;],&quot;data&quot;:[&quot;0.229&quot;]}]}")</script>
                                     </canvas>
                                 </div>
                                 <div class="chart">
-                                    <canvas id="PrometheusMonitor_registerCBSD_besu_clique_horizontalBar0">
-                                        <script>plotChart("PrometheusMonitor_registerCBSD_besu_clique_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu Memory Usage (MB)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;besu_clique&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;],&quot;data&quot;:[&quot;827&quot;]}]}")</script>
+                                    <canvas id="PrometheusMonitor_registerCBSD-low_besu_clique_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_registerCBSD-low_besu_clique_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu Memory Usage (MB)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;besu_clique&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;],&quot;data&quot;:[&quot;476&quot;]}]}")</script>
                                     </canvas>
                                 </div>
                                 <div class="chart">
-                                    <canvas id="PrometheusMonitor_registerCBSD_besu_clique_horizontalBar0">
-                                        <script>plotChart("PrometheusMonitor_registerCBSD_besu_clique_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu Disk Usage (MB)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;besu_clique&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;],&quot;data&quot;:[&quot;88.5&quot;]}]}")</script>
+                                    <canvas id="PrometheusMonitor_registerCBSD-low_besu_clique_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_registerCBSD-low_besu_clique_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu Disk Usage (MB)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;besu_clique&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;],&quot;data&quot;:[&quot;88.5&quot;]}]}")</script>
                                     </canvas>
                                 </div>
                             </div>
             </div>
 
-            <div style="border-bottom: 1px solid #d9d9d9; padding-bottom: 10px;" id="updateGrantAmount">
-                <h2>Benchmark round: updateGrantAmount</h2>
+            <div style="border-bottom: 1px solid #d9d9d9; padding-bottom: 10px;" id="registerCBSD-mid">
+                <h2>Benchmark round: registerCBSD-mid</h2>
                 <p></p>
                 <pre style="overflow: visible;white-space: pre-wrap;max-height:100%;">rateControl:
   type: fixed-rate
   opts:
-    tps: 50
+    tps: 25
 </pre>
-                        <h3>Performance metrics for updateGrantAmount</h3>
+                        <h3>Performance metrics for registerCBSD-mid</h3>
                             <table style="min-width: 100%;">
                                 <tr>
                                      <th>Name</th> <th>Succ</th> <th>Fail</th> <th>Send Rate (TPS)</th> <th>Max Latency (s)</th> <th>Min Latency (s)</th> <th>Avg Latency (s)</th> <th>Throughput (TPS)</th>
                                 </tr>
                                 <tr>
-                                     <td>updateGrantAmount</td> <td>1000</td> <td>0</td> <td>50.1</td> <td>14.79</td> <td>1.06</td> <td>7.48</td> <td>29.6</td>
+                                     <td>registerCBSD-mid</td> <td>500</td> <td>0</td> <td>25.1</td> <td>39.84</td> <td>2.25</td> <td>20.54</td> <td>8.5</td>
                                 </tr>
                             </table>
-                        <h3>Resource utilization for updateGrantAmount</h3>
+                        <h3>Resource utilization for registerCBSD-mid</h3>
                             <h4>Resource monitor: prometheus</h4>
                             <table style="min-width: 100%;">
                                 <tr>
@@ -250,10 +298,10 @@
                                          <th>Metric</th> <th>Prometheus Query</th> <th>Name</th> <th>Value</th>
                                     </tr>
                                     <tr>
-                                         <td>Besu CPU Usage (cores)</td> <td>sum(rate(container_cpu_usage_seconds_total{name&#x3D;&quot;besu_clique&quot;}[30s])) by (name)</td> <td>besu_clique</td> <td>0.181</td>
+                                         <td>Besu CPU Usage (cores)</td> <td>sum(rate(container_cpu_usage_seconds_total{name&#x3D;&quot;besu_clique&quot;}[30s])) by (name)</td> <td>besu_clique</td> <td>0.248</td>
                                     </tr>
                                     <tr>
-                                         <td>Besu Memory Usage (MB)</td> <td>sum(container_memory_usage_bytes{name&#x3D;&quot;besu_clique&quot;}) by (name)</td> <td>besu_clique</td> <td>837</td>
+                                         <td>Besu Memory Usage (MB)</td> <td>sum(container_memory_usage_bytes{name&#x3D;&quot;besu_clique&quot;}) by (name)</td> <td>besu_clique</td> <td>553</td>
                                     </tr>
                                     <tr>
                                          <td>Besu Disk Usage (MB)</td> <td>sum(container_fs_usage_bytes{name&#x3D;&quot;besu_clique&quot;}) by (name)</td> <td>besu_clique</td> <td>88.5</td>
@@ -263,41 +311,41 @@
                             </table>
                             <div class="charting">
                                 <div class="chart">
-                                    <canvas id="PrometheusMonitor_updateGrantAmount_besu_clique_horizontalBar0">
-                                        <script>plotChart("PrometheusMonitor_updateGrantAmount_besu_clique_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu CPU Usage (cores)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;besu_clique&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;],&quot;data&quot;:[&quot;0.181&quot;]}]}")</script>
+                                    <canvas id="PrometheusMonitor_registerCBSD-mid_besu_clique_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_registerCBSD-mid_besu_clique_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu CPU Usage (cores)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;besu_clique&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;],&quot;data&quot;:[&quot;0.248&quot;]}]}")</script>
                                     </canvas>
                                 </div>
                                 <div class="chart">
-                                    <canvas id="PrometheusMonitor_updateGrantAmount_besu_clique_horizontalBar0">
-                                        <script>plotChart("PrometheusMonitor_updateGrantAmount_besu_clique_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu Memory Usage (MB)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;besu_clique&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;],&quot;data&quot;:[&quot;837&quot;]}]}")</script>
+                                    <canvas id="PrometheusMonitor_registerCBSD-mid_besu_clique_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_registerCBSD-mid_besu_clique_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu Memory Usage (MB)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;besu_clique&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;],&quot;data&quot;:[&quot;553&quot;]}]}")</script>
                                     </canvas>
                                 </div>
                                 <div class="chart">
-                                    <canvas id="PrometheusMonitor_updateGrantAmount_besu_clique_horizontalBar0">
-                                        <script>plotChart("PrometheusMonitor_updateGrantAmount_besu_clique_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu Disk Usage (MB)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;besu_clique&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;],&quot;data&quot;:[&quot;88.5&quot;]}]}")</script>
+                                    <canvas id="PrometheusMonitor_registerCBSD-mid_besu_clique_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_registerCBSD-mid_besu_clique_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu Disk Usage (MB)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;besu_clique&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;],&quot;data&quot;:[&quot;88.5&quot;]}]}")</script>
                                     </canvas>
                                 </div>
                             </div>
             </div>
 
-            <div style="border-bottom: 1px solid #d9d9d9; padding-bottom: 10px;" id="updateStatus">
-                <h2>Benchmark round: updateStatus</h2>
+            <div style="border-bottom: 1px solid #d9d9d9; padding-bottom: 10px;" id="registerCBSD-high">
+                <h2>Benchmark round: registerCBSD-high</h2>
                 <p></p>
                 <pre style="overflow: visible;white-space: pre-wrap;max-height:100%;">rateControl:
   type: fixed-rate
   opts:
     tps: 50
 </pre>
-                        <h3>Performance metrics for updateStatus</h3>
+                        <h3>Performance metrics for registerCBSD-high</h3>
                             <table style="min-width: 100%;">
                                 <tr>
                                      <th>Name</th> <th>Succ</th> <th>Fail</th> <th>Send Rate (TPS)</th> <th>Max Latency (s)</th> <th>Min Latency (s)</th> <th>Avg Latency (s)</th> <th>Throughput (TPS)</th>
                                 </tr>
                                 <tr>
-                                     <td>updateStatus</td> <td>1000</td> <td>0</td> <td>50.1</td> <td>15.88</td> <td>1.05</td> <td>8.34</td> <td>29.5</td>
+                                     <td>registerCBSD-high</td> <td>1000</td> <td>0</td> <td>50.1</td> <td>98.99</td> <td>3.09</td> <td>49.61</td> <td>8.4</td>
                                 </tr>
                             </table>
-                        <h3>Resource utilization for updateStatus</h3>
+                        <h3>Resource utilization for registerCBSD-high</h3>
                             <h4>Resource monitor: prometheus</h4>
                             <table style="min-width: 100%;">
                                 <tr>
@@ -306,10 +354,10 @@
                                          <th>Metric</th> <th>Prometheus Query</th> <th>Name</th> <th>Value</th>
                                     </tr>
                                     <tr>
-                                         <td>Besu CPU Usage (cores)</td> <td>sum(rate(container_cpu_usage_seconds_total{name&#x3D;&quot;besu_clique&quot;}[30s])) by (name)</td> <td>besu_clique</td> <td>0.160</td>
+                                         <td>Besu CPU Usage (cores)</td> <td>sum(rate(container_cpu_usage_seconds_total{name&#x3D;&quot;besu_clique&quot;}[30s])) by (name)</td> <td>besu_clique</td> <td>0.128</td>
                                     </tr>
                                     <tr>
-                                         <td>Besu Memory Usage (MB)</td> <td>sum(container_memory_usage_bytes{name&#x3D;&quot;besu_clique&quot;}) by (name)</td> <td>besu_clique</td> <td>846</td>
+                                         <td>Besu Memory Usage (MB)</td> <td>sum(container_memory_usage_bytes{name&#x3D;&quot;besu_clique&quot;}) by (name)</td> <td>besu_clique</td> <td>612</td>
                                     </tr>
                                     <tr>
                                          <td>Besu Disk Usage (MB)</td> <td>sum(container_fs_usage_bytes{name&#x3D;&quot;besu_clique&quot;}) by (name)</td> <td>besu_clique</td> <td>88.6</td>
@@ -319,41 +367,42 @@
                             </table>
                             <div class="charting">
                                 <div class="chart">
-                                    <canvas id="PrometheusMonitor_updateStatus_besu_clique_horizontalBar0">
-                                        <script>plotChart("PrometheusMonitor_updateStatus_besu_clique_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu CPU Usage (cores)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;besu_clique&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;],&quot;data&quot;:[&quot;0.160&quot;]}]}")</script>
+                                    <canvas id="PrometheusMonitor_registerCBSD-high_besu_clique_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_registerCBSD-high_besu_clique_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu CPU Usage (cores)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;besu_clique&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;],&quot;data&quot;:[&quot;0.128&quot;]}]}")</script>
                                     </canvas>
                                 </div>
                                 <div class="chart">
-                                    <canvas id="PrometheusMonitor_updateStatus_besu_clique_horizontalBar0">
-                                        <script>plotChart("PrometheusMonitor_updateStatus_besu_clique_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu Memory Usage (MB)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;besu_clique&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;],&quot;data&quot;:[&quot;846&quot;]}]}")</script>
+                                    <canvas id="PrometheusMonitor_registerCBSD-high_besu_clique_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_registerCBSD-high_besu_clique_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu Memory Usage (MB)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;besu_clique&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;],&quot;data&quot;:[&quot;612&quot;]}]}")</script>
                                     </canvas>
                                 </div>
                                 <div class="chart">
-                                    <canvas id="PrometheusMonitor_updateStatus_besu_clique_horizontalBar0">
-                                        <script>plotChart("PrometheusMonitor_updateStatus_besu_clique_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu Disk Usage (MB)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;besu_clique&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;],&quot;data&quot;:[&quot;88.6&quot;]}]}")</script>
+                                    <canvas id="PrometheusMonitor_registerCBSD-high_besu_clique_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_registerCBSD-high_besu_clique_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu Disk Usage (MB)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;besu_clique&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;],&quot;data&quot;:[&quot;88.6&quot;]}]}")</script>
                                     </canvas>
                                 </div>
                             </div>
             </div>
 
-            <div style="border-bottom: 1px solid #d9d9d9; padding-bottom: 10px;" id="getCBSDInfo">
-                <h2>Benchmark round: getCBSDInfo</h2>
+            <div style="border-bottom: 1px solid #d9d9d9; padding-bottom: 10px;" id="registerCBSD-stress">
+                <h2>Benchmark round: registerCBSD-stress</h2>
                 <p></p>
                 <pre style="overflow: visible;white-space: pre-wrap;max-height:100%;">rateControl:
-  type: fixed-rate
+  type: linear-rate
   opts:
-    tps: 50
+    startingTps: 10
+    finishingTps: 100
 </pre>
-                        <h3>Performance metrics for getCBSDInfo</h3>
+                        <h3>Performance metrics for registerCBSD-stress</h3>
                             <table style="min-width: 100%;">
                                 <tr>
                                      <th>Name</th> <th>Succ</th> <th>Fail</th> <th>Send Rate (TPS)</th> <th>Max Latency (s)</th> <th>Min Latency (s)</th> <th>Avg Latency (s)</th> <th>Throughput (TPS)</th>
                                 </tr>
                                 <tr>
-                                     <td>getCBSDInfo</td> <td>1000</td> <td>0</td> <td>50.1</td> <td>0.03</td> <td>0.00</td> <td>0.00</td> <td>50.0</td>
+                                     <td>registerCBSD-stress</td> <td>1000</td> <td>0</td> <td>17.9</td> <td>63.03</td> <td>0.18</td> <td>24.67</td> <td>8.4</td>
                                 </tr>
                             </table>
-                        <h3>Resource utilization for getCBSDInfo</h3>
+                        <h3>Resource utilization for registerCBSD-stress</h3>
                             <h4>Resource monitor: prometheus</h4>
                             <table style="min-width: 100%;">
                                 <tr>
@@ -362,10 +411,10 @@
                                          <th>Metric</th> <th>Prometheus Query</th> <th>Name</th> <th>Value</th>
                                     </tr>
                                     <tr>
-                                         <td>Besu CPU Usage (cores)</td> <td>sum(rate(container_cpu_usage_seconds_total{name&#x3D;&quot;besu_clique&quot;}[30s])) by (name)</td> <td>besu_clique</td> <td>0.137</td>
+                                         <td>Besu CPU Usage (cores)</td> <td>sum(rate(container_cpu_usage_seconds_total{name&#x3D;&quot;besu_clique&quot;}[30s])) by (name)</td> <td>besu_clique</td> <td>0.0734</td>
                                     </tr>
                                     <tr>
-                                         <td>Besu Memory Usage (MB)</td> <td>sum(container_memory_usage_bytes{name&#x3D;&quot;besu_clique&quot;}) by (name)</td> <td>besu_clique</td> <td>854</td>
+                                         <td>Besu Memory Usage (MB)</td> <td>sum(container_memory_usage_bytes{name&#x3D;&quot;besu_clique&quot;}) by (name)</td> <td>besu_clique</td> <td>621</td>
                                     </tr>
                                     <tr>
                                          <td>Besu Disk Usage (MB)</td> <td>sum(container_fs_usage_bytes{name&#x3D;&quot;besu_clique&quot;}) by (name)</td> <td>besu_clique</td> <td>88.6</td>
@@ -375,18 +424,693 @@
                             </table>
                             <div class="charting">
                                 <div class="chart">
-                                    <canvas id="PrometheusMonitor_getCBSDInfo_besu_clique_horizontalBar0">
-                                        <script>plotChart("PrometheusMonitor_getCBSDInfo_besu_clique_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu CPU Usage (cores)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;besu_clique&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;],&quot;data&quot;:[&quot;0.137&quot;]}]}")</script>
+                                    <canvas id="PrometheusMonitor_registerCBSD-stress_besu_clique_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_registerCBSD-stress_besu_clique_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu CPU Usage (cores)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;besu_clique&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;],&quot;data&quot;:[&quot;0.0734&quot;]}]}")</script>
                                     </canvas>
                                 </div>
                                 <div class="chart">
-                                    <canvas id="PrometheusMonitor_getCBSDInfo_besu_clique_horizontalBar0">
-                                        <script>plotChart("PrometheusMonitor_getCBSDInfo_besu_clique_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu Memory Usage (MB)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;besu_clique&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;],&quot;data&quot;:[&quot;854&quot;]}]}")</script>
+                                    <canvas id="PrometheusMonitor_registerCBSD-stress_besu_clique_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_registerCBSD-stress_besu_clique_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu Memory Usage (MB)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;besu_clique&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;],&quot;data&quot;:[&quot;621&quot;]}]}")</script>
                                     </canvas>
                                 </div>
                                 <div class="chart">
-                                    <canvas id="PrometheusMonitor_getCBSDInfo_besu_clique_horizontalBar0">
-                                        <script>plotChart("PrometheusMonitor_getCBSDInfo_besu_clique_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu Disk Usage (MB)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;besu_clique&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;],&quot;data&quot;:[&quot;88.6&quot;]}]}")</script>
+                                    <canvas id="PrometheusMonitor_registerCBSD-stress_besu_clique_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_registerCBSD-stress_besu_clique_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu Disk Usage (MB)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;besu_clique&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;],&quot;data&quot;:[&quot;88.6&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                            </div>
+            </div>
+
+            <div style="border-bottom: 1px solid #d9d9d9; padding-bottom: 10px;" id="updateGrantAmount-low">
+                <h2>Benchmark round: updateGrantAmount-low</h2>
+                <p></p>
+                <pre style="overflow: visible;white-space: pre-wrap;max-height:100%;">rateControl:
+  type: fixed-rate
+  opts:
+    tps: 10
+</pre>
+                        <h3>Performance metrics for updateGrantAmount-low</h3>
+                            <table style="min-width: 100%;">
+                                <tr>
+                                     <th>Name</th> <th>Succ</th> <th>Fail</th> <th>Send Rate (TPS)</th> <th>Max Latency (s)</th> <th>Min Latency (s)</th> <th>Avg Latency (s)</th> <th>Throughput (TPS)</th>
+                                </tr>
+                                <tr>
+                                     <td>updateGrantAmount-low</td> <td>100</td> <td>0</td> <td>10.1</td> <td>5.04</td> <td>0.13</td> <td>2.58</td> <td>7.3</td>
+                                </tr>
+                            </table>
+                        <h3>Resource utilization for updateGrantAmount-low</h3>
+                            <h4>Resource monitor: prometheus</h4>
+                            <table style="min-width: 100%;">
+                                <tr>
+                                <table>
+                                    <tr>
+                                         <th>Metric</th> <th>Prometheus Query</th> <th>Name</th> <th>Value</th>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu CPU Usage (cores)</td> <td>sum(rate(container_cpu_usage_seconds_total{name&#x3D;&quot;besu_clique&quot;}[30s])) by (name)</td> <td>besu_clique</td> <td>0.0368</td>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu Memory Usage (MB)</td> <td>sum(container_memory_usage_bytes{name&#x3D;&quot;besu_clique&quot;}) by (name)</td> <td>besu_clique</td> <td>621</td>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu Disk Usage (MB)</td> <td>sum(container_fs_usage_bytes{name&#x3D;&quot;besu_clique&quot;}) by (name)</td> <td>besu_clique</td> <td>88.6</td>
+                                    </tr>
+                                </table>
+                                </tr>
+                            </table>
+                            <div class="charting">
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_updateGrantAmount-low_besu_clique_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_updateGrantAmount-low_besu_clique_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu CPU Usage (cores)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;besu_clique&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;],&quot;data&quot;:[&quot;0.0368&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_updateGrantAmount-low_besu_clique_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_updateGrantAmount-low_besu_clique_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu Memory Usage (MB)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;besu_clique&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;],&quot;data&quot;:[&quot;621&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_updateGrantAmount-low_besu_clique_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_updateGrantAmount-low_besu_clique_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu Disk Usage (MB)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;besu_clique&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;],&quot;data&quot;:[&quot;88.6&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                            </div>
+            </div>
+
+            <div style="border-bottom: 1px solid #d9d9d9; padding-bottom: 10px;" id="updateGrantAmount-mid">
+                <h2>Benchmark round: updateGrantAmount-mid</h2>
+                <p></p>
+                <pre style="overflow: visible;white-space: pre-wrap;max-height:100%;">rateControl:
+  type: fixed-rate
+  opts:
+    tps: 25
+</pre>
+                        <h3>Performance metrics for updateGrantAmount-mid</h3>
+                            <table style="min-width: 100%;">
+                                <tr>
+                                     <th>Name</th> <th>Succ</th> <th>Fail</th> <th>Send Rate (TPS)</th> <th>Max Latency (s)</th> <th>Min Latency (s)</th> <th>Avg Latency (s)</th> <th>Throughput (TPS)</th>
+                                </tr>
+                                <tr>
+                                     <td>updateGrantAmount-mid</td> <td>500</td> <td>0</td> <td>25.1</td> <td>5.14</td> <td>0.17</td> <td>2.65</td> <td>20.9</td>
+                                </tr>
+                            </table>
+                        <h3>Resource utilization for updateGrantAmount-mid</h3>
+                            <h4>Resource monitor: prometheus</h4>
+                            <table style="min-width: 100%;">
+                                <tr>
+                                <table>
+                                    <tr>
+                                         <th>Metric</th> <th>Prometheus Query</th> <th>Name</th> <th>Value</th>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu CPU Usage (cores)</td> <td>sum(rate(container_cpu_usage_seconds_total{name&#x3D;&quot;besu_clique&quot;}[30s])) by (name)</td> <td>besu_clique</td> <td>0.0989</td>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu Memory Usage (MB)</td> <td>sum(container_memory_usage_bytes{name&#x3D;&quot;besu_clique&quot;}) by (name)</td> <td>besu_clique</td> <td>626</td>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu Disk Usage (MB)</td> <td>sum(container_fs_usage_bytes{name&#x3D;&quot;besu_clique&quot;}) by (name)</td> <td>besu_clique</td> <td>88.6</td>
+                                    </tr>
+                                </table>
+                                </tr>
+                            </table>
+                            <div class="charting">
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_updateGrantAmount-mid_besu_clique_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_updateGrantAmount-mid_besu_clique_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu CPU Usage (cores)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;besu_clique&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;],&quot;data&quot;:[&quot;0.0989&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_updateGrantAmount-mid_besu_clique_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_updateGrantAmount-mid_besu_clique_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu Memory Usage (MB)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;besu_clique&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;],&quot;data&quot;:[&quot;626&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_updateGrantAmount-mid_besu_clique_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_updateGrantAmount-mid_besu_clique_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu Disk Usage (MB)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;besu_clique&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;],&quot;data&quot;:[&quot;88.6&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                            </div>
+            </div>
+
+            <div style="border-bottom: 1px solid #d9d9d9; padding-bottom: 10px;" id="updateGrantAmount-high">
+                <h2>Benchmark round: updateGrantAmount-high</h2>
+                <p></p>
+                <pre style="overflow: visible;white-space: pre-wrap;max-height:100%;">rateControl:
+  type: fixed-rate
+  opts:
+    tps: 50
+</pre>
+                        <h3>Performance metrics for updateGrantAmount-high</h3>
+                            <table style="min-width: 100%;">
+                                <tr>
+                                     <th>Name</th> <th>Succ</th> <th>Fail</th> <th>Send Rate (TPS)</th> <th>Max Latency (s)</th> <th>Min Latency (s)</th> <th>Avg Latency (s)</th> <th>Throughput (TPS)</th>
+                                </tr>
+                                <tr>
+                                     <td>updateGrantAmount-high</td> <td>1000</td> <td>0</td> <td>50.1</td> <td>14.92</td> <td>0.95</td> <td>7.49</td> <td>29.5</td>
+                                </tr>
+                            </table>
+                        <h3>Resource utilization for updateGrantAmount-high</h3>
+                            <h4>Resource monitor: prometheus</h4>
+                            <table style="min-width: 100%;">
+                                <tr>
+                                <table>
+                                    <tr>
+                                         <th>Metric</th> <th>Prometheus Query</th> <th>Name</th> <th>Value</th>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu CPU Usage (cores)</td> <td>sum(rate(container_cpu_usage_seconds_total{name&#x3D;&quot;besu_clique&quot;}[30s])) by (name)</td> <td>besu_clique</td> <td>0.152</td>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu Memory Usage (MB)</td> <td>sum(container_memory_usage_bytes{name&#x3D;&quot;besu_clique&quot;}) by (name)</td> <td>besu_clique</td> <td>631</td>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu Disk Usage (MB)</td> <td>sum(container_fs_usage_bytes{name&#x3D;&quot;besu_clique&quot;}) by (name)</td> <td>besu_clique</td> <td>88.6</td>
+                                    </tr>
+                                </table>
+                                </tr>
+                            </table>
+                            <div class="charting">
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_updateGrantAmount-high_besu_clique_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_updateGrantAmount-high_besu_clique_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu CPU Usage (cores)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;besu_clique&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;],&quot;data&quot;:[&quot;0.152&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_updateGrantAmount-high_besu_clique_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_updateGrantAmount-high_besu_clique_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu Memory Usage (MB)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;besu_clique&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;],&quot;data&quot;:[&quot;631&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_updateGrantAmount-high_besu_clique_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_updateGrantAmount-high_besu_clique_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu Disk Usage (MB)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;besu_clique&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;],&quot;data&quot;:[&quot;88.6&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                            </div>
+            </div>
+
+            <div style="border-bottom: 1px solid #d9d9d9; padding-bottom: 10px;" id="updateGrantAmount-stress">
+                <h2>Benchmark round: updateGrantAmount-stress</h2>
+                <p></p>
+                <pre style="overflow: visible;white-space: pre-wrap;max-height:100%;">rateControl:
+  type: linear-rate
+  opts:
+    startingTps: 10
+    finishingTps: 100
+</pre>
+                        <h3>Performance metrics for updateGrantAmount-stress</h3>
+                            <table style="min-width: 100%;">
+                                <tr>
+                                     <th>Name</th> <th>Succ</th> <th>Fail</th> <th>Send Rate (TPS)</th> <th>Max Latency (s)</th> <th>Min Latency (s)</th> <th>Avg Latency (s)</th> <th>Throughput (TPS)</th>
+                                </tr>
+                                <tr>
+                                     <td>updateGrantAmount-stress</td> <td>1000</td> <td>0</td> <td>18.0</td> <td>5.48</td> <td>0.12</td> <td>2.77</td> <td>17.0</td>
+                                </tr>
+                            </table>
+                        <h3>Resource utilization for updateGrantAmount-stress</h3>
+                            <h4>Resource monitor: prometheus</h4>
+                            <table style="min-width: 100%;">
+                                <tr>
+                                <table>
+                                    <tr>
+                                         <th>Metric</th> <th>Prometheus Query</th> <th>Name</th> <th>Value</th>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu CPU Usage (cores)</td> <td>sum(rate(container_cpu_usage_seconds_total{name&#x3D;&quot;besu_clique&quot;}[30s])) by (name)</td> <td>besu_clique</td> <td>0.0801</td>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu Memory Usage (MB)</td> <td>sum(container_memory_usage_bytes{name&#x3D;&quot;besu_clique&quot;}) by (name)</td> <td>besu_clique</td> <td>637</td>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu Disk Usage (MB)</td> <td>sum(container_fs_usage_bytes{name&#x3D;&quot;besu_clique&quot;}) by (name)</td> <td>besu_clique</td> <td>88.6</td>
+                                    </tr>
+                                </table>
+                                </tr>
+                            </table>
+                            <div class="charting">
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_updateGrantAmount-stress_besu_clique_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_updateGrantAmount-stress_besu_clique_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu CPU Usage (cores)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;besu_clique&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;],&quot;data&quot;:[&quot;0.0801&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_updateGrantAmount-stress_besu_clique_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_updateGrantAmount-stress_besu_clique_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu Memory Usage (MB)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;besu_clique&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;],&quot;data&quot;:[&quot;637&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_updateGrantAmount-stress_besu_clique_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_updateGrantAmount-stress_besu_clique_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu Disk Usage (MB)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;besu_clique&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;],&quot;data&quot;:[&quot;88.6&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                            </div>
+            </div>
+
+            <div style="border-bottom: 1px solid #d9d9d9; padding-bottom: 10px;" id="updateStatus-low">
+                <h2>Benchmark round: updateStatus-low</h2>
+                <p></p>
+                <pre style="overflow: visible;white-space: pre-wrap;max-height:100%;">rateControl:
+  type: fixed-rate
+  opts:
+    tps: 10
+</pre>
+                        <h3>Performance metrics for updateStatus-low</h3>
+                            <table style="min-width: 100%;">
+                                <tr>
+                                     <th>Name</th> <th>Succ</th> <th>Fail</th> <th>Send Rate (TPS)</th> <th>Max Latency (s)</th> <th>Min Latency (s)</th> <th>Avg Latency (s)</th> <th>Throughput (TPS)</th>
+                                </tr>
+                                <tr>
+                                     <td>updateStatus-low</td> <td>100</td> <td>0</td> <td>10.1</td> <td>5.05</td> <td>0.16</td> <td>2.60</td> <td>7.3</td>
+                                </tr>
+                            </table>
+                        <h3>Resource utilization for updateStatus-low</h3>
+                            <h4>Resource monitor: prometheus</h4>
+                            <table style="min-width: 100%;">
+                                <tr>
+                                <table>
+                                    <tr>
+                                         <th>Metric</th> <th>Prometheus Query</th> <th>Name</th> <th>Value</th>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu CPU Usage (cores)</td> <td>sum(rate(container_cpu_usage_seconds_total{name&#x3D;&quot;besu_clique&quot;}[30s])) by (name)</td> <td>besu_clique</td> <td>0.0867</td>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu Memory Usage (MB)</td> <td>sum(container_memory_usage_bytes{name&#x3D;&quot;besu_clique&quot;}) by (name)</td> <td>besu_clique</td> <td>639</td>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu Disk Usage (MB)</td> <td>sum(container_fs_usage_bytes{name&#x3D;&quot;besu_clique&quot;}) by (name)</td> <td>besu_clique</td> <td>88.6</td>
+                                    </tr>
+                                </table>
+                                </tr>
+                            </table>
+                            <div class="charting">
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_updateStatus-low_besu_clique_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_updateStatus-low_besu_clique_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu CPU Usage (cores)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;besu_clique&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;],&quot;data&quot;:[&quot;0.0867&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_updateStatus-low_besu_clique_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_updateStatus-low_besu_clique_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu Memory Usage (MB)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;besu_clique&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;],&quot;data&quot;:[&quot;639&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_updateStatus-low_besu_clique_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_updateStatus-low_besu_clique_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu Disk Usage (MB)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;besu_clique&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;],&quot;data&quot;:[&quot;88.6&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                            </div>
+            </div>
+
+            <div style="border-bottom: 1px solid #d9d9d9; padding-bottom: 10px;" id="updateStatus-mid">
+                <h2>Benchmark round: updateStatus-mid</h2>
+                <p></p>
+                <pre style="overflow: visible;white-space: pre-wrap;max-height:100%;">rateControl:
+  type: fixed-rate
+  opts:
+    tps: 25
+</pre>
+                        <h3>Performance metrics for updateStatus-mid</h3>
+                            <table style="min-width: 100%;">
+                                <tr>
+                                     <th>Name</th> <th>Succ</th> <th>Fail</th> <th>Send Rate (TPS)</th> <th>Max Latency (s)</th> <th>Min Latency (s)</th> <th>Avg Latency (s)</th> <th>Throughput (TPS)</th>
+                                </tr>
+                                <tr>
+                                     <td>updateStatus-mid</td> <td>500</td> <td>0</td> <td>25.1</td> <td>5.15</td> <td>0.20</td> <td>2.68</td> <td>20.9</td>
+                                </tr>
+                            </table>
+                        <h3>Resource utilization for updateStatus-mid</h3>
+                            <h4>Resource monitor: prometheus</h4>
+                            <table style="min-width: 100%;">
+                                <tr>
+                                <table>
+                                    <tr>
+                                         <th>Metric</th> <th>Prometheus Query</th> <th>Name</th> <th>Value</th>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu CPU Usage (cores)</td> <td>sum(rate(container_cpu_usage_seconds_total{name&#x3D;&quot;besu_clique&quot;}[30s])) by (name)</td> <td>besu_clique</td> <td>0.0975</td>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu Memory Usage (MB)</td> <td>sum(container_memory_usage_bytes{name&#x3D;&quot;besu_clique&quot;}) by (name)</td> <td>besu_clique</td> <td>643</td>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu Disk Usage (MB)</td> <td>sum(container_fs_usage_bytes{name&#x3D;&quot;besu_clique&quot;}) by (name)</td> <td>besu_clique</td> <td>88.6</td>
+                                    </tr>
+                                </table>
+                                </tr>
+                            </table>
+                            <div class="charting">
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_updateStatus-mid_besu_clique_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_updateStatus-mid_besu_clique_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu CPU Usage (cores)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;besu_clique&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;],&quot;data&quot;:[&quot;0.0975&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_updateStatus-mid_besu_clique_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_updateStatus-mid_besu_clique_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu Memory Usage (MB)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;besu_clique&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;],&quot;data&quot;:[&quot;643&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_updateStatus-mid_besu_clique_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_updateStatus-mid_besu_clique_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu Disk Usage (MB)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;besu_clique&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;],&quot;data&quot;:[&quot;88.6&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                            </div>
+            </div>
+
+            <div style="border-bottom: 1px solid #d9d9d9; padding-bottom: 10px;" id="updateStatus-high">
+                <h2>Benchmark round: updateStatus-high</h2>
+                <p></p>
+                <pre style="overflow: visible;white-space: pre-wrap;max-height:100%;">rateControl:
+  type: fixed-rate
+  opts:
+    tps: 50
+</pre>
+                        <h3>Performance metrics for updateStatus-high</h3>
+                            <table style="min-width: 100%;">
+                                <tr>
+                                     <th>Name</th> <th>Succ</th> <th>Fail</th> <th>Send Rate (TPS)</th> <th>Max Latency (s)</th> <th>Min Latency (s)</th> <th>Avg Latency (s)</th> <th>Throughput (TPS)</th>
+                                </tr>
+                                <tr>
+                                     <td>updateStatus-high</td> <td>1000</td> <td>0</td> <td>50.1</td> <td>15.89</td> <td>1.08</td> <td>8.26</td> <td>29.4</td>
+                                </tr>
+                            </table>
+                        <h3>Resource utilization for updateStatus-high</h3>
+                            <h4>Resource monitor: prometheus</h4>
+                            <table style="min-width: 100%;">
+                                <tr>
+                                <table>
+                                    <tr>
+                                         <th>Metric</th> <th>Prometheus Query</th> <th>Name</th> <th>Value</th>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu CPU Usage (cores)</td> <td>sum(rate(container_cpu_usage_seconds_total{name&#x3D;&quot;besu_clique&quot;}[30s])) by (name)</td> <td>besu_clique</td> <td>0.138</td>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu Memory Usage (MB)</td> <td>sum(container_memory_usage_bytes{name&#x3D;&quot;besu_clique&quot;}) by (name)</td> <td>besu_clique</td> <td>651</td>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu Disk Usage (MB)</td> <td>sum(container_fs_usage_bytes{name&#x3D;&quot;besu_clique&quot;}) by (name)</td> <td>besu_clique</td> <td>88.8</td>
+                                    </tr>
+                                </table>
+                                </tr>
+                            </table>
+                            <div class="charting">
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_updateStatus-high_besu_clique_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_updateStatus-high_besu_clique_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu CPU Usage (cores)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;besu_clique&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;],&quot;data&quot;:[&quot;0.138&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_updateStatus-high_besu_clique_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_updateStatus-high_besu_clique_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu Memory Usage (MB)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;besu_clique&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;],&quot;data&quot;:[&quot;651&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_updateStatus-high_besu_clique_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_updateStatus-high_besu_clique_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu Disk Usage (MB)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;besu_clique&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;],&quot;data&quot;:[&quot;88.8&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                            </div>
+            </div>
+
+            <div style="border-bottom: 1px solid #d9d9d9; padding-bottom: 10px;" id="updateStatus-stress">
+                <h2>Benchmark round: updateStatus-stress</h2>
+                <p></p>
+                <pre style="overflow: visible;white-space: pre-wrap;max-height:100%;">rateControl:
+  type: linear-rate
+  opts:
+    startingTps: 10
+    finishingTps: 100
+</pre>
+                        <h3>Performance metrics for updateStatus-stress</h3>
+                            <table style="min-width: 100%;">
+                                <tr>
+                                     <th>Name</th> <th>Succ</th> <th>Fail</th> <th>Send Rate (TPS)</th> <th>Max Latency (s)</th> <th>Min Latency (s)</th> <th>Avg Latency (s)</th> <th>Throughput (TPS)</th>
+                                </tr>
+                                <tr>
+                                     <td>updateStatus-stress</td> <td>1000</td> <td>0</td> <td>17.9</td> <td>5.59</td> <td>0.12</td> <td>2.82</td> <td>17.0</td>
+                                </tr>
+                            </table>
+                        <h3>Resource utilization for updateStatus-stress</h3>
+                            <h4>Resource monitor: prometheus</h4>
+                            <table style="min-width: 100%;">
+                                <tr>
+                                <table>
+                                    <tr>
+                                         <th>Metric</th> <th>Prometheus Query</th> <th>Name</th> <th>Value</th>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu CPU Usage (cores)</td> <td>sum(rate(container_cpu_usage_seconds_total{name&#x3D;&quot;besu_clique&quot;}[30s])) by (name)</td> <td>besu_clique</td> <td>0.0748</td>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu Memory Usage (MB)</td> <td>sum(container_memory_usage_bytes{name&#x3D;&quot;besu_clique&quot;}) by (name)</td> <td>besu_clique</td> <td>656</td>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu Disk Usage (MB)</td> <td>sum(container_fs_usage_bytes{name&#x3D;&quot;besu_clique&quot;}) by (name)</td> <td>besu_clique</td> <td>88.8</td>
+                                    </tr>
+                                </table>
+                                </tr>
+                            </table>
+                            <div class="charting">
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_updateStatus-stress_besu_clique_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_updateStatus-stress_besu_clique_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu CPU Usage (cores)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;besu_clique&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;],&quot;data&quot;:[&quot;0.0748&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_updateStatus-stress_besu_clique_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_updateStatus-stress_besu_clique_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu Memory Usage (MB)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;besu_clique&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;],&quot;data&quot;:[&quot;656&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_updateStatus-stress_besu_clique_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_updateStatus-stress_besu_clique_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu Disk Usage (MB)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;besu_clique&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;],&quot;data&quot;:[&quot;88.8&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                            </div>
+            </div>
+
+            <div style="border-bottom: 1px solid #d9d9d9; padding-bottom: 10px;" id="getCBSDInfo-low">
+                <h2>Benchmark round: getCBSDInfo-low</h2>
+                <p></p>
+                <pre style="overflow: visible;white-space: pre-wrap;max-height:100%;">rateControl:
+  type: fixed-rate
+  opts:
+    tps: 10
+</pre>
+                        <h3>Performance metrics for getCBSDInfo-low</h3>
+                            <table style="min-width: 100%;">
+                                <tr>
+                                     <th>Name</th> <th>Succ</th> <th>Fail</th> <th>Send Rate (TPS)</th> <th>Max Latency (s)</th> <th>Min Latency (s)</th> <th>Avg Latency (s)</th> <th>Throughput (TPS)</th>
+                                </tr>
+                                <tr>
+                                     <td>getCBSDInfo-low</td> <td>100</td> <td>0</td> <td>10.1</td> <td>0.02</td> <td>0.00</td> <td>0.00</td> <td>10.1</td>
+                                </tr>
+                            </table>
+                        <h3>Resource utilization for getCBSDInfo-low</h3>
+                            <h4>Resource monitor: prometheus</h4>
+                            <table style="min-width: 100%;">
+                                <tr>
+                                <table>
+                                    <tr>
+                                         <th>Metric</th> <th>Prometheus Query</th> <th>Name</th> <th>Value</th>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu CPU Usage (cores)</td> <td>sum(rate(container_cpu_usage_seconds_total{name&#x3D;&quot;besu_clique&quot;}[30s])) by (name)</td> <td>besu_clique</td> <td>0.102</td>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu Memory Usage (MB)</td> <td>sum(container_memory_usage_bytes{name&#x3D;&quot;besu_clique&quot;}) by (name)</td> <td>besu_clique</td> <td>658</td>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu Disk Usage (MB)</td> <td>sum(container_fs_usage_bytes{name&#x3D;&quot;besu_clique&quot;}) by (name)</td> <td>besu_clique</td> <td>88.8</td>
+                                    </tr>
+                                </table>
+                                </tr>
+                            </table>
+                            <div class="charting">
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_getCBSDInfo-low_besu_clique_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_getCBSDInfo-low_besu_clique_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu CPU Usage (cores)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;besu_clique&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;],&quot;data&quot;:[&quot;0.102&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_getCBSDInfo-low_besu_clique_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_getCBSDInfo-low_besu_clique_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu Memory Usage (MB)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;besu_clique&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;],&quot;data&quot;:[&quot;658&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_getCBSDInfo-low_besu_clique_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_getCBSDInfo-low_besu_clique_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu Disk Usage (MB)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;besu_clique&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;],&quot;data&quot;:[&quot;88.8&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                            </div>
+            </div>
+
+            <div style="border-bottom: 1px solid #d9d9d9; padding-bottom: 10px;" id="getCBSDInfo-mid">
+                <h2>Benchmark round: getCBSDInfo-mid</h2>
+                <p></p>
+                <pre style="overflow: visible;white-space: pre-wrap;max-height:100%;">rateControl:
+  type: fixed-rate
+  opts:
+    tps: 25
+</pre>
+                        <h3>Performance metrics for getCBSDInfo-mid</h3>
+                            <table style="min-width: 100%;">
+                                <tr>
+                                     <th>Name</th> <th>Succ</th> <th>Fail</th> <th>Send Rate (TPS)</th> <th>Max Latency (s)</th> <th>Min Latency (s)</th> <th>Avg Latency (s)</th> <th>Throughput (TPS)</th>
+                                </tr>
+                                <tr>
+                                     <td>getCBSDInfo-mid</td> <td>500</td> <td>0</td> <td>25.1</td> <td>0.04</td> <td>0.00</td> <td>0.00</td> <td>25.0</td>
+                                </tr>
+                            </table>
+                        <h3>Resource utilization for getCBSDInfo-mid</h3>
+                            <h4>Resource monitor: prometheus</h4>
+                            <table style="min-width: 100%;">
+                                <tr>
+                                <table>
+                                    <tr>
+                                         <th>Metric</th> <th>Prometheus Query</th> <th>Name</th> <th>Value</th>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu CPU Usage (cores)</td> <td>sum(rate(container_cpu_usage_seconds_total{name&#x3D;&quot;besu_clique&quot;}[30s])) by (name)</td> <td>besu_clique</td> <td>0.0614</td>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu Memory Usage (MB)</td> <td>sum(container_memory_usage_bytes{name&#x3D;&quot;besu_clique&quot;}) by (name)</td> <td>besu_clique</td> <td>659</td>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu Disk Usage (MB)</td> <td>sum(container_fs_usage_bytes{name&#x3D;&quot;besu_clique&quot;}) by (name)</td> <td>besu_clique</td> <td>88.8</td>
+                                    </tr>
+                                </table>
+                                </tr>
+                            </table>
+                            <div class="charting">
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_getCBSDInfo-mid_besu_clique_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_getCBSDInfo-mid_besu_clique_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu CPU Usage (cores)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;besu_clique&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;],&quot;data&quot;:[&quot;0.0614&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_getCBSDInfo-mid_besu_clique_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_getCBSDInfo-mid_besu_clique_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu Memory Usage (MB)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;besu_clique&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;],&quot;data&quot;:[&quot;659&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_getCBSDInfo-mid_besu_clique_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_getCBSDInfo-mid_besu_clique_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu Disk Usage (MB)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;besu_clique&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;],&quot;data&quot;:[&quot;88.8&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                            </div>
+            </div>
+
+            <div style="border-bottom: 1px solid #d9d9d9; padding-bottom: 10px;" id="getCBSDInfo-high">
+                <h2>Benchmark round: getCBSDInfo-high</h2>
+                <p></p>
+                <pre style="overflow: visible;white-space: pre-wrap;max-height:100%;">rateControl:
+  type: fixed-rate
+  opts:
+    tps: 50
+</pre>
+                        <h3>Performance metrics for getCBSDInfo-high</h3>
+                            <table style="min-width: 100%;">
+                                <tr>
+                                     <th>Name</th> <th>Succ</th> <th>Fail</th> <th>Send Rate (TPS)</th> <th>Max Latency (s)</th> <th>Min Latency (s)</th> <th>Avg Latency (s)</th> <th>Throughput (TPS)</th>
+                                </tr>
+                                <tr>
+                                     <td>getCBSDInfo-high</td> <td>1000</td> <td>0</td> <td>50.1</td> <td>0.03</td> <td>0.00</td> <td>0.00</td> <td>50.0</td>
+                                </tr>
+                            </table>
+                        <h3>Resource utilization for getCBSDInfo-high</h3>
+                            <h4>Resource monitor: prometheus</h4>
+                            <table style="min-width: 100%;">
+                                <tr>
+                                <table>
+                                    <tr>
+                                         <th>Metric</th> <th>Prometheus Query</th> <th>Name</th> <th>Value</th>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu CPU Usage (cores)</td> <td>sum(rate(container_cpu_usage_seconds_total{name&#x3D;&quot;besu_clique&quot;}[30s])) by (name)</td> <td>besu_clique</td> <td>0.0770</td>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu Memory Usage (MB)</td> <td>sum(container_memory_usage_bytes{name&#x3D;&quot;besu_clique&quot;}) by (name)</td> <td>besu_clique</td> <td>659</td>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu Disk Usage (MB)</td> <td>sum(container_fs_usage_bytes{name&#x3D;&quot;besu_clique&quot;}) by (name)</td> <td>besu_clique</td> <td>88.8</td>
+                                    </tr>
+                                </table>
+                                </tr>
+                            </table>
+                            <div class="charting">
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_getCBSDInfo-high_besu_clique_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_getCBSDInfo-high_besu_clique_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu CPU Usage (cores)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;besu_clique&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;],&quot;data&quot;:[&quot;0.0770&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_getCBSDInfo-high_besu_clique_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_getCBSDInfo-high_besu_clique_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu Memory Usage (MB)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;besu_clique&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;],&quot;data&quot;:[&quot;659&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_getCBSDInfo-high_besu_clique_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_getCBSDInfo-high_besu_clique_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu Disk Usage (MB)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;besu_clique&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;],&quot;data&quot;:[&quot;88.8&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                            </div>
+            </div>
+
+            <div style="border-bottom: 1px solid #d9d9d9; padding-bottom: 10px;" id="getCBSDInfo-stress">
+                <h2>Benchmark round: getCBSDInfo-stress</h2>
+                <p></p>
+                <pre style="overflow: visible;white-space: pre-wrap;max-height:100%;">rateControl:
+  type: linear-rate
+  opts:
+    startingTps: 10
+    finishingTps: 100
+</pre>
+                        <h3>Performance metrics for getCBSDInfo-stress</h3>
+                            <table style="min-width: 100%;">
+                                <tr>
+                                     <th>Name</th> <th>Succ</th> <th>Fail</th> <th>Send Rate (TPS)</th> <th>Max Latency (s)</th> <th>Min Latency (s)</th> <th>Avg Latency (s)</th> <th>Throughput (TPS)</th>
+                                </tr>
+                                <tr>
+                                     <td>getCBSDInfo-stress</td> <td>1000</td> <td>0</td> <td>18.0</td> <td>0.04</td> <td>0.00</td> <td>0.00</td> <td>18.0</td>
+                                </tr>
+                            </table>
+                        <h3>Resource utilization for getCBSDInfo-stress</h3>
+                            <h4>Resource monitor: prometheus</h4>
+                            <table style="min-width: 100%;">
+                                <tr>
+                                <table>
+                                    <tr>
+                                         <th>Metric</th> <th>Prometheus Query</th> <th>Name</th> <th>Value</th>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu CPU Usage (cores)</td> <td>sum(rate(container_cpu_usage_seconds_total{name&#x3D;&quot;besu_clique&quot;}[30s])) by (name)</td> <td>besu_clique</td> <td>0.0529</td>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu Memory Usage (MB)</td> <td>sum(container_memory_usage_bytes{name&#x3D;&quot;besu_clique&quot;}) by (name)</td> <td>besu_clique</td> <td>661</td>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu Disk Usage (MB)</td> <td>sum(container_fs_usage_bytes{name&#x3D;&quot;besu_clique&quot;}) by (name)</td> <td>besu_clique</td> <td>88.8</td>
+                                    </tr>
+                                </table>
+                                </tr>
+                            </table>
+                            <div class="charting">
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_getCBSDInfo-stress_besu_clique_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_getCBSDInfo-stress_besu_clique_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu CPU Usage (cores)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;besu_clique&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;],&quot;data&quot;:[&quot;0.0529&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_getCBSDInfo-stress_besu_clique_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_getCBSDInfo-stress_besu_clique_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu Memory Usage (MB)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;besu_clique&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;],&quot;data&quot;:[&quot;661&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_getCBSDInfo-stress_besu_clique_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_getCBSDInfo-stress_besu_clique_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu Disk Usage (MB)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;besu_clique&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;],&quot;data&quot;:[&quot;88.8&quot;]}]}")</script>
                                     </canvas>
                                 </div>
                             </div>
@@ -401,7 +1125,23 @@ workers:
   type: local
   number: 1
 rounds:
-  - label: registerCBSD
+  - label: registerCBSD-low
+    txNumber: 100
+    rateControl:
+      type: fixed-rate
+      opts:
+        tps: 10
+    workload:
+      module: benchmarks&#x2F;scenario&#x2F;CBSDRegistry&#x2F;register.js
+  - label: registerCBSD-mid
+    txNumber: 500
+    rateControl:
+      type: fixed-rate
+      opts:
+        tps: 25
+    workload:
+      module: benchmarks&#x2F;scenario&#x2F;CBSDRegistry&#x2F;register.js
+  - label: registerCBSD-high
     txNumber: 1000
     rateControl:
       type: fixed-rate
@@ -409,7 +1149,32 @@ rounds:
         tps: 50
     workload:
       module: benchmarks&#x2F;scenario&#x2F;CBSDRegistry&#x2F;register.js
-  - label: updateGrantAmount
+  - label: registerCBSD-stress
+    txNumber: 1000
+    rateControl:
+      type: linear-rate
+      opts:
+        startingTps: 10
+        finishingTps: 100
+    workload:
+      module: benchmarks&#x2F;scenario&#x2F;CBSDRegistry&#x2F;register.js
+  - label: updateGrantAmount-low
+    txNumber: 100
+    rateControl:
+      type: fixed-rate
+      opts:
+        tps: 10
+    workload:
+      module: benchmarks&#x2F;scenario&#x2F;CBSDRegistry&#x2F;updateGrant.js
+  - label: updateGrantAmount-mid
+    txNumber: 500
+    rateControl:
+      type: fixed-rate
+      opts:
+        tps: 25
+    workload:
+      module: benchmarks&#x2F;scenario&#x2F;CBSDRegistry&#x2F;updateGrant.js
+  - label: updateGrantAmount-high
     txNumber: 1000
     rateControl:
       type: fixed-rate
@@ -417,7 +1182,32 @@ rounds:
         tps: 50
     workload:
       module: benchmarks&#x2F;scenario&#x2F;CBSDRegistry&#x2F;updateGrant.js
-  - label: updateStatus
+  - label: updateGrantAmount-stress
+    txNumber: 1000
+    rateControl:
+      type: linear-rate
+      opts:
+        startingTps: 10
+        finishingTps: 100
+    workload:
+      module: benchmarks&#x2F;scenario&#x2F;CBSDRegistry&#x2F;updateGrant.js
+  - label: updateStatus-low
+    txNumber: 100
+    rateControl:
+      type: fixed-rate
+      opts:
+        tps: 10
+    workload:
+      module: benchmarks&#x2F;scenario&#x2F;CBSDRegistry&#x2F;updateStatus.js
+  - label: updateStatus-mid
+    txNumber: 500
+    rateControl:
+      type: fixed-rate
+      opts:
+        tps: 25
+    workload:
+      module: benchmarks&#x2F;scenario&#x2F;CBSDRegistry&#x2F;updateStatus.js
+  - label: updateStatus-high
     txNumber: 1000
     rateControl:
       type: fixed-rate
@@ -425,12 +1215,46 @@ rounds:
         tps: 50
     workload:
       module: benchmarks&#x2F;scenario&#x2F;CBSDRegistry&#x2F;updateStatus.js
-  - label: getCBSDInfo
+  - label: updateStatus-stress
+    txNumber: 1000
+    rateControl:
+      type: linear-rate
+      opts:
+        startingTps: 10
+        finishingTps: 100
+    workload:
+      module: benchmarks&#x2F;scenario&#x2F;CBSDRegistry&#x2F;updateStatus.js
+  - label: getCBSDInfo-low
+    txNumber: 100
+    rateControl:
+      type: fixed-rate
+      opts:
+        tps: 10
+    workload:
+      module: benchmarks&#x2F;scenario&#x2F;CBSDRegistry&#x2F;query.js
+  - label: getCBSDInfo-mid
+    txNumber: 500
+    rateControl:
+      type: fixed-rate
+      opts:
+        tps: 25
+    workload:
+      module: benchmarks&#x2F;scenario&#x2F;CBSDRegistry&#x2F;query.js
+  - label: getCBSDInfo-high
     txNumber: 1000
     rateControl:
       type: fixed-rate
       opts:
         tps: 50
+    workload:
+      module: benchmarks&#x2F;scenario&#x2F;CBSDRegistry&#x2F;query.js
+  - label: getCBSDInfo-stress
+    txNumber: 1000
+    rateControl:
+      type: linear-rate
+      opts:
+        startingTps: 10
+        finishingTps: 100
     workload:
       module: benchmarks&#x2F;scenario&#x2F;CBSDRegistry&#x2F;query.js
 </pre>

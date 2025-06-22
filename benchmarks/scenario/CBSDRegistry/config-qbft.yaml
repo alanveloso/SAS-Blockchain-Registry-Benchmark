@@ -1,0 +1,176 @@
+simpleArgs: &simple-args
+  numberOfAccounts: &number-of-accounts 50
+  tps: &tps 50
+  workers: &workers 1
+
+test:
+  name: CBSDRegistry-benchmark
+  description: Benchmark for CBSDRegistry smart contract
+  workers:
+    type: local
+    number: *workers
+  rounds:
+    - label: registerCBSD-low
+      txNumber: 100
+      rateControl:
+        type: fixed-rate
+        opts:
+          tps: 10
+      workload:
+        module: benchmarks/scenario/CBSDRegistry/register.js
+    - label: registerCBSD-mid
+      txNumber: 500
+      rateControl:
+        type: fixed-rate
+        opts:
+          tps: 25
+      workload:
+        module: benchmarks/scenario/CBSDRegistry/register.js
+    - label: registerCBSD-high
+      txNumber: 1000
+      rateControl:
+        type: fixed-rate
+        opts:
+          tps: 50
+      workload:
+        module: benchmarks/scenario/CBSDRegistry/register.js
+    - label: registerCBSD-stress
+      txNumber: 1000
+      rateControl:
+        type: linear-rate
+        opts:
+          startingTps: 10
+          finishingTps: 100
+      workload:
+        module: benchmarks/scenario/CBSDRegistry/register.js
+
+    - label: updateGrantAmount-low
+      txNumber: 100
+      rateControl:
+        type: fixed-rate
+        opts:
+          tps: 10
+      workload:
+        module: benchmarks/scenario/CBSDRegistry/updateGrant.js
+    - label: updateGrantAmount-mid
+      txNumber: 500
+      rateControl:
+        type: fixed-rate
+        opts:
+          tps: 25
+      workload:
+        module: benchmarks/scenario/CBSDRegistry/updateGrant.js
+    - label: updateGrantAmount-high
+      txNumber: 1000
+      rateControl:
+        type: fixed-rate
+        opts:
+          tps: 50
+      workload:
+        module: benchmarks/scenario/CBSDRegistry/updateGrant.js
+    - label: updateGrantAmount-stress
+      txNumber: 1000
+      rateControl:
+        type: linear-rate
+        opts:
+          startingTps: 10
+          finishingTps: 100
+      workload:
+        module: benchmarks/scenario/CBSDRegistry/updateGrant.js
+
+    - label: updateStatus-low
+      txNumber: 100
+      rateControl:
+        type: fixed-rate
+        opts:
+          tps: 10
+      workload:
+        module: benchmarks/scenario/CBSDRegistry/updateStatus.js
+    - label: updateStatus-mid
+      txNumber: 500
+      rateControl:
+        type: fixed-rate
+        opts:
+          tps: 25
+      workload:
+        module: benchmarks/scenario/CBSDRegistry/updateStatus.js
+    - label: updateStatus-high
+      txNumber: 1000
+      rateControl:
+        type: fixed-rate
+        opts:
+          tps: 50
+      workload:
+        module: benchmarks/scenario/CBSDRegistry/updateStatus.js
+    - label: updateStatus-stress
+      txNumber: 1000
+      rateControl:
+        type: linear-rate
+        opts:
+          startingTps: 10
+          finishingTps: 100
+      workload:
+        module: benchmarks/scenario/CBSDRegistry/updateStatus.js
+
+    - label: getCBSDInfo-low
+      txNumber: 100
+      rateControl:
+        type: fixed-rate
+        opts:
+          tps: 10
+      workload:
+        module: benchmarks/scenario/CBSDRegistry/query.js
+    - label: getCBSDInfo-mid
+      txNumber: 500
+      rateControl:
+        type: fixed-rate
+        opts:
+          tps: 25
+      workload:
+        module: benchmarks/scenario/CBSDRegistry/query.js
+    - label: getCBSDInfo-high
+      txNumber: 1000
+      rateControl:
+        type: fixed-rate
+        opts:
+          tps: 50
+      workload:
+        module: benchmarks/scenario/CBSDRegistry/query.js
+    - label: getCBSDInfo-stress
+      txNumber: 1000
+      rateControl:
+        type: linear-rate
+        opts:
+          startingTps: 10
+          finishingTps: 100
+      workload:
+        module: benchmarks/scenario/CBSDRegistry/query.js
+
+monitors:
+  resource:
+    - module: prometheus
+      options:
+        url: "http://localhost:9090"
+        metrics:
+          include: ["4node-qbft-validator1-1", "4node-qbft-validator2-1", "4node-qbft-validator3-1", "4node-qbft-validator4-1"]
+          queries:
+            - name: Besu CPU Usage (cores)
+              query: sum(rate(container_cpu_usage_seconds_total{name=~"4node-qbft-validator[1-4]-1"}[30s])) by (name)
+              step: 10
+              label: name
+              statistic: avg
+            - name: Besu Memory Usage (MB)
+              query: sum(container_memory_usage_bytes{name=~"4node-qbft-validator[1-4]-1"}) by (name)
+              step: 10
+              label: name
+              statistic: max
+              multiplier: 0.000001
+            - name: Besu Disk Usage (MB)
+              query: sum(container_fs_usage_bytes{name=~"4node-qbft-validator[1-4]-1"}) by (name)
+              step: 10
+              label: name
+              statistic: max
+              multiplier: 0.000001
+        charting:
+          bar:
+            metrics: [all]
