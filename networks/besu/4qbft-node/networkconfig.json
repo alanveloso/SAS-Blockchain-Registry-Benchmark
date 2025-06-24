@@ -2,8 +2,8 @@
     "caliper": {
         "blockchain": "ethereum",
         "command" : {
-            "start": "docker compose -f ./networks/besu/4node-qbft/docker-compose.yml up -d && sleep 60",
-            "end" : "docker compose -f ./networks/besu/4node-qbft/docker-compose.yml down"
+            "start": "docker compose -f ./networks/besu/4qbft-node/docker-compose.yml up -d && sleep 60",
+            "end" : "docker compose -f ./networks/besu/4qbft-node/docker-compose.yml down"
           }
     },
     "ethereum": {
@@ -17,7 +17,6 @@
           "CBSDRegistry": {
             "address": "0x588108d3eAB34e94484d7cdA5a1D31804cA96FE7",
             "path": "src/ethereum/CBSDRegistry/CBSDRegistry.json",
-            "estimateGas": true,
             "gas": {
               "registerCBSD": 200000,
               "getCBSDInfo": 100000,

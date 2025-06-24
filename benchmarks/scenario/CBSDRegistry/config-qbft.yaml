@@ -10,141 +10,138 @@ test:
     type: local
     number: *workers
   rounds:
-    - label: registerCBSD-low
+    # REGISTER CBSD
+    - label: registerCBSD-verylow
       txNumber: 100
-      rateControl:
-        type: fixed-rate
-        opts:
-          tps: 10
-      workload:
-        module: benchmarks/scenario/CBSDRegistry/register.js
-    - label: registerCBSD-mid
+      rateControl: { type: fixed-rate, opts: { tps: 10 } }
+      workload: { module: benchmarks/scenario/CBSDRegistry/register.js }
+
+    - label: pause-after-registerCBSD-verylow
+      txNumber: 1
+      rateControl: { type: fixed-rate, opts: { tps: 1 } }
+      workload: { module: benchmarks/scenario/CBSDRegistry/pause.js }
+
+    - label: registerCBSD-low
+      txNumber: 250
+      rateControl: { type: fixed-rate, opts: { tps: 15 } }
+      workload: { module: benchmarks/scenario/CBSDRegistry/register.js }
+
+    - label: pause-after-registerCBSD-low
+      txNumber: 1
+      rateControl: { type: fixed-rate, opts: { tps: 1 } }
+      workload: { module: benchmarks/scenario/CBSDRegistry/pause.js }
+
+    - label: registerCBSD-lowmid
       txNumber: 500
-      rateControl:
-        type: fixed-rate
-        opts:
-          tps: 25
-      workload:
-        module: benchmarks/scenario/CBSDRegistry/register.js
+      rateControl: { type: fixed-rate, opts: { tps: 25 } }
+      workload: { module: benchmarks/scenario/CBSDRegistry/register.js }
+
+    - label: pause-after-registerCBSD-lowmid
+      txNumber: 1
+      rateControl: { type: fixed-rate, opts: { tps: 1 } }
+      workload: { module: benchmarks/scenario/CBSDRegistry/pause.js }
+
+    - label: registerCBSD-mid
+      txNumber: 700
+      rateControl: { type: fixed-rate, opts: { tps: 35 } }
+      workload: { module: benchmarks/scenario/CBSDRegistry/register.js }
+
+    - label: pause-after-registerCBSD-mid
+      txNumber: 1
+      rateControl: { type: fixed-rate, opts: { tps: 1 } }
+      workload: { module: benchmarks/scenario/CBSDRegistry/pause.js }
+
+    - label: registerCBSD-midhigh
+      txNumber: 900
+      rateControl: { type: fixed-rate, opts: { tps: 45 } }
+      workload: { module: benchmarks/scenario/CBSDRegistry/register.js }
+
+    - label: pause-after-registerCBSD-midhigh
+      txNumber: 1
+      rateControl: { type: fixed-rate, opts: { tps: 1 } }
+      workload: { module: benchmarks/scenario/CBSDRegistry/pause.js }
+
     - label: registerCBSD-high
       txNumber: 1000
-      rateControl:
-        type: fixed-rate
-        opts:
-          tps: 50
-      workload:
-        module: benchmarks/scenario/CBSDRegistry/register.js
-    - label: registerCBSD-stress
+      rateControl: { type: fixed-rate, opts: { tps: 50 } }
+      workload: { module: benchmarks/scenario/CBSDRegistry/register.js }
+
+    - label: pause-after-registerCBSD-high
+      txNumber: 1
+      rateControl: { type: fixed-rate, opts: { tps: 1 } }
+      workload: { module: benchmarks/scenario/CBSDRegistry/pause.js }
+
+    # UPDATE GRANT
+
+    - label: registerCBSD-setup
       txNumber: 1000
-      rateControl:
-        type: linear-rate
-        opts:
-          startingTps: 10
-          finishingTps: 100
-      workload:
-        module: benchmarks/scenario/CBSDRegistry/register.js
+      rateControl: { type: fixed-rate, opts: { tps: 10 } }
+      workload: { module: benchmarks/scenario/CBSDRegistry/register-confirmed.js }
+
+    - label: pause-after-setup
+      txNumber: 1
+      rateControl: { type: fixed-rate, opts: { tps: 1 } }
+      workload: { module: benchmarks/scenario/CBSDRegistry/pause.js }
+
+    - label: updateGrantAmount-verylow
+      txNumber: 100
+      rateControl: { type: fixed-rate, opts: { tps: 10 } }
+      workload: { module: benchmarks/scenario/CBSDRegistry/updateGrant.js }
+
+    - label: pause-after-updateGrantAmount-verylow
+      txNumber: 1
+      rateControl: { type: fixed-rate, opts: { tps: 1 } }
+      workload: { module: benchmarks/scenario/CBSDRegistry/pause.js }
 
     - label: updateGrantAmount-low
-      txNumber: 100
-      rateControl:
-        type: fixed-rate
-        opts:
-          tps: 10
-      workload:
-        module: benchmarks/scenario/CBSDRegistry/updateGrant.js
-    - label: updateGrantAmount-mid
+      txNumber: 250
+      rateControl: { type: fixed-rate, opts: { tps: 15 } }
+      workload: { module: benchmarks/scenario/CBSDRegistry/updateGrant.js }
+
+    - label: pause-after-updateGrantAmount-low
+      txNumber: 1
+      rateControl: { type: fixed-rate, opts: { tps: 1 } }
+      workload: { module: benchmarks/scenario/CBSDRegistry/pause.js }
+
+    - label: updateGrantAmount-lowmid
       txNumber: 500
-      rateControl:
-        type: fixed-rate
-        opts:
-          tps: 25
-      workload:
-        module: benchmarks/scenario/CBSDRegistry/updateGrant.js
+      rateControl: { type: fixed-rate, opts: { tps: 25 } }
+      workload: { module: benchmarks/scenario/CBSDRegistry/updateGrant.js }
+
+    - label: pause-after-updateGrantAmount-lowmid
+      txNumber: 1
+      rateControl: { type: fixed-rate, opts: { tps: 1 } }
+      workload: { module: benchmarks/scenario/CBSDRegistry/pause.js }
+
+    - label: updateGrantAmount-mid
+      txNumber: 700
+      rateControl: { type: fixed-rate, opts: { tps: 35 } }
+      workload: { module: benchmarks/scenario/CBSDRegistry/updateGrant.js }
+
+    - label: pause-after-updateGrantAmount-mid
+      txNumber: 1
+      rateControl: { type: fixed-rate, opts: { tps: 1 } }
+      workload: { module: benchmarks/scenario/CBSDRegistry/pause.js }
+
+    - label: updateGrantAmount-midhigh
+      txNumber: 900
+      rateControl: { type: fixed-rate, opts: { tps: 45 } }
+      workload: { module: benchmarks/scenario/CBSDRegistry/updateGrant.js }
+
+    - label: pause-after-updateGrantAmount-midhigh
+      txNumber: 1
+      rateControl: { type: fixed-rate, opts: { tps: 1 } }
+      workload: { module: benchmarks/scenario/CBSDRegistry/pause.js }
+
     - label: updateGrantAmount-high
       txNumber: 1000
-      rateControl:
-        type: fixed-rate
-        opts:
-          tps: 50
-      workload:
-        module: benchmarks/scenario/CBSDRegistry/updateGrant.js
-    - label: updateGrantAmount-stress
-      txNumber: 1000
-      rateControl:
-        type: linear-rate
-        opts:
-          startingTps: 10
-          finishingTps: 100
-      workload:
-        module: benchmarks/scenario/CBSDRegistry/updateGrant.js
+      rateControl: { type: fixed-rate, opts: { tps: 50 } }
+      workload: { module: benchmarks/scenario/CBSDRegistry/updateGrant.js }
 
-    - label: updateStatus-low
-      txNumber: 100
-      rateControl:
-        type: fixed-rate
-        opts:
-          tps: 10
-      workload:
-        module: benchmarks/scenario/CBSDRegistry/updateStatus.js
-    - label: updateStatus-mid
-      txNumber: 500
-      rateControl:
-        type: fixed-rate
-        opts:
-          tps: 25
-      workload:
-        module: benchmarks/scenario/CBSDRegistry/updateStatus.js
-    - label: updateStatus-high
-      txNumber: 1000
-      rateControl:
-        type: fixed-rate
-        opts:
-          tps: 50
-      workload:
-        module: benchmarks/scenario/CBSDRegistry/updateStatus.js
-    - label: updateStatus-stress
-      txNumber: 1000
-      rateControl:
-        type: linear-rate
-        opts:
-          startingTps: 10
-          finishingTps: 100
-      workload:
-        module: benchmarks/scenario/CBSDRegistry/updateStatus.js
-
-    - label: getCBSDInfo-low
-      txNumber: 100
-      rateControl:
-        type: fixed-rate
-        opts:
-          tps: 10
-      workload:
-        module: benchmarks/scenario/CBSDRegistry/query.js
-    - label: getCBSDInfo-mid
-      txNumber: 500
-      rateControl:
-        type: fixed-rate
-        opts:
-          tps: 25
-      workload:
-        module: benchmarks/scenario/CBSDRegistry/query.js
-    - label: getCBSDInfo-high
-      txNumber: 1000
-      rateControl:
-        type: fixed-rate
-        opts:
-          tps: 50
-      workload:
-        module: benchmarks/scenario/CBSDRegistry/query.js
-    - label: getCBSDInfo-stress
-      txNumber: 1000
-      rateControl:
-        type: linear-rate
-        opts:
-          startingTps: 10
-          finishingTps: 100
-      workload:
-        module: benchmarks/scenario/CBSDRegistry/query.js
+    - label: pause-after-updateGrantAmount-high
+      txNumber: 1
+      rateControl: { type: fixed-rate, opts: { tps: 1 } }
+      workload: { module: benchmarks/scenario/CBSDRegistry/pause.js }
 
 monitors:
   resource:
@@ -152,21 +149,21 @@ monitors:
       options:
         url: "http://localhost:9090"
         metrics:
-          include: ["4node-qbft-validator1-1", "4node-qbft-validator2-1", "4node-qbft-validator3-1", "4node-qbft-validator4-1"]
+          include: ["4qbft-node-validator1-1", "4qbft-node-validator2-1", "4qbft-node-validator3-1", "4qbft-node-validator4-1"]
           queries:
             - name: Besu CPU Usage (cores)
-              query: sum(rate(container_cpu_usage_seconds_total{name=~"4node-qbft-validator[1-4]-1"}[30s])) by (name)
+              query: sum(rate(container_cpu_usage_seconds_total{name=~"4qbft-node-validator[1-4]-1"}[30s])) by (name)
               step: 10
               label: name
               statistic: avg
             - name: Besu Memory Usage (MB)
-              query: sum(container_memory_usage_bytes{name=~"4node-qbft-validator[1-4]-1"}) by (name)
+              query: sum(container_memory_usage_bytes{name=~"4qbft-node-validator[1-4]-1"}) by (name)
               step: 10
               label: name
               statistic: max
               multiplier: 0.000001
             - name: Besu Disk Usage (MB)
-              query: sum(container_fs_usage_bytes{name=~"4node-qbft-validator[1-4]-1"}) by (name)
+              query: sum(container_fs_usage_bytes{name=~"4qbft-node-validator[1-4]-1"}) by (name)
               step: 10
               label: name
               statistic: max

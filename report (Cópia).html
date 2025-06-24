@@ -1,0 +1,2174 @@
+<!doctype html>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+<script>
+    function plotChart(divId, chartData) {
+        // Convert from stringified html, to valid JSON
+        const chartDetails = JSON.parse(chartData.replace(/&quot;/g,'"'));
+        new Chart(document.getElementById(divId), {
+            type: chartDetails.type,
+            data: {
+                labels: chartDetails.labels,
+                datasets: chartDetails.datasets
+            },
+            options: {
+                legend: { display: chartDetails.legend },
+                title: {
+                    display: true,
+                    text: chartDetails.title
+                }
+            }
+        });
+    }
+</script>
+<html>
+<head>
+    <title>Hyperledger Caliper Report</title>
+    <meta charset="UTF-8"/>
+    <style type="text/css">
+        .left-column {
+            position: fixed;
+            width:20%;
+        }
+        .left-column ul {
+            display: block;
+            padding: 0;
+            list-style: none;
+            border-bottom: 1px solid #d9d9d9;
+            font-size: 14px;
+        }
+        .left-column h2{
+            font-size: 24px;
+            font-weight: 400;
+            margin-block-end: 0.5em;
+        }
+        .left-column h3{
+            font-size: 18px;
+            font-weight: 400;
+            margin-block-end: 0.5em;
+        }
+        .left-column li{
+            margin-left: 10px;
+            margin-bottom: 5px;
+            color: #5e6b73;
+        }
+        .right-column {
+            margin-left: 22%;
+            width:60%;
+        }
+        .right-column table {
+            font-size:11px;
+            color:#333333;
+            border-width: 1px;
+            border-color: #666666;
+            border-collapse: collapse;
+            margin-bottom: 10px;
+        }
+        .right-column h2{
+            font-weight: 400;
+        }
+        .right-column h3{
+            font-weight: 400;
+        }
+        .right-column h4 {
+            font-weight: 400;
+            margin-block-end: 0;
+        }
+        .right-column th {
+            border-width: 1px;
+            font-size: small;
+            padding: 8px;
+            border-style: solid;
+            border-color: #666666;
+            background-color: #f2f2f2;
+        }
+        .right-column td {
+            border-width: 1px;
+            font-size: small;
+            padding: 8px;
+            border-style: solid;
+            border-color: #666666;
+            background-color: #ffffff;
+            font-weight: 400;
+        }
+        .tag {
+            margin-bottom: 10px;
+            padding: 5px 10px;
+        }
+        pre {
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            background-color: #f2f2f2;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            -khtml-border-radius: 5px;
+            overflow:auto;
+            max-height:300px;
+            font-size:12px;
+        }
+        .charting {
+            display:flex;
+            flex-direction:row;
+            flex-wrap: wrap;
+            page-break-inside: auto;
+        }
+        .chart {
+            display:flex;
+            flex:1;
+            max-width: 50%;
+        }
+    </style>
+</head>
+<body style="font-family: IBM Plex Sans; font-weight: 200;">
+    <main>
+        <div class="left-column">
+            <img src="https://hyperledger.github.io/caliper/assets/img/hyperledger_caliper_logo_color.png" style="width:95%;" alt="">
+            <ul>
+                <h3>&nbspBasic information</h3>
+                <li>DLT: &nbsp<span style="font-weight: 500;">ethereum</span></li>
+                <li>Name: &nbsp<span style="font-weight: 500;">CBSDRegistry-benchmark</span></li>
+                <li>Description: &nbsp<span style="font-weight: 500;">Benchmark for CBSDRegistry smart contract</span></li>
+                <li>Benchmark Rounds: &nbsp<span style="font-weight: 500;">21</span></li>
+                <li><a href="#benchmarkInfo">Details</a></li>
+            </ul>
+            <ul>
+                <h3>&nbspBenchmark results</h3>
+                <li><a href="#benchmarksummary">Summary</a></li>
+                    <li><a href="#registerCBSD-low">registerCBSD-low</a></li>
+                    <li><a href="#registerCBSD-lowmid">registerCBSD-lowmid</a></li>
+                    <li><a href="#registerCBSD-midlow">registerCBSD-midlow</a></li>
+                    <li><a href="#registerCBSD-mid">registerCBSD-mid</a></li>
+                    <li><a href="#registerCBSD-midmid">registerCBSD-midmid</a></li>
+                    <li><a href="#registerCBSD-midhigh">registerCBSD-midhigh</a></li>
+                    <li><a href="#registerCBSD-prehigh">registerCBSD-prehigh</a></li>
+                    <li><a href="#registerCBSD-high">registerCBSD-high</a></li>
+                    <li><a href="#registerCBSD-stress">registerCBSD-stress</a></li>
+                    <li><a href="#updateGrantAmount-low">updateGrantAmount-low</a></li>
+                    <li><a href="#updateGrantAmount-mid">updateGrantAmount-mid</a></li>
+                    <li><a href="#updateGrantAmount-high">updateGrantAmount-high</a></li>
+                    <li><a href="#updateGrantAmount-stress">updateGrantAmount-stress</a></li>
+                    <li><a href="#updateStatus-low">updateStatus-low</a></li>
+                    <li><a href="#updateStatus-mid">updateStatus-mid</a></li>
+                    <li><a href="#updateStatus-high">updateStatus-high</a></li>
+                    <li><a href="#updateStatus-stress">updateStatus-stress</a></li>
+                    <li><a href="#getCBSDInfo-low">getCBSDInfo-low</a></li>
+                    <li><a href="#getCBSDInfo-mid">getCBSDInfo-mid</a></li>
+                    <li><a href="#getCBSDInfo-high">getCBSDInfo-high</a></li>
+                    <li><a href="#getCBSDInfo-stress">getCBSDInfo-stress</a></li>
+            </ul>
+            <ul>
+                <h3>&nbspSystem under test</h3>
+                <li><a href="#sutdetails">Details</a></li>
+            </ul>
+        </div>
+
+        <div class="right-column">
+            <h1 style="padding-top: 3em; font-weight: 500;">Caliper report</h1>
+            <div style="border-bottom: 1px solid #d9d9d9; margin-bottom: 10px;" id="benchmarksummary">
+                <table style="min-width: 100%;">
+                    <h3>Summary of performance metrics</h3>
+                    <tr>
+                         <th>Name</th> <th>Succ</th> <th>Fail</th> <th>Send Rate (TPS)</th> <th>Max Latency (s)</th> <th>Min Latency (s)</th> <th>Avg Latency (s)</th> <th>Throughput (TPS)</th>
+                    </tr>
+
+                    <tr>
+                         <td>registerCBSD-low</td> <td>100</td> <td>0</td> <td>10.1</td> <td>6.15</td> <td>1.22</td> <td>3.60</td> <td>7.3</td>
+                    </tr>
+                    <tr>
+                         <td>registerCBSD-lowmid</td> <td>250</td> <td>0</td> <td>15.1</td> <td>6.96</td> <td>1.89</td> <td>4.11</td> <td>13.0</td>
+                    </tr>
+                    <tr>
+                         <td>registerCBSD-midlow</td> <td>350</td> <td>0</td> <td>18.1</td> <td>6.62</td> <td>0.90</td> <td>3.65</td> <td>15.1</td>
+                    </tr>
+                    <tr>
+                         <td>registerCBSD-mid</td> <td>500</td> <td>0</td> <td>25.0</td> <td>6.07</td> <td>0.77</td> <td>3.58</td> <td>21.1</td>
+                    </tr>
+                    <tr>
+                         <td>registerCBSD-midmid</td> <td>600</td> <td>0</td> <td>30.1</td> <td>6.43</td> <td>0.94</td> <td>3.51</td> <td>25.1</td>
+                    </tr>
+                    <tr>
+                         <td>registerCBSD-midhigh</td> <td>700</td> <td>0</td> <td>35.1</td> <td>5.92</td> <td>0.85</td> <td>3.25</td> <td>29.6</td>
+                    </tr>
+                    <tr>
+                         <td>registerCBSD-prehigh</td> <td>349</td> <td>501</td> <td>42.1</td> <td>5.86</td> <td>1.22</td> <td>3.49</td> <td>3.2</td>
+                    </tr>
+                    <tr>
+                         <td>registerCBSD-high</td> <td>178</td> <td>822</td> <td>50.1</td> <td>4.81</td> <td>1.26</td> <td>2.92</td> <td>3.9</td>
+                    </tr>
+                    <tr>
+                         <td>registerCBSD-stress</td> <td>836</td> <td>164</td> <td>18.0</td> <td>5.47</td> <td>0.13</td> <td>2.97</td> <td>3.9</td>
+                    </tr>
+                    <tr>
+                         <td>updateGrantAmount-low</td> <td>0</td> <td>100</td> <td>10.1</td> <td>-</td> <td>-</td> <td>-</td> <td>7.3</td>
+                    </tr>
+                    <tr>
+                         <td>updateGrantAmount-mid</td> <td>0</td> <td>500</td> <td>25.1</td> <td>-</td> <td>-</td> <td>-</td> <td>20.8</td>
+                    </tr>
+                    <tr>
+                         <td>updateGrantAmount-high</td> <td>0</td> <td>1000</td> <td>50.1</td> <td>-</td> <td>-</td> <td>-</td> <td>3.8</td>
+                    </tr>
+                    <tr>
+                         <td>updateGrantAmount-stress</td> <td>0</td> <td>1000</td> <td>17.9</td> <td>-</td> <td>-</td> <td>-</td> <td>3.8</td>
+                    </tr>
+                    <tr>
+                         <td>updateStatus-low</td> <td>0</td> <td>100</td> <td>10.1</td> <td>-</td> <td>-</td> <td>-</td> <td>7.2</td>
+                    </tr>
+                    <tr>
+                         <td>updateStatus-mid</td> <td>0</td> <td>500</td> <td>25.1</td> <td>-</td> <td>-</td> <td>-</td> <td>20.9</td>
+                    </tr>
+                    <tr>
+                         <td>updateStatus-high</td> <td>0</td> <td>1000</td> <td>50.1</td> <td>-</td> <td>-</td> <td>-</td> <td>3.9</td>
+                    </tr>
+                    <tr>
+                         <td>updateStatus-stress</td> <td>0</td> <td>1000</td> <td>18.0</td> <td>-</td> <td>-</td> <td>-</td> <td>3.9</td>
+                    </tr>
+                    <tr>
+                         <td>getCBSDInfo-low</td> <td>100</td> <td>0</td> <td>10.1</td> <td>0.05</td> <td>0.00</td> <td>0.00</td> <td>10.1</td>
+                    </tr>
+                    <tr>
+                         <td>getCBSDInfo-mid</td> <td>500</td> <td>0</td> <td>25.1</td> <td>0.01</td> <td>0.00</td> <td>0.00</td> <td>25.0</td>
+                    </tr>
+                    <tr>
+                         <td>getCBSDInfo-high</td> <td>1000</td> <td>0</td> <td>50.1</td> <td>0.02</td> <td>0.00</td> <td>0.00</td> <td>50.0</td>
+                    </tr>
+                    <tr>
+                         <td>getCBSDInfo-stress</td> <td>1000</td> <td>0</td> <td>18.1</td> <td>0.02</td> <td>0.00</td> <td>0.00</td> <td>18.1</td>
+                    </tr>
+                </table>
+            </div>
+            <div style="border-bottom: 1px solid #d9d9d9; padding-bottom: 10px;" id="registerCBSD-low">
+                <h2>Benchmark round: registerCBSD-low</h2>
+                <p></p>
+                <pre style="overflow: visible;white-space: pre-wrap;max-height:100%;">rateControl:
+  type: fixed-rate
+  opts:
+    tps: 10
+</pre>
+                        <h3>Performance metrics for registerCBSD-low</h3>
+                            <table style="min-width: 100%;">
+                                <tr>
+                                     <th>Name</th> <th>Succ</th> <th>Fail</th> <th>Send Rate (TPS)</th> <th>Max Latency (s)</th> <th>Min Latency (s)</th> <th>Avg Latency (s)</th> <th>Throughput (TPS)</th>
+                                </tr>
+                                <tr>
+                                     <td>registerCBSD-low</td> <td>100</td> <td>0</td> <td>10.1</td> <td>6.15</td> <td>1.22</td> <td>3.60</td> <td>7.3</td>
+                                </tr>
+                            </table>
+                        <h3>Resource utilization for registerCBSD-low</h3>
+                            <h4>Resource monitor: prometheus</h4>
+                            <table style="min-width: 100%;">
+                                <tr>
+                                <table>
+                                    <tr>
+                                         <th>Metric</th> <th>Prometheus Query</th> <th>Name</th> <th>Value</th>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu CPU Usage (cores)</td> <td>sum(rate(container_cpu_usage_seconds_total{name&#x3D;~&quot;4node-qbft-validator[1-4]-1&quot;}[30s])) by (name)</td> <td>4node-qbft-validator1-1</td> <td>0.134</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator2-1</td> <td>0.165</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator3-1</td> <td>0.174</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator4-1</td> <td>0.164</td>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu Memory Usage (MB)</td> <td>sum(container_memory_usage_bytes{name&#x3D;~&quot;4node-qbft-validator[1-4]-1&quot;}) by (name)</td> <td>4node-qbft-validator1-1</td> <td>431</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator2-1</td> <td>476</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator3-1</td> <td>445</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator4-1</td> <td>464</td>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu Disk Usage (MB)</td> <td>sum(container_fs_usage_bytes{name&#x3D;~&quot;4node-qbft-validator[1-4]-1&quot;}) by (name)</td> <td>4node-qbft-validator1-1</td> <td>106</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator2-1</td> <td>106</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator3-1</td> <td>106</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator4-1</td> <td>106</td>
+                                    </tr>
+                                </table>
+                                </tr>
+                            </table>
+                            <div class="charting">
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_registerCBSD-low_4node-qbft-validator1-1_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_registerCBSD-low_4node-qbft-validator1-1_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu CPU Usage (cores)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;4node-qbft-validator1-1&quot;,&quot;4node-qbft-validator2-1&quot;,&quot;4node-qbft-validator3-1&quot;,&quot;4node-qbft-validator4-1&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;,&quot;rgb(179,50,0,0.6)&quot;,&quot;rgb(255,209,191,0.6)&quot;,&quot;rgb(255,163,128,0.6)&quot;],&quot;data&quot;:[&quot;0.134&quot;,&quot;0.165&quot;,&quot;0.174&quot;,&quot;0.164&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_registerCBSD-low_4node-qbft-validator1-1_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_registerCBSD-low_4node-qbft-validator1-1_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu Memory Usage (MB)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;4node-qbft-validator1-1&quot;,&quot;4node-qbft-validator2-1&quot;,&quot;4node-qbft-validator3-1&quot;,&quot;4node-qbft-validator4-1&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;,&quot;rgb(179,50,0,0.6)&quot;,&quot;rgb(255,209,191,0.6)&quot;,&quot;rgb(255,163,128,0.6)&quot;],&quot;data&quot;:[&quot;431&quot;,&quot;476&quot;,&quot;445&quot;,&quot;464&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_registerCBSD-low_4node-qbft-validator1-1_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_registerCBSD-low_4node-qbft-validator1-1_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu Disk Usage (MB)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;4node-qbft-validator1-1&quot;,&quot;4node-qbft-validator2-1&quot;,&quot;4node-qbft-validator3-1&quot;,&quot;4node-qbft-validator4-1&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;,&quot;rgb(179,50,0,0.6)&quot;,&quot;rgb(255,209,191,0.6)&quot;,&quot;rgb(255,163,128,0.6)&quot;],&quot;data&quot;:[&quot;106&quot;,&quot;106&quot;,&quot;106&quot;,&quot;106&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                            </div>
+            </div>
+
+            <div style="border-bottom: 1px solid #d9d9d9; padding-bottom: 10px;" id="registerCBSD-lowmid">
+                <h2>Benchmark round: registerCBSD-lowmid</h2>
+                <p></p>
+                <pre style="overflow: visible;white-space: pre-wrap;max-height:100%;">rateControl:
+  type: fixed-rate
+  opts:
+    tps: 15
+</pre>
+                        <h3>Performance metrics for registerCBSD-lowmid</h3>
+                            <table style="min-width: 100%;">
+                                <tr>
+                                     <th>Name</th> <th>Succ</th> <th>Fail</th> <th>Send Rate (TPS)</th> <th>Max Latency (s)</th> <th>Min Latency (s)</th> <th>Avg Latency (s)</th> <th>Throughput (TPS)</th>
+                                </tr>
+                                <tr>
+                                     <td>registerCBSD-lowmid</td> <td>250</td> <td>0</td> <td>15.1</td> <td>6.96</td> <td>1.89</td> <td>4.11</td> <td>13.0</td>
+                                </tr>
+                            </table>
+                        <h3>Resource utilization for registerCBSD-lowmid</h3>
+                            <h4>Resource monitor: prometheus</h4>
+                            <table style="min-width: 100%;">
+                                <tr>
+                                <table>
+                                    <tr>
+                                         <th>Metric</th> <th>Prometheus Query</th> <th>Name</th> <th>Value</th>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu CPU Usage (cores)</td> <td>sum(rate(container_cpu_usage_seconds_total{name&#x3D;~&quot;4node-qbft-validator[1-4]-1&quot;}[30s])) by (name)</td> <td>4node-qbft-validator1-1</td> <td>0.190</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator2-1</td> <td>0.208</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator3-1</td> <td>0.205</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator4-1</td> <td>0.183</td>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu Memory Usage (MB)</td> <td>sum(container_memory_usage_bytes{name&#x3D;~&quot;4node-qbft-validator[1-4]-1&quot;}) by (name)</td> <td>4node-qbft-validator1-1</td> <td>463</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator2-1</td> <td>501</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator3-1</td> <td>489</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator4-1</td> <td>510</td>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu Disk Usage (MB)</td> <td>sum(container_fs_usage_bytes{name&#x3D;~&quot;4node-qbft-validator[1-4]-1&quot;}) by (name)</td> <td>4node-qbft-validator1-1</td> <td>106</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator2-1</td> <td>106</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator3-1</td> <td>106</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator4-1</td> <td>106</td>
+                                    </tr>
+                                </table>
+                                </tr>
+                            </table>
+                            <div class="charting">
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_registerCBSD-lowmid_4node-qbft-validator1-1_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_registerCBSD-lowmid_4node-qbft-validator1-1_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu CPU Usage (cores)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;4node-qbft-validator1-1&quot;,&quot;4node-qbft-validator2-1&quot;,&quot;4node-qbft-validator3-1&quot;,&quot;4node-qbft-validator4-1&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;,&quot;rgb(179,50,0,0.6)&quot;,&quot;rgb(255,209,191,0.6)&quot;,&quot;rgb(255,163,128,0.6)&quot;],&quot;data&quot;:[&quot;0.190&quot;,&quot;0.208&quot;,&quot;0.205&quot;,&quot;0.183&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_registerCBSD-lowmid_4node-qbft-validator1-1_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_registerCBSD-lowmid_4node-qbft-validator1-1_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu Memory Usage (MB)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;4node-qbft-validator1-1&quot;,&quot;4node-qbft-validator2-1&quot;,&quot;4node-qbft-validator3-1&quot;,&quot;4node-qbft-validator4-1&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;,&quot;rgb(179,50,0,0.6)&quot;,&quot;rgb(255,209,191,0.6)&quot;,&quot;rgb(255,163,128,0.6)&quot;],&quot;data&quot;:[&quot;463&quot;,&quot;501&quot;,&quot;489&quot;,&quot;510&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_registerCBSD-lowmid_4node-qbft-validator1-1_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_registerCBSD-lowmid_4node-qbft-validator1-1_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu Disk Usage (MB)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;4node-qbft-validator1-1&quot;,&quot;4node-qbft-validator2-1&quot;,&quot;4node-qbft-validator3-1&quot;,&quot;4node-qbft-validator4-1&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;,&quot;rgb(179,50,0,0.6)&quot;,&quot;rgb(255,209,191,0.6)&quot;,&quot;rgb(255,163,128,0.6)&quot;],&quot;data&quot;:[&quot;106&quot;,&quot;106&quot;,&quot;106&quot;,&quot;106&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                            </div>
+            </div>
+
+            <div style="border-bottom: 1px solid #d9d9d9; padding-bottom: 10px;" id="registerCBSD-midlow">
+                <h2>Benchmark round: registerCBSD-midlow</h2>
+                <p></p>
+                <pre style="overflow: visible;white-space: pre-wrap;max-height:100%;">rateControl:
+  type: fixed-rate
+  opts:
+    tps: 18
+</pre>
+                        <h3>Performance metrics for registerCBSD-midlow</h3>
+                            <table style="min-width: 100%;">
+                                <tr>
+                                     <th>Name</th> <th>Succ</th> <th>Fail</th> <th>Send Rate (TPS)</th> <th>Max Latency (s)</th> <th>Min Latency (s)</th> <th>Avg Latency (s)</th> <th>Throughput (TPS)</th>
+                                </tr>
+                                <tr>
+                                     <td>registerCBSD-midlow</td> <td>350</td> <td>0</td> <td>18.1</td> <td>6.62</td> <td>0.90</td> <td>3.65</td> <td>15.1</td>
+                                </tr>
+                            </table>
+                        <h3>Resource utilization for registerCBSD-midlow</h3>
+                            <h4>Resource monitor: prometheus</h4>
+                            <table style="min-width: 100%;">
+                                <tr>
+                                <table>
+                                    <tr>
+                                         <th>Metric</th> <th>Prometheus Query</th> <th>Name</th> <th>Value</th>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu CPU Usage (cores)</td> <td>sum(rate(container_cpu_usage_seconds_total{name&#x3D;~&quot;4node-qbft-validator[1-4]-1&quot;}[30s])) by (name)</td> <td>4node-qbft-validator1-1</td> <td>0.267</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator2-1</td> <td>0.215</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator3-1</td> <td>0.214</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator4-1</td> <td>0.231</td>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu Memory Usage (MB)</td> <td>sum(container_memory_usage_bytes{name&#x3D;~&quot;4node-qbft-validator[1-4]-1&quot;}) by (name)</td> <td>4node-qbft-validator1-1</td> <td>495</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator2-1</td> <td>520</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator3-1</td> <td>504</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator4-1</td> <td>519</td>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu Disk Usage (MB)</td> <td>sum(container_fs_usage_bytes{name&#x3D;~&quot;4node-qbft-validator[1-4]-1&quot;}) by (name)</td> <td>4node-qbft-validator1-1</td> <td>107</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator2-1</td> <td>107</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator3-1</td> <td>107</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator4-1</td> <td>107</td>
+                                    </tr>
+                                </table>
+                                </tr>
+                            </table>
+                            <div class="charting">
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_registerCBSD-midlow_4node-qbft-validator1-1_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_registerCBSD-midlow_4node-qbft-validator1-1_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu CPU Usage (cores)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;4node-qbft-validator1-1&quot;,&quot;4node-qbft-validator2-1&quot;,&quot;4node-qbft-validator3-1&quot;,&quot;4node-qbft-validator4-1&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;,&quot;rgb(179,50,0,0.6)&quot;,&quot;rgb(255,209,191,0.6)&quot;,&quot;rgb(255,163,128,0.6)&quot;],&quot;data&quot;:[&quot;0.267&quot;,&quot;0.215&quot;,&quot;0.214&quot;,&quot;0.231&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_registerCBSD-midlow_4node-qbft-validator1-1_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_registerCBSD-midlow_4node-qbft-validator1-1_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu Memory Usage (MB)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;4node-qbft-validator1-1&quot;,&quot;4node-qbft-validator2-1&quot;,&quot;4node-qbft-validator3-1&quot;,&quot;4node-qbft-validator4-1&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;,&quot;rgb(179,50,0,0.6)&quot;,&quot;rgb(255,209,191,0.6)&quot;,&quot;rgb(255,163,128,0.6)&quot;],&quot;data&quot;:[&quot;495&quot;,&quot;520&quot;,&quot;504&quot;,&quot;519&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_registerCBSD-midlow_4node-qbft-validator1-1_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_registerCBSD-midlow_4node-qbft-validator1-1_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu Disk Usage (MB)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;4node-qbft-validator1-1&quot;,&quot;4node-qbft-validator2-1&quot;,&quot;4node-qbft-validator3-1&quot;,&quot;4node-qbft-validator4-1&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;,&quot;rgb(179,50,0,0.6)&quot;,&quot;rgb(255,209,191,0.6)&quot;,&quot;rgb(255,163,128,0.6)&quot;],&quot;data&quot;:[&quot;107&quot;,&quot;107&quot;,&quot;107&quot;,&quot;107&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                            </div>
+            </div>
+
+            <div style="border-bottom: 1px solid #d9d9d9; padding-bottom: 10px;" id="registerCBSD-mid">
+                <h2>Benchmark round: registerCBSD-mid</h2>
+                <p></p>
+                <pre style="overflow: visible;white-space: pre-wrap;max-height:100%;">rateControl:
+  type: fixed-rate
+  opts:
+    tps: 25
+</pre>
+                        <h3>Performance metrics for registerCBSD-mid</h3>
+                            <table style="min-width: 100%;">
+                                <tr>
+                                     <th>Name</th> <th>Succ</th> <th>Fail</th> <th>Send Rate (TPS)</th> <th>Max Latency (s)</th> <th>Min Latency (s)</th> <th>Avg Latency (s)</th> <th>Throughput (TPS)</th>
+                                </tr>
+                                <tr>
+                                     <td>registerCBSD-mid</td> <td>500</td> <td>0</td> <td>25.0</td> <td>6.07</td> <td>0.77</td> <td>3.58</td> <td>21.1</td>
+                                </tr>
+                            </table>
+                        <h3>Resource utilization for registerCBSD-mid</h3>
+                            <h4>Resource monitor: prometheus</h4>
+                            <table style="min-width: 100%;">
+                                <tr>
+                                <table>
+                                    <tr>
+                                         <th>Metric</th> <th>Prometheus Query</th> <th>Name</th> <th>Value</th>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu CPU Usage (cores)</td> <td>sum(rate(container_cpu_usage_seconds_total{name&#x3D;~&quot;4node-qbft-validator[1-4]-1&quot;}[30s])) by (name)</td> <td>4node-qbft-validator1-1</td> <td>0.248</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator2-1</td> <td>0.228</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator3-1</td> <td>0.227</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator4-1</td> <td>0.219</td>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu Memory Usage (MB)</td> <td>sum(container_memory_usage_bytes{name&#x3D;~&quot;4node-qbft-validator[1-4]-1&quot;}) by (name)</td> <td>4node-qbft-validator1-1</td> <td>501</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator2-1</td> <td>520</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator3-1</td> <td>485</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator4-1</td> <td>501</td>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu Disk Usage (MB)</td> <td>sum(container_fs_usage_bytes{name&#x3D;~&quot;4node-qbft-validator[1-4]-1&quot;}) by (name)</td> <td>4node-qbft-validator1-1</td> <td>107</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator2-1</td> <td>107</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator3-1</td> <td>107</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator4-1</td> <td>107</td>
+                                    </tr>
+                                </table>
+                                </tr>
+                            </table>
+                            <div class="charting">
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_registerCBSD-mid_4node-qbft-validator1-1_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_registerCBSD-mid_4node-qbft-validator1-1_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu CPU Usage (cores)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;4node-qbft-validator1-1&quot;,&quot;4node-qbft-validator2-1&quot;,&quot;4node-qbft-validator3-1&quot;,&quot;4node-qbft-validator4-1&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;,&quot;rgb(179,50,0,0.6)&quot;,&quot;rgb(255,209,191,0.6)&quot;,&quot;rgb(255,163,128,0.6)&quot;],&quot;data&quot;:[&quot;0.248&quot;,&quot;0.228&quot;,&quot;0.227&quot;,&quot;0.219&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_registerCBSD-mid_4node-qbft-validator1-1_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_registerCBSD-mid_4node-qbft-validator1-1_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu Memory Usage (MB)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;4node-qbft-validator1-1&quot;,&quot;4node-qbft-validator2-1&quot;,&quot;4node-qbft-validator3-1&quot;,&quot;4node-qbft-validator4-1&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;,&quot;rgb(179,50,0,0.6)&quot;,&quot;rgb(255,209,191,0.6)&quot;,&quot;rgb(255,163,128,0.6)&quot;],&quot;data&quot;:[&quot;501&quot;,&quot;520&quot;,&quot;485&quot;,&quot;501&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_registerCBSD-mid_4node-qbft-validator1-1_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_registerCBSD-mid_4node-qbft-validator1-1_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu Disk Usage (MB)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;4node-qbft-validator1-1&quot;,&quot;4node-qbft-validator2-1&quot;,&quot;4node-qbft-validator3-1&quot;,&quot;4node-qbft-validator4-1&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;,&quot;rgb(179,50,0,0.6)&quot;,&quot;rgb(255,209,191,0.6)&quot;,&quot;rgb(255,163,128,0.6)&quot;],&quot;data&quot;:[&quot;107&quot;,&quot;107&quot;,&quot;107&quot;,&quot;107&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                            </div>
+            </div>
+
+            <div style="border-bottom: 1px solid #d9d9d9; padding-bottom: 10px;" id="registerCBSD-midmid">
+                <h2>Benchmark round: registerCBSD-midmid</h2>
+                <p></p>
+                <pre style="overflow: visible;white-space: pre-wrap;max-height:100%;">rateControl:
+  type: fixed-rate
+  opts:
+    tps: 30
+</pre>
+                        <h3>Performance metrics for registerCBSD-midmid</h3>
+                            <table style="min-width: 100%;">
+                                <tr>
+                                     <th>Name</th> <th>Succ</th> <th>Fail</th> <th>Send Rate (TPS)</th> <th>Max Latency (s)</th> <th>Min Latency (s)</th> <th>Avg Latency (s)</th> <th>Throughput (TPS)</th>
+                                </tr>
+                                <tr>
+                                     <td>registerCBSD-midmid</td> <td>600</td> <td>0</td> <td>30.1</td> <td>6.43</td> <td>0.94</td> <td>3.51</td> <td>25.1</td>
+                                </tr>
+                            </table>
+                        <h3>Resource utilization for registerCBSD-midmid</h3>
+                            <h4>Resource monitor: prometheus</h4>
+                            <table style="min-width: 100%;">
+                                <tr>
+                                <table>
+                                    <tr>
+                                         <th>Metric</th> <th>Prometheus Query</th> <th>Name</th> <th>Value</th>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu CPU Usage (cores)</td> <td>sum(rate(container_cpu_usage_seconds_total{name&#x3D;~&quot;4node-qbft-validator[1-4]-1&quot;}[30s])) by (name)</td> <td>4node-qbft-validator1-1</td> <td>0.223</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator2-1</td> <td>0.218</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator3-1</td> <td>0.233</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator4-1</td> <td>0.224</td>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu Memory Usage (MB)</td> <td>sum(container_memory_usage_bytes{name&#x3D;~&quot;4node-qbft-validator[1-4]-1&quot;}) by (name)</td> <td>4node-qbft-validator1-1</td> <td>499</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator2-1</td> <td>510</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator3-1</td> <td>478</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator4-1</td> <td>503</td>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu Disk Usage (MB)</td> <td>sum(container_fs_usage_bytes{name&#x3D;~&quot;4node-qbft-validator[1-4]-1&quot;}) by (name)</td> <td>4node-qbft-validator1-1</td> <td>108</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator2-1</td> <td>108</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator3-1</td> <td>108</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator4-1</td> <td>108</td>
+                                    </tr>
+                                </table>
+                                </tr>
+                            </table>
+                            <div class="charting">
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_registerCBSD-midmid_4node-qbft-validator1-1_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_registerCBSD-midmid_4node-qbft-validator1-1_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu CPU Usage (cores)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;4node-qbft-validator1-1&quot;,&quot;4node-qbft-validator2-1&quot;,&quot;4node-qbft-validator3-1&quot;,&quot;4node-qbft-validator4-1&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;,&quot;rgb(179,50,0,0.6)&quot;,&quot;rgb(255,209,191,0.6)&quot;,&quot;rgb(255,163,128,0.6)&quot;],&quot;data&quot;:[&quot;0.223&quot;,&quot;0.218&quot;,&quot;0.233&quot;,&quot;0.224&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_registerCBSD-midmid_4node-qbft-validator1-1_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_registerCBSD-midmid_4node-qbft-validator1-1_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu Memory Usage (MB)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;4node-qbft-validator1-1&quot;,&quot;4node-qbft-validator2-1&quot;,&quot;4node-qbft-validator3-1&quot;,&quot;4node-qbft-validator4-1&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;,&quot;rgb(179,50,0,0.6)&quot;,&quot;rgb(255,209,191,0.6)&quot;,&quot;rgb(255,163,128,0.6)&quot;],&quot;data&quot;:[&quot;499&quot;,&quot;510&quot;,&quot;478&quot;,&quot;503&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_registerCBSD-midmid_4node-qbft-validator1-1_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_registerCBSD-midmid_4node-qbft-validator1-1_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu Disk Usage (MB)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;4node-qbft-validator1-1&quot;,&quot;4node-qbft-validator2-1&quot;,&quot;4node-qbft-validator3-1&quot;,&quot;4node-qbft-validator4-1&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;,&quot;rgb(179,50,0,0.6)&quot;,&quot;rgb(255,209,191,0.6)&quot;,&quot;rgb(255,163,128,0.6)&quot;],&quot;data&quot;:[&quot;108&quot;,&quot;108&quot;,&quot;108&quot;,&quot;108&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                            </div>
+            </div>
+
+            <div style="border-bottom: 1px solid #d9d9d9; padding-bottom: 10px;" id="registerCBSD-midhigh">
+                <h2>Benchmark round: registerCBSD-midhigh</h2>
+                <p></p>
+                <pre style="overflow: visible;white-space: pre-wrap;max-height:100%;">rateControl:
+  type: fixed-rate
+  opts:
+    tps: 35
+</pre>
+                        <h3>Performance metrics for registerCBSD-midhigh</h3>
+                            <table style="min-width: 100%;">
+                                <tr>
+                                     <th>Name</th> <th>Succ</th> <th>Fail</th> <th>Send Rate (TPS)</th> <th>Max Latency (s)</th> <th>Min Latency (s)</th> <th>Avg Latency (s)</th> <th>Throughput (TPS)</th>
+                                </tr>
+                                <tr>
+                                     <td>registerCBSD-midhigh</td> <td>700</td> <td>0</td> <td>35.1</td> <td>5.92</td> <td>0.85</td> <td>3.25</td> <td>29.6</td>
+                                </tr>
+                            </table>
+                        <h3>Resource utilization for registerCBSD-midhigh</h3>
+                            <h4>Resource monitor: prometheus</h4>
+                            <table style="min-width: 100%;">
+                                <tr>
+                                <table>
+                                    <tr>
+                                         <th>Metric</th> <th>Prometheus Query</th> <th>Name</th> <th>Value</th>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu CPU Usage (cores)</td> <td>sum(rate(container_cpu_usage_seconds_total{name&#x3D;~&quot;4node-qbft-validator[1-4]-1&quot;}[30s])) by (name)</td> <td>4node-qbft-validator1-1</td> <td>0.174</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator2-1</td> <td>0.161</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator3-1</td> <td>0.159</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator4-1</td> <td>0.168</td>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu Memory Usage (MB)</td> <td>sum(container_memory_usage_bytes{name&#x3D;~&quot;4node-qbft-validator[1-4]-1&quot;}) by (name)</td> <td>4node-qbft-validator1-1</td> <td>501</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator2-1</td> <td>501</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator3-1</td> <td>475</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator4-1</td> <td>493</td>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu Disk Usage (MB)</td> <td>sum(container_fs_usage_bytes{name&#x3D;~&quot;4node-qbft-validator[1-4]-1&quot;}) by (name)</td> <td>4node-qbft-validator1-1</td> <td>109</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator2-1</td> <td>109</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator3-1</td> <td>109</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator4-1</td> <td>109</td>
+                                    </tr>
+                                </table>
+                                </tr>
+                            </table>
+                            <div class="charting">
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_registerCBSD-midhigh_4node-qbft-validator1-1_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_registerCBSD-midhigh_4node-qbft-validator1-1_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu CPU Usage (cores)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;4node-qbft-validator1-1&quot;,&quot;4node-qbft-validator2-1&quot;,&quot;4node-qbft-validator3-1&quot;,&quot;4node-qbft-validator4-1&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;,&quot;rgb(179,50,0,0.6)&quot;,&quot;rgb(255,209,191,0.6)&quot;,&quot;rgb(255,163,128,0.6)&quot;],&quot;data&quot;:[&quot;0.174&quot;,&quot;0.161&quot;,&quot;0.159&quot;,&quot;0.168&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_registerCBSD-midhigh_4node-qbft-validator1-1_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_registerCBSD-midhigh_4node-qbft-validator1-1_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu Memory Usage (MB)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;4node-qbft-validator1-1&quot;,&quot;4node-qbft-validator2-1&quot;,&quot;4node-qbft-validator3-1&quot;,&quot;4node-qbft-validator4-1&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;,&quot;rgb(179,50,0,0.6)&quot;,&quot;rgb(255,209,191,0.6)&quot;,&quot;rgb(255,163,128,0.6)&quot;],&quot;data&quot;:[&quot;501&quot;,&quot;501&quot;,&quot;475&quot;,&quot;493&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_registerCBSD-midhigh_4node-qbft-validator1-1_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_registerCBSD-midhigh_4node-qbft-validator1-1_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu Disk Usage (MB)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;4node-qbft-validator1-1&quot;,&quot;4node-qbft-validator2-1&quot;,&quot;4node-qbft-validator3-1&quot;,&quot;4node-qbft-validator4-1&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;,&quot;rgb(179,50,0,0.6)&quot;,&quot;rgb(255,209,191,0.6)&quot;,&quot;rgb(255,163,128,0.6)&quot;],&quot;data&quot;:[&quot;109&quot;,&quot;109&quot;,&quot;109&quot;,&quot;109&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                            </div>
+            </div>
+
+            <div style="border-bottom: 1px solid #d9d9d9; padding-bottom: 10px;" id="registerCBSD-prehigh">
+                <h2>Benchmark round: registerCBSD-prehigh</h2>
+                <p></p>
+                <pre style="overflow: visible;white-space: pre-wrap;max-height:100%;">rateControl:
+  type: fixed-rate
+  opts:
+    tps: 42
+</pre>
+                        <h3>Performance metrics for registerCBSD-prehigh</h3>
+                            <table style="min-width: 100%;">
+                                <tr>
+                                     <th>Name</th> <th>Succ</th> <th>Fail</th> <th>Send Rate (TPS)</th> <th>Max Latency (s)</th> <th>Min Latency (s)</th> <th>Avg Latency (s)</th> <th>Throughput (TPS)</th>
+                                </tr>
+                                <tr>
+                                     <td>registerCBSD-prehigh</td> <td>349</td> <td>501</td> <td>42.1</td> <td>5.86</td> <td>1.22</td> <td>3.49</td> <td>3.2</td>
+                                </tr>
+                            </table>
+                        <h3>Resource utilization for registerCBSD-prehigh</h3>
+                            <h4>Resource monitor: prometheus</h4>
+                            <table style="min-width: 100%;">
+                                <tr>
+                                <table>
+                                    <tr>
+                                         <th>Metric</th> <th>Prometheus Query</th> <th>Name</th> <th>Value</th>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu CPU Usage (cores)</td> <td>sum(rate(container_cpu_usage_seconds_total{name&#x3D;~&quot;4node-qbft-validator[1-4]-1&quot;}[30s])) by (name)</td> <td>4node-qbft-validator1-1</td> <td>0.0656</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator2-1</td> <td>0.0693</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator3-1</td> <td>0.0677</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator4-1</td> <td>0.0705</td>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu Memory Usage (MB)</td> <td>sum(container_memory_usage_bytes{name&#x3D;~&quot;4node-qbft-validator[1-4]-1&quot;}) by (name)</td> <td>4node-qbft-validator1-1</td> <td>504</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator2-1</td> <td>505</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator3-1</td> <td>491</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator4-1</td> <td>512</td>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu Disk Usage (MB)</td> <td>sum(container_fs_usage_bytes{name&#x3D;~&quot;4node-qbft-validator[1-4]-1&quot;}) by (name)</td> <td>4node-qbft-validator1-1</td> <td>110</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator2-1</td> <td>110</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator3-1</td> <td>110</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator4-1</td> <td>110</td>
+                                    </tr>
+                                </table>
+                                </tr>
+                            </table>
+                            <div class="charting">
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_registerCBSD-prehigh_4node-qbft-validator1-1_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_registerCBSD-prehigh_4node-qbft-validator1-1_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu CPU Usage (cores)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;4node-qbft-validator1-1&quot;,&quot;4node-qbft-validator2-1&quot;,&quot;4node-qbft-validator3-1&quot;,&quot;4node-qbft-validator4-1&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;,&quot;rgb(179,50,0,0.6)&quot;,&quot;rgb(255,209,191,0.6)&quot;,&quot;rgb(255,163,128,0.6)&quot;],&quot;data&quot;:[&quot;0.0656&quot;,&quot;0.0693&quot;,&quot;0.0677&quot;,&quot;0.0705&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_registerCBSD-prehigh_4node-qbft-validator1-1_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_registerCBSD-prehigh_4node-qbft-validator1-1_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu Memory Usage (MB)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;4node-qbft-validator1-1&quot;,&quot;4node-qbft-validator2-1&quot;,&quot;4node-qbft-validator3-1&quot;,&quot;4node-qbft-validator4-1&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;,&quot;rgb(179,50,0,0.6)&quot;,&quot;rgb(255,209,191,0.6)&quot;,&quot;rgb(255,163,128,0.6)&quot;],&quot;data&quot;:[&quot;504&quot;,&quot;505&quot;,&quot;491&quot;,&quot;512&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_registerCBSD-prehigh_4node-qbft-validator1-1_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_registerCBSD-prehigh_4node-qbft-validator1-1_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu Disk Usage (MB)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;4node-qbft-validator1-1&quot;,&quot;4node-qbft-validator2-1&quot;,&quot;4node-qbft-validator3-1&quot;,&quot;4node-qbft-validator4-1&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;,&quot;rgb(179,50,0,0.6)&quot;,&quot;rgb(255,209,191,0.6)&quot;,&quot;rgb(255,163,128,0.6)&quot;],&quot;data&quot;:[&quot;110&quot;,&quot;110&quot;,&quot;110&quot;,&quot;110&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                            </div>
+            </div>
+
+            <div style="border-bottom: 1px solid #d9d9d9; padding-bottom: 10px;" id="registerCBSD-high">
+                <h2>Benchmark round: registerCBSD-high</h2>
+                <p></p>
+                <pre style="overflow: visible;white-space: pre-wrap;max-height:100%;">rateControl:
+  type: fixed-rate
+  opts:
+    tps: 50
+</pre>
+                        <h3>Performance metrics for registerCBSD-high</h3>
+                            <table style="min-width: 100%;">
+                                <tr>
+                                     <th>Name</th> <th>Succ</th> <th>Fail</th> <th>Send Rate (TPS)</th> <th>Max Latency (s)</th> <th>Min Latency (s)</th> <th>Avg Latency (s)</th> <th>Throughput (TPS)</th>
+                                </tr>
+                                <tr>
+                                     <td>registerCBSD-high</td> <td>178</td> <td>822</td> <td>50.1</td> <td>4.81</td> <td>1.26</td> <td>2.92</td> <td>3.9</td>
+                                </tr>
+                            </table>
+                        <h3>Resource utilization for registerCBSD-high</h3>
+                            <h4>Resource monitor: prometheus</h4>
+                            <table style="min-width: 100%;">
+                                <tr>
+                                <table>
+                                    <tr>
+                                         <th>Metric</th> <th>Prometheus Query</th> <th>Name</th> <th>Value</th>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu CPU Usage (cores)</td> <td>sum(rate(container_cpu_usage_seconds_total{name&#x3D;~&quot;4node-qbft-validator[1-4]-1&quot;}[30s])) by (name)</td> <td>4node-qbft-validator1-1</td> <td>0.0543</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator2-1</td> <td>0.0655</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator3-1</td> <td>0.0604</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator4-1</td> <td>0.0620</td>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu Memory Usage (MB)</td> <td>sum(container_memory_usage_bytes{name&#x3D;~&quot;4node-qbft-validator[1-4]-1&quot;}) by (name)</td> <td>4node-qbft-validator1-1</td> <td>519</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator2-1</td> <td>518</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator3-1</td> <td>514</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator4-1</td> <td>546</td>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu Disk Usage (MB)</td> <td>sum(container_fs_usage_bytes{name&#x3D;~&quot;4node-qbft-validator[1-4]-1&quot;}) by (name)</td> <td>4node-qbft-validator1-1</td> <td>111</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator2-1</td> <td>111</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator3-1</td> <td>111</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator4-1</td> <td>111</td>
+                                    </tr>
+                                </table>
+                                </tr>
+                            </table>
+                            <div class="charting">
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_registerCBSD-high_4node-qbft-validator1-1_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_registerCBSD-high_4node-qbft-validator1-1_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu CPU Usage (cores)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;4node-qbft-validator1-1&quot;,&quot;4node-qbft-validator2-1&quot;,&quot;4node-qbft-validator3-1&quot;,&quot;4node-qbft-validator4-1&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;,&quot;rgb(179,50,0,0.6)&quot;,&quot;rgb(255,209,191,0.6)&quot;,&quot;rgb(255,163,128,0.6)&quot;],&quot;data&quot;:[&quot;0.0543&quot;,&quot;0.0655&quot;,&quot;0.0604&quot;,&quot;0.0620&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_registerCBSD-high_4node-qbft-validator1-1_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_registerCBSD-high_4node-qbft-validator1-1_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu Memory Usage (MB)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;4node-qbft-validator1-1&quot;,&quot;4node-qbft-validator2-1&quot;,&quot;4node-qbft-validator3-1&quot;,&quot;4node-qbft-validator4-1&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;,&quot;rgb(179,50,0,0.6)&quot;,&quot;rgb(255,209,191,0.6)&quot;,&quot;rgb(255,163,128,0.6)&quot;],&quot;data&quot;:[&quot;519&quot;,&quot;518&quot;,&quot;514&quot;,&quot;546&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_registerCBSD-high_4node-qbft-validator1-1_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_registerCBSD-high_4node-qbft-validator1-1_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu Disk Usage (MB)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;4node-qbft-validator1-1&quot;,&quot;4node-qbft-validator2-1&quot;,&quot;4node-qbft-validator3-1&quot;,&quot;4node-qbft-validator4-1&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;,&quot;rgb(179,50,0,0.6)&quot;,&quot;rgb(255,209,191,0.6)&quot;,&quot;rgb(255,163,128,0.6)&quot;],&quot;data&quot;:[&quot;111&quot;,&quot;111&quot;,&quot;111&quot;,&quot;111&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                            </div>
+            </div>
+
+            <div style="border-bottom: 1px solid #d9d9d9; padding-bottom: 10px;" id="registerCBSD-stress">
+                <h2>Benchmark round: registerCBSD-stress</h2>
+                <p></p>
+                <pre style="overflow: visible;white-space: pre-wrap;max-height:100%;">rateControl:
+  type: linear-rate
+  opts:
+    startingTps: 10
+    finishingTps: 100
+</pre>
+                        <h3>Performance metrics for registerCBSD-stress</h3>
+                            <table style="min-width: 100%;">
+                                <tr>
+                                     <th>Name</th> <th>Succ</th> <th>Fail</th> <th>Send Rate (TPS)</th> <th>Max Latency (s)</th> <th>Min Latency (s)</th> <th>Avg Latency (s)</th> <th>Throughput (TPS)</th>
+                                </tr>
+                                <tr>
+                                     <td>registerCBSD-stress</td> <td>836</td> <td>164</td> <td>18.0</td> <td>5.47</td> <td>0.13</td> <td>2.97</td> <td>3.9</td>
+                                </tr>
+                            </table>
+                        <h3>Resource utilization for registerCBSD-stress</h3>
+                            <h4>Resource monitor: prometheus</h4>
+                            <table style="min-width: 100%;">
+                                <tr>
+                                <table>
+                                    <tr>
+                                         <th>Metric</th> <th>Prometheus Query</th> <th>Name</th> <th>Value</th>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu CPU Usage (cores)</td> <td>sum(rate(container_cpu_usage_seconds_total{name&#x3D;~&quot;4node-qbft-validator[1-4]-1&quot;}[30s])) by (name)</td> <td>4node-qbft-validator1-1</td> <td>0.0677</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator2-1</td> <td>0.0731</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator3-1</td> <td>0.0726</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator4-1</td> <td>0.0703</td>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu Memory Usage (MB)</td> <td>sum(container_memory_usage_bytes{name&#x3D;~&quot;4node-qbft-validator[1-4]-1&quot;}) by (name)</td> <td>4node-qbft-validator1-1</td> <td>532</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator2-1</td> <td>507</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator3-1</td> <td>509</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator4-1</td> <td>521</td>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu Disk Usage (MB)</td> <td>sum(container_fs_usage_bytes{name&#x3D;~&quot;4node-qbft-validator[1-4]-1&quot;}) by (name)</td> <td>4node-qbft-validator1-1</td> <td>113</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator2-1</td> <td>112</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator3-1</td> <td>112</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator4-1</td> <td>113</td>
+                                    </tr>
+                                </table>
+                                </tr>
+                            </table>
+                            <div class="charting">
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_registerCBSD-stress_4node-qbft-validator1-1_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_registerCBSD-stress_4node-qbft-validator1-1_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu CPU Usage (cores)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;4node-qbft-validator1-1&quot;,&quot;4node-qbft-validator2-1&quot;,&quot;4node-qbft-validator3-1&quot;,&quot;4node-qbft-validator4-1&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;,&quot;rgb(179,50,0,0.6)&quot;,&quot;rgb(255,209,191,0.6)&quot;,&quot;rgb(255,163,128,0.6)&quot;],&quot;data&quot;:[&quot;0.0677&quot;,&quot;0.0731&quot;,&quot;0.0726&quot;,&quot;0.0703&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_registerCBSD-stress_4node-qbft-validator1-1_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_registerCBSD-stress_4node-qbft-validator1-1_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu Memory Usage (MB)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;4node-qbft-validator1-1&quot;,&quot;4node-qbft-validator2-1&quot;,&quot;4node-qbft-validator3-1&quot;,&quot;4node-qbft-validator4-1&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;,&quot;rgb(179,50,0,0.6)&quot;,&quot;rgb(255,209,191,0.6)&quot;,&quot;rgb(255,163,128,0.6)&quot;],&quot;data&quot;:[&quot;532&quot;,&quot;507&quot;,&quot;509&quot;,&quot;521&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_registerCBSD-stress_4node-qbft-validator1-1_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_registerCBSD-stress_4node-qbft-validator1-1_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu Disk Usage (MB)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;4node-qbft-validator1-1&quot;,&quot;4node-qbft-validator2-1&quot;,&quot;4node-qbft-validator3-1&quot;,&quot;4node-qbft-validator4-1&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;,&quot;rgb(179,50,0,0.6)&quot;,&quot;rgb(255,209,191,0.6)&quot;,&quot;rgb(255,163,128,0.6)&quot;],&quot;data&quot;:[&quot;113&quot;,&quot;112&quot;,&quot;112&quot;,&quot;113&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                            </div>
+            </div>
+
+            <div style="border-bottom: 1px solid #d9d9d9; padding-bottom: 10px;" id="updateGrantAmount-low">
+                <h2>Benchmark round: updateGrantAmount-low</h2>
+                <p></p>
+                <pre style="overflow: visible;white-space: pre-wrap;max-height:100%;">rateControl:
+  type: fixed-rate
+  opts:
+    tps: 10
+</pre>
+                        <h3>Performance metrics for updateGrantAmount-low</h3>
+                            <table style="min-width: 100%;">
+                                <tr>
+                                     <th>Name</th> <th>Succ</th> <th>Fail</th> <th>Send Rate (TPS)</th> <th>Max Latency (s)</th> <th>Min Latency (s)</th> <th>Avg Latency (s)</th> <th>Throughput (TPS)</th>
+                                </tr>
+                                <tr>
+                                     <td>updateGrantAmount-low</td> <td>0</td> <td>100</td> <td>10.1</td> <td>-</td> <td>-</td> <td>-</td> <td>7.3</td>
+                                </tr>
+                            </table>
+                        <h3>Resource utilization for updateGrantAmount-low</h3>
+                            <h4>Resource monitor: prometheus</h4>
+                            <table style="min-width: 100%;">
+                                <tr>
+                                <table>
+                                    <tr>
+                                         <th>Metric</th> <th>Prometheus Query</th> <th>Name</th> <th>Value</th>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu CPU Usage (cores)</td> <td>sum(rate(container_cpu_usage_seconds_total{name&#x3D;~&quot;4node-qbft-validator[1-4]-1&quot;}[30s])) by (name)</td> <td>4node-qbft-validator1-1</td> <td>0.0590</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator2-1</td> <td>0.0669</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator3-1</td> <td>0.0558</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator4-1</td> <td>0.0608</td>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu Memory Usage (MB)</td> <td>sum(container_memory_usage_bytes{name&#x3D;~&quot;4node-qbft-validator[1-4]-1&quot;}) by (name)</td> <td>4node-qbft-validator1-1</td> <td>506</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator2-1</td> <td>504</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator3-1</td> <td>480</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator4-1</td> <td>492</td>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu Disk Usage (MB)</td> <td>sum(container_fs_usage_bytes{name&#x3D;~&quot;4node-qbft-validator[1-4]-1&quot;}) by (name)</td> <td>4node-qbft-validator1-1</td> <td>113</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator2-1</td> <td>112</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator3-1</td> <td>112</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator4-1</td> <td>113</td>
+                                    </tr>
+                                </table>
+                                </tr>
+                            </table>
+                            <div class="charting">
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_updateGrantAmount-low_4node-qbft-validator1-1_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_updateGrantAmount-low_4node-qbft-validator1-1_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu CPU Usage (cores)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;4node-qbft-validator1-1&quot;,&quot;4node-qbft-validator2-1&quot;,&quot;4node-qbft-validator3-1&quot;,&quot;4node-qbft-validator4-1&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;,&quot;rgb(179,50,0,0.6)&quot;,&quot;rgb(255,209,191,0.6)&quot;,&quot;rgb(255,163,128,0.6)&quot;],&quot;data&quot;:[&quot;0.0590&quot;,&quot;0.0669&quot;,&quot;0.0558&quot;,&quot;0.0608&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_updateGrantAmount-low_4node-qbft-validator1-1_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_updateGrantAmount-low_4node-qbft-validator1-1_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu Memory Usage (MB)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;4node-qbft-validator1-1&quot;,&quot;4node-qbft-validator2-1&quot;,&quot;4node-qbft-validator3-1&quot;,&quot;4node-qbft-validator4-1&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;,&quot;rgb(179,50,0,0.6)&quot;,&quot;rgb(255,209,191,0.6)&quot;,&quot;rgb(255,163,128,0.6)&quot;],&quot;data&quot;:[&quot;506&quot;,&quot;504&quot;,&quot;480&quot;,&quot;492&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_updateGrantAmount-low_4node-qbft-validator1-1_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_updateGrantAmount-low_4node-qbft-validator1-1_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu Disk Usage (MB)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;4node-qbft-validator1-1&quot;,&quot;4node-qbft-validator2-1&quot;,&quot;4node-qbft-validator3-1&quot;,&quot;4node-qbft-validator4-1&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;,&quot;rgb(179,50,0,0.6)&quot;,&quot;rgb(255,209,191,0.6)&quot;,&quot;rgb(255,163,128,0.6)&quot;],&quot;data&quot;:[&quot;113&quot;,&quot;112&quot;,&quot;112&quot;,&quot;113&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                            </div>
+            </div>
+
+            <div style="border-bottom: 1px solid #d9d9d9; padding-bottom: 10px;" id="updateGrantAmount-mid">
+                <h2>Benchmark round: updateGrantAmount-mid</h2>
+                <p></p>
+                <pre style="overflow: visible;white-space: pre-wrap;max-height:100%;">rateControl:
+  type: fixed-rate
+  opts:
+    tps: 25
+</pre>
+                        <h3>Performance metrics for updateGrantAmount-mid</h3>
+                            <table style="min-width: 100%;">
+                                <tr>
+                                     <th>Name</th> <th>Succ</th> <th>Fail</th> <th>Send Rate (TPS)</th> <th>Max Latency (s)</th> <th>Min Latency (s)</th> <th>Avg Latency (s)</th> <th>Throughput (TPS)</th>
+                                </tr>
+                                <tr>
+                                     <td>updateGrantAmount-mid</td> <td>0</td> <td>500</td> <td>25.1</td> <td>-</td> <td>-</td> <td>-</td> <td>20.8</td>
+                                </tr>
+                            </table>
+                        <h3>Resource utilization for updateGrantAmount-mid</h3>
+                            <h4>Resource monitor: prometheus</h4>
+                            <table style="min-width: 100%;">
+                                <tr>
+                                <table>
+                                    <tr>
+                                         <th>Metric</th> <th>Prometheus Query</th> <th>Name</th> <th>Value</th>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu CPU Usage (cores)</td> <td>sum(rate(container_cpu_usage_seconds_total{name&#x3D;~&quot;4node-qbft-validator[1-4]-1&quot;}[30s])) by (name)</td> <td>4node-qbft-validator1-1</td> <td>0.134</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator2-1</td> <td>0.129</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator3-1</td> <td>0.126</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator4-1</td> <td>0.129</td>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu Memory Usage (MB)</td> <td>sum(container_memory_usage_bytes{name&#x3D;~&quot;4node-qbft-validator[1-4]-1&quot;}) by (name)</td> <td>4node-qbft-validator1-1</td> <td>514</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator2-1</td> <td>519</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator3-1</td> <td>502</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator4-1</td> <td>508</td>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu Disk Usage (MB)</td> <td>sum(container_fs_usage_bytes{name&#x3D;~&quot;4node-qbft-validator[1-4]-1&quot;}) by (name)</td> <td>4node-qbft-validator1-1</td> <td>113</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator2-1</td> <td>113</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator3-1</td> <td>112</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator4-1</td> <td>113</td>
+                                    </tr>
+                                </table>
+                                </tr>
+                            </table>
+                            <div class="charting">
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_updateGrantAmount-mid_4node-qbft-validator1-1_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_updateGrantAmount-mid_4node-qbft-validator1-1_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu CPU Usage (cores)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;4node-qbft-validator1-1&quot;,&quot;4node-qbft-validator2-1&quot;,&quot;4node-qbft-validator3-1&quot;,&quot;4node-qbft-validator4-1&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;,&quot;rgb(179,50,0,0.6)&quot;,&quot;rgb(255,209,191,0.6)&quot;,&quot;rgb(255,163,128,0.6)&quot;],&quot;data&quot;:[&quot;0.134&quot;,&quot;0.129&quot;,&quot;0.126&quot;,&quot;0.129&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_updateGrantAmount-mid_4node-qbft-validator1-1_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_updateGrantAmount-mid_4node-qbft-validator1-1_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu Memory Usage (MB)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;4node-qbft-validator1-1&quot;,&quot;4node-qbft-validator2-1&quot;,&quot;4node-qbft-validator3-1&quot;,&quot;4node-qbft-validator4-1&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;,&quot;rgb(179,50,0,0.6)&quot;,&quot;rgb(255,209,191,0.6)&quot;,&quot;rgb(255,163,128,0.6)&quot;],&quot;data&quot;:[&quot;514&quot;,&quot;519&quot;,&quot;502&quot;,&quot;508&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_updateGrantAmount-mid_4node-qbft-validator1-1_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_updateGrantAmount-mid_4node-qbft-validator1-1_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu Disk Usage (MB)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;4node-qbft-validator1-1&quot;,&quot;4node-qbft-validator2-1&quot;,&quot;4node-qbft-validator3-1&quot;,&quot;4node-qbft-validator4-1&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;,&quot;rgb(179,50,0,0.6)&quot;,&quot;rgb(255,209,191,0.6)&quot;,&quot;rgb(255,163,128,0.6)&quot;],&quot;data&quot;:[&quot;113&quot;,&quot;113&quot;,&quot;112&quot;,&quot;113&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                            </div>
+            </div>
+
+            <div style="border-bottom: 1px solid #d9d9d9; padding-bottom: 10px;" id="updateGrantAmount-high">
+                <h2>Benchmark round: updateGrantAmount-high</h2>
+                <p></p>
+                <pre style="overflow: visible;white-space: pre-wrap;max-height:100%;">rateControl:
+  type: fixed-rate
+  opts:
+    tps: 50
+</pre>
+                        <h3>Performance metrics for updateGrantAmount-high</h3>
+                            <table style="min-width: 100%;">
+                                <tr>
+                                     <th>Name</th> <th>Succ</th> <th>Fail</th> <th>Send Rate (TPS)</th> <th>Max Latency (s)</th> <th>Min Latency (s)</th> <th>Avg Latency (s)</th> <th>Throughput (TPS)</th>
+                                </tr>
+                                <tr>
+                                     <td>updateGrantAmount-high</td> <td>0</td> <td>1000</td> <td>50.1</td> <td>-</td> <td>-</td> <td>-</td> <td>3.8</td>
+                                </tr>
+                            </table>
+                        <h3>Resource utilization for updateGrantAmount-high</h3>
+                            <h4>Resource monitor: prometheus</h4>
+                            <table style="min-width: 100%;">
+                                <tr>
+                                <table>
+                                    <tr>
+                                         <th>Metric</th> <th>Prometheus Query</th> <th>Name</th> <th>Value</th>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu CPU Usage (cores)</td> <td>sum(rate(container_cpu_usage_seconds_total{name&#x3D;~&quot;4node-qbft-validator[1-4]-1&quot;}[30s])) by (name)</td> <td>4node-qbft-validator1-1</td> <td>0.0617</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator2-1</td> <td>0.0628</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator3-1</td> <td>0.0611</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator4-1</td> <td>0.0663</td>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu Memory Usage (MB)</td> <td>sum(container_memory_usage_bytes{name&#x3D;~&quot;4node-qbft-validator[1-4]-1&quot;}) by (name)</td> <td>4node-qbft-validator1-1</td> <td>528</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator2-1</td> <td>515</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator3-1</td> <td>505</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator4-1</td> <td>518</td>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu Disk Usage (MB)</td> <td>sum(container_fs_usage_bytes{name&#x3D;~&quot;4node-qbft-validator[1-4]-1&quot;}) by (name)</td> <td>4node-qbft-validator1-1</td> <td>114</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator2-1</td> <td>114</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator3-1</td> <td>114</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator4-1</td> <td>115</td>
+                                    </tr>
+                                </table>
+                                </tr>
+                            </table>
+                            <div class="charting">
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_updateGrantAmount-high_4node-qbft-validator1-1_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_updateGrantAmount-high_4node-qbft-validator1-1_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu CPU Usage (cores)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;4node-qbft-validator1-1&quot;,&quot;4node-qbft-validator2-1&quot;,&quot;4node-qbft-validator3-1&quot;,&quot;4node-qbft-validator4-1&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;,&quot;rgb(179,50,0,0.6)&quot;,&quot;rgb(255,209,191,0.6)&quot;,&quot;rgb(255,163,128,0.6)&quot;],&quot;data&quot;:[&quot;0.0617&quot;,&quot;0.0628&quot;,&quot;0.0611&quot;,&quot;0.0663&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_updateGrantAmount-high_4node-qbft-validator1-1_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_updateGrantAmount-high_4node-qbft-validator1-1_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu Memory Usage (MB)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;4node-qbft-validator1-1&quot;,&quot;4node-qbft-validator2-1&quot;,&quot;4node-qbft-validator3-1&quot;,&quot;4node-qbft-validator4-1&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;,&quot;rgb(179,50,0,0.6)&quot;,&quot;rgb(255,209,191,0.6)&quot;,&quot;rgb(255,163,128,0.6)&quot;],&quot;data&quot;:[&quot;528&quot;,&quot;515&quot;,&quot;505&quot;,&quot;518&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_updateGrantAmount-high_4node-qbft-validator1-1_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_updateGrantAmount-high_4node-qbft-validator1-1_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu Disk Usage (MB)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;4node-qbft-validator1-1&quot;,&quot;4node-qbft-validator2-1&quot;,&quot;4node-qbft-validator3-1&quot;,&quot;4node-qbft-validator4-1&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;,&quot;rgb(179,50,0,0.6)&quot;,&quot;rgb(255,209,191,0.6)&quot;,&quot;rgb(255,163,128,0.6)&quot;],&quot;data&quot;:[&quot;114&quot;,&quot;114&quot;,&quot;114&quot;,&quot;115&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                            </div>
+            </div>
+
+            <div style="border-bottom: 1px solid #d9d9d9; padding-bottom: 10px;" id="updateGrantAmount-stress">
+                <h2>Benchmark round: updateGrantAmount-stress</h2>
+                <p></p>
+                <pre style="overflow: visible;white-space: pre-wrap;max-height:100%;">rateControl:
+  type: linear-rate
+  opts:
+    startingTps: 10
+    finishingTps: 100
+</pre>
+                        <h3>Performance metrics for updateGrantAmount-stress</h3>
+                            <table style="min-width: 100%;">
+                                <tr>
+                                     <th>Name</th> <th>Succ</th> <th>Fail</th> <th>Send Rate (TPS)</th> <th>Max Latency (s)</th> <th>Min Latency (s)</th> <th>Avg Latency (s)</th> <th>Throughput (TPS)</th>
+                                </tr>
+                                <tr>
+                                     <td>updateGrantAmount-stress</td> <td>0</td> <td>1000</td> <td>17.9</td> <td>-</td> <td>-</td> <td>-</td> <td>3.8</td>
+                                </tr>
+                            </table>
+                        <h3>Resource utilization for updateGrantAmount-stress</h3>
+                            <h4>Resource monitor: prometheus</h4>
+                            <table style="min-width: 100%;">
+                                <tr>
+                                <table>
+                                    <tr>
+                                         <th>Metric</th> <th>Prometheus Query</th> <th>Name</th> <th>Value</th>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu CPU Usage (cores)</td> <td>sum(rate(container_cpu_usage_seconds_total{name&#x3D;~&quot;4node-qbft-validator[1-4]-1&quot;}[30s])) by (name)</td> <td>4node-qbft-validator1-1</td> <td>0.0710</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator2-1</td> <td>0.0689</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator3-1</td> <td>0.0669</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator4-1</td> <td>0.0700</td>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu Memory Usage (MB)</td> <td>sum(container_memory_usage_bytes{name&#x3D;~&quot;4node-qbft-validator[1-4]-1&quot;}) by (name)</td> <td>4node-qbft-validator1-1</td> <td>527</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator2-1</td> <td>533</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator3-1</td> <td>514</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator4-1</td> <td>521</td>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu Disk Usage (MB)</td> <td>sum(container_fs_usage_bytes{name&#x3D;~&quot;4node-qbft-validator[1-4]-1&quot;}) by (name)</td> <td>4node-qbft-validator1-1</td> <td>116</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator2-1</td> <td>115</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator3-1</td> <td>115</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator4-1</td> <td>116</td>
+                                    </tr>
+                                </table>
+                                </tr>
+                            </table>
+                            <div class="charting">
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_updateGrantAmount-stress_4node-qbft-validator1-1_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_updateGrantAmount-stress_4node-qbft-validator1-1_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu CPU Usage (cores)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;4node-qbft-validator1-1&quot;,&quot;4node-qbft-validator2-1&quot;,&quot;4node-qbft-validator3-1&quot;,&quot;4node-qbft-validator4-1&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;,&quot;rgb(179,50,0,0.6)&quot;,&quot;rgb(255,209,191,0.6)&quot;,&quot;rgb(255,163,128,0.6)&quot;],&quot;data&quot;:[&quot;0.0710&quot;,&quot;0.0689&quot;,&quot;0.0669&quot;,&quot;0.0700&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_updateGrantAmount-stress_4node-qbft-validator1-1_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_updateGrantAmount-stress_4node-qbft-validator1-1_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu Memory Usage (MB)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;4node-qbft-validator1-1&quot;,&quot;4node-qbft-validator2-1&quot;,&quot;4node-qbft-validator3-1&quot;,&quot;4node-qbft-validator4-1&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;,&quot;rgb(179,50,0,0.6)&quot;,&quot;rgb(255,209,191,0.6)&quot;,&quot;rgb(255,163,128,0.6)&quot;],&quot;data&quot;:[&quot;527&quot;,&quot;533&quot;,&quot;514&quot;,&quot;521&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_updateGrantAmount-stress_4node-qbft-validator1-1_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_updateGrantAmount-stress_4node-qbft-validator1-1_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu Disk Usage (MB)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;4node-qbft-validator1-1&quot;,&quot;4node-qbft-validator2-1&quot;,&quot;4node-qbft-validator3-1&quot;,&quot;4node-qbft-validator4-1&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;,&quot;rgb(179,50,0,0.6)&quot;,&quot;rgb(255,209,191,0.6)&quot;,&quot;rgb(255,163,128,0.6)&quot;],&quot;data&quot;:[&quot;116&quot;,&quot;115&quot;,&quot;115&quot;,&quot;116&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                            </div>
+            </div>
+
+            <div style="border-bottom: 1px solid #d9d9d9; padding-bottom: 10px;" id="updateStatus-low">
+                <h2>Benchmark round: updateStatus-low</h2>
+                <p></p>
+                <pre style="overflow: visible;white-space: pre-wrap;max-height:100%;">rateControl:
+  type: fixed-rate
+  opts:
+    tps: 10
+</pre>
+                        <h3>Performance metrics for updateStatus-low</h3>
+                            <table style="min-width: 100%;">
+                                <tr>
+                                     <th>Name</th> <th>Succ</th> <th>Fail</th> <th>Send Rate (TPS)</th> <th>Max Latency (s)</th> <th>Min Latency (s)</th> <th>Avg Latency (s)</th> <th>Throughput (TPS)</th>
+                                </tr>
+                                <tr>
+                                     <td>updateStatus-low</td> <td>0</td> <td>100</td> <td>10.1</td> <td>-</td> <td>-</td> <td>-</td> <td>7.2</td>
+                                </tr>
+                            </table>
+                        <h3>Resource utilization for updateStatus-low</h3>
+                            <h4>Resource monitor: prometheus</h4>
+                            <table style="min-width: 100%;">
+                                <tr>
+                                <table>
+                                    <tr>
+                                         <th>Metric</th> <th>Prometheus Query</th> <th>Name</th> <th>Value</th>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu CPU Usage (cores)</td> <td>sum(rate(container_cpu_usage_seconds_total{name&#x3D;~&quot;4node-qbft-validator[1-4]-1&quot;}[30s])) by (name)</td> <td>4node-qbft-validator1-1</td> <td>0.0511</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator2-1</td> <td>0.0526</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator3-1</td> <td>0.0478</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator4-1</td> <td>0.0596</td>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu Memory Usage (MB)</td> <td>sum(container_memory_usage_bytes{name&#x3D;~&quot;4node-qbft-validator[1-4]-1&quot;}) by (name)</td> <td>4node-qbft-validator1-1</td> <td>508</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator2-1</td> <td>508</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator3-1</td> <td>515</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator4-1</td> <td>502</td>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu Disk Usage (MB)</td> <td>sum(container_fs_usage_bytes{name&#x3D;~&quot;4node-qbft-validator[1-4]-1&quot;}) by (name)</td> <td>4node-qbft-validator1-1</td> <td>116</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator2-1</td> <td>116</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator3-1</td> <td>115</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator4-1</td> <td>116</td>
+                                    </tr>
+                                </table>
+                                </tr>
+                            </table>
+                            <div class="charting">
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_updateStatus-low_4node-qbft-validator1-1_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_updateStatus-low_4node-qbft-validator1-1_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu CPU Usage (cores)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;4node-qbft-validator1-1&quot;,&quot;4node-qbft-validator2-1&quot;,&quot;4node-qbft-validator3-1&quot;,&quot;4node-qbft-validator4-1&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;,&quot;rgb(179,50,0,0.6)&quot;,&quot;rgb(255,209,191,0.6)&quot;,&quot;rgb(255,163,128,0.6)&quot;],&quot;data&quot;:[&quot;0.0511&quot;,&quot;0.0526&quot;,&quot;0.0478&quot;,&quot;0.0596&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_updateStatus-low_4node-qbft-validator1-1_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_updateStatus-low_4node-qbft-validator1-1_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu Memory Usage (MB)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;4node-qbft-validator1-1&quot;,&quot;4node-qbft-validator2-1&quot;,&quot;4node-qbft-validator3-1&quot;,&quot;4node-qbft-validator4-1&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;,&quot;rgb(179,50,0,0.6)&quot;,&quot;rgb(255,209,191,0.6)&quot;,&quot;rgb(255,163,128,0.6)&quot;],&quot;data&quot;:[&quot;508&quot;,&quot;508&quot;,&quot;515&quot;,&quot;502&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_updateStatus-low_4node-qbft-validator1-1_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_updateStatus-low_4node-qbft-validator1-1_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu Disk Usage (MB)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;4node-qbft-validator1-1&quot;,&quot;4node-qbft-validator2-1&quot;,&quot;4node-qbft-validator3-1&quot;,&quot;4node-qbft-validator4-1&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;,&quot;rgb(179,50,0,0.6)&quot;,&quot;rgb(255,209,191,0.6)&quot;,&quot;rgb(255,163,128,0.6)&quot;],&quot;data&quot;:[&quot;116&quot;,&quot;116&quot;,&quot;115&quot;,&quot;116&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                            </div>
+            </div>
+
+            <div style="border-bottom: 1px solid #d9d9d9; padding-bottom: 10px;" id="updateStatus-mid">
+                <h2>Benchmark round: updateStatus-mid</h2>
+                <p></p>
+                <pre style="overflow: visible;white-space: pre-wrap;max-height:100%;">rateControl:
+  type: fixed-rate
+  opts:
+    tps: 25
+</pre>
+                        <h3>Performance metrics for updateStatus-mid</h3>
+                            <table style="min-width: 100%;">
+                                <tr>
+                                     <th>Name</th> <th>Succ</th> <th>Fail</th> <th>Send Rate (TPS)</th> <th>Max Latency (s)</th> <th>Min Latency (s)</th> <th>Avg Latency (s)</th> <th>Throughput (TPS)</th>
+                                </tr>
+                                <tr>
+                                     <td>updateStatus-mid</td> <td>0</td> <td>500</td> <td>25.1</td> <td>-</td> <td>-</td> <td>-</td> <td>20.9</td>
+                                </tr>
+                            </table>
+                        <h3>Resource utilization for updateStatus-mid</h3>
+                            <h4>Resource monitor: prometheus</h4>
+                            <table style="min-width: 100%;">
+                                <tr>
+                                <table>
+                                    <tr>
+                                         <th>Metric</th> <th>Prometheus Query</th> <th>Name</th> <th>Value</th>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu CPU Usage (cores)</td> <td>sum(rate(container_cpu_usage_seconds_total{name&#x3D;~&quot;4node-qbft-validator[1-4]-1&quot;}[30s])) by (name)</td> <td>4node-qbft-validator1-1</td> <td>0.139</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator2-1</td> <td>0.139</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator3-1</td> <td>0.129</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator4-1</td> <td>0.120</td>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu Memory Usage (MB)</td> <td>sum(container_memory_usage_bytes{name&#x3D;~&quot;4node-qbft-validator[1-4]-1&quot;}) by (name)</td> <td>4node-qbft-validator1-1</td> <td>539</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator2-1</td> <td>532</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator3-1</td> <td>506</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator4-1</td> <td>513</td>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu Disk Usage (MB)</td> <td>sum(container_fs_usage_bytes{name&#x3D;~&quot;4node-qbft-validator[1-4]-1&quot;}) by (name)</td> <td>4node-qbft-validator1-1</td> <td>116</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator2-1</td> <td>116</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator3-1</td> <td>115</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator4-1</td> <td>116</td>
+                                    </tr>
+                                </table>
+                                </tr>
+                            </table>
+                            <div class="charting">
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_updateStatus-mid_4node-qbft-validator1-1_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_updateStatus-mid_4node-qbft-validator1-1_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu CPU Usage (cores)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;4node-qbft-validator1-1&quot;,&quot;4node-qbft-validator2-1&quot;,&quot;4node-qbft-validator3-1&quot;,&quot;4node-qbft-validator4-1&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;,&quot;rgb(179,50,0,0.6)&quot;,&quot;rgb(255,209,191,0.6)&quot;,&quot;rgb(255,163,128,0.6)&quot;],&quot;data&quot;:[&quot;0.139&quot;,&quot;0.139&quot;,&quot;0.129&quot;,&quot;0.120&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_updateStatus-mid_4node-qbft-validator1-1_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_updateStatus-mid_4node-qbft-validator1-1_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu Memory Usage (MB)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;4node-qbft-validator1-1&quot;,&quot;4node-qbft-validator2-1&quot;,&quot;4node-qbft-validator3-1&quot;,&quot;4node-qbft-validator4-1&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;,&quot;rgb(179,50,0,0.6)&quot;,&quot;rgb(255,209,191,0.6)&quot;,&quot;rgb(255,163,128,0.6)&quot;],&quot;data&quot;:[&quot;539&quot;,&quot;532&quot;,&quot;506&quot;,&quot;513&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_updateStatus-mid_4node-qbft-validator1-1_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_updateStatus-mid_4node-qbft-validator1-1_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu Disk Usage (MB)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;4node-qbft-validator1-1&quot;,&quot;4node-qbft-validator2-1&quot;,&quot;4node-qbft-validator3-1&quot;,&quot;4node-qbft-validator4-1&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;,&quot;rgb(179,50,0,0.6)&quot;,&quot;rgb(255,209,191,0.6)&quot;,&quot;rgb(255,163,128,0.6)&quot;],&quot;data&quot;:[&quot;116&quot;,&quot;116&quot;,&quot;115&quot;,&quot;116&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                            </div>
+            </div>
+
+            <div style="border-bottom: 1px solid #d9d9d9; padding-bottom: 10px;" id="updateStatus-high">
+                <h2>Benchmark round: updateStatus-high</h2>
+                <p></p>
+                <pre style="overflow: visible;white-space: pre-wrap;max-height:100%;">rateControl:
+  type: fixed-rate
+  opts:
+    tps: 50
+</pre>
+                        <h3>Performance metrics for updateStatus-high</h3>
+                            <table style="min-width: 100%;">
+                                <tr>
+                                     <th>Name</th> <th>Succ</th> <th>Fail</th> <th>Send Rate (TPS)</th> <th>Max Latency (s)</th> <th>Min Latency (s)</th> <th>Avg Latency (s)</th> <th>Throughput (TPS)</th>
+                                </tr>
+                                <tr>
+                                     <td>updateStatus-high</td> <td>0</td> <td>1000</td> <td>50.1</td> <td>-</td> <td>-</td> <td>-</td> <td>3.9</td>
+                                </tr>
+                            </table>
+                        <h3>Resource utilization for updateStatus-high</h3>
+                            <h4>Resource monitor: prometheus</h4>
+                            <table style="min-width: 100%;">
+                                <tr>
+                                <table>
+                                    <tr>
+                                         <th>Metric</th> <th>Prometheus Query</th> <th>Name</th> <th>Value</th>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu CPU Usage (cores)</td> <td>sum(rate(container_cpu_usage_seconds_total{name&#x3D;~&quot;4node-qbft-validator[1-4]-1&quot;}[30s])) by (name)</td> <td>4node-qbft-validator1-1</td> <td>0.0586</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator2-1</td> <td>0.0557</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator3-1</td> <td>0.0556</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator4-1</td> <td>0.0572</td>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu Memory Usage (MB)</td> <td>sum(container_memory_usage_bytes{name&#x3D;~&quot;4node-qbft-validator[1-4]-1&quot;}) by (name)</td> <td>4node-qbft-validator1-1</td> <td>550</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator2-1</td> <td>531</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator3-1</td> <td>528</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator4-1</td> <td>534</td>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu Disk Usage (MB)</td> <td>sum(container_fs_usage_bytes{name&#x3D;~&quot;4node-qbft-validator[1-4]-1&quot;}) by (name)</td> <td>4node-qbft-validator1-1</td> <td>117</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator2-1</td> <td>117</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator3-1</td> <td>117</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator4-1</td> <td>118</td>
+                                    </tr>
+                                </table>
+                                </tr>
+                            </table>
+                            <div class="charting">
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_updateStatus-high_4node-qbft-validator1-1_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_updateStatus-high_4node-qbft-validator1-1_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu CPU Usage (cores)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;4node-qbft-validator1-1&quot;,&quot;4node-qbft-validator2-1&quot;,&quot;4node-qbft-validator3-1&quot;,&quot;4node-qbft-validator4-1&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;,&quot;rgb(179,50,0,0.6)&quot;,&quot;rgb(255,209,191,0.6)&quot;,&quot;rgb(255,163,128,0.6)&quot;],&quot;data&quot;:[&quot;0.0586&quot;,&quot;0.0557&quot;,&quot;0.0556&quot;,&quot;0.0572&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_updateStatus-high_4node-qbft-validator1-1_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_updateStatus-high_4node-qbft-validator1-1_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu Memory Usage (MB)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;4node-qbft-validator1-1&quot;,&quot;4node-qbft-validator2-1&quot;,&quot;4node-qbft-validator3-1&quot;,&quot;4node-qbft-validator4-1&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;,&quot;rgb(179,50,0,0.6)&quot;,&quot;rgb(255,209,191,0.6)&quot;,&quot;rgb(255,163,128,0.6)&quot;],&quot;data&quot;:[&quot;550&quot;,&quot;531&quot;,&quot;528&quot;,&quot;534&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_updateStatus-high_4node-qbft-validator1-1_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_updateStatus-high_4node-qbft-validator1-1_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu Disk Usage (MB)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;4node-qbft-validator1-1&quot;,&quot;4node-qbft-validator2-1&quot;,&quot;4node-qbft-validator3-1&quot;,&quot;4node-qbft-validator4-1&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;,&quot;rgb(179,50,0,0.6)&quot;,&quot;rgb(255,209,191,0.6)&quot;,&quot;rgb(255,163,128,0.6)&quot;],&quot;data&quot;:[&quot;117&quot;,&quot;117&quot;,&quot;117&quot;,&quot;118&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                            </div>
+            </div>
+
+            <div style="border-bottom: 1px solid #d9d9d9; padding-bottom: 10px;" id="updateStatus-stress">
+                <h2>Benchmark round: updateStatus-stress</h2>
+                <p></p>
+                <pre style="overflow: visible;white-space: pre-wrap;max-height:100%;">rateControl:
+  type: linear-rate
+  opts:
+    startingTps: 10
+    finishingTps: 100
+</pre>
+                        <h3>Performance metrics for updateStatus-stress</h3>
+                            <table style="min-width: 100%;">
+                                <tr>
+                                     <th>Name</th> <th>Succ</th> <th>Fail</th> <th>Send Rate (TPS)</th> <th>Max Latency (s)</th> <th>Min Latency (s)</th> <th>Avg Latency (s)</th> <th>Throughput (TPS)</th>
+                                </tr>
+                                <tr>
+                                     <td>updateStatus-stress</td> <td>0</td> <td>1000</td> <td>18.0</td> <td>-</td> <td>-</td> <td>-</td> <td>3.9</td>
+                                </tr>
+                            </table>
+                        <h3>Resource utilization for updateStatus-stress</h3>
+                            <h4>Resource monitor: prometheus</h4>
+                            <table style="min-width: 100%;">
+                                <tr>
+                                <table>
+                                    <tr>
+                                         <th>Metric</th> <th>Prometheus Query</th> <th>Name</th> <th>Value</th>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu CPU Usage (cores)</td> <td>sum(rate(container_cpu_usage_seconds_total{name&#x3D;~&quot;4node-qbft-validator[1-4]-1&quot;}[30s])) by (name)</td> <td>4node-qbft-validator1-1</td> <td>0.0637</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator2-1</td> <td>0.0649</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator3-1</td> <td>0.0654</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator4-1</td> <td>0.0649</td>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu Memory Usage (MB)</td> <td>sum(container_memory_usage_bytes{name&#x3D;~&quot;4node-qbft-validator[1-4]-1&quot;}) by (name)</td> <td>4node-qbft-validator1-1</td> <td>551</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator2-1</td> <td>545</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator3-1</td> <td>534</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator4-1</td> <td>531</td>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu Disk Usage (MB)</td> <td>sum(container_fs_usage_bytes{name&#x3D;~&quot;4node-qbft-validator[1-4]-1&quot;}) by (name)</td> <td>4node-qbft-validator1-1</td> <td>120</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator2-1</td> <td>119</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator3-1</td> <td>119</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator4-1</td> <td>120</td>
+                                    </tr>
+                                </table>
+                                </tr>
+                            </table>
+                            <div class="charting">
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_updateStatus-stress_4node-qbft-validator1-1_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_updateStatus-stress_4node-qbft-validator1-1_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu CPU Usage (cores)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;4node-qbft-validator1-1&quot;,&quot;4node-qbft-validator2-1&quot;,&quot;4node-qbft-validator3-1&quot;,&quot;4node-qbft-validator4-1&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;,&quot;rgb(179,50,0,0.6)&quot;,&quot;rgb(255,209,191,0.6)&quot;,&quot;rgb(255,163,128,0.6)&quot;],&quot;data&quot;:[&quot;0.0637&quot;,&quot;0.0649&quot;,&quot;0.0654&quot;,&quot;0.0649&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_updateStatus-stress_4node-qbft-validator1-1_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_updateStatus-stress_4node-qbft-validator1-1_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu Memory Usage (MB)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;4node-qbft-validator1-1&quot;,&quot;4node-qbft-validator2-1&quot;,&quot;4node-qbft-validator3-1&quot;,&quot;4node-qbft-validator4-1&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;,&quot;rgb(179,50,0,0.6)&quot;,&quot;rgb(255,209,191,0.6)&quot;,&quot;rgb(255,163,128,0.6)&quot;],&quot;data&quot;:[&quot;551&quot;,&quot;545&quot;,&quot;534&quot;,&quot;531&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_updateStatus-stress_4node-qbft-validator1-1_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_updateStatus-stress_4node-qbft-validator1-1_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu Disk Usage (MB)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;4node-qbft-validator1-1&quot;,&quot;4node-qbft-validator2-1&quot;,&quot;4node-qbft-validator3-1&quot;,&quot;4node-qbft-validator4-1&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;,&quot;rgb(179,50,0,0.6)&quot;,&quot;rgb(255,209,191,0.6)&quot;,&quot;rgb(255,163,128,0.6)&quot;],&quot;data&quot;:[&quot;120&quot;,&quot;119&quot;,&quot;119&quot;,&quot;120&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                            </div>
+            </div>
+
+            <div style="border-bottom: 1px solid #d9d9d9; padding-bottom: 10px;" id="getCBSDInfo-low">
+                <h2>Benchmark round: getCBSDInfo-low</h2>
+                <p></p>
+                <pre style="overflow: visible;white-space: pre-wrap;max-height:100%;">rateControl:
+  type: fixed-rate
+  opts:
+    tps: 10
+</pre>
+                        <h3>Performance metrics for getCBSDInfo-low</h3>
+                            <table style="min-width: 100%;">
+                                <tr>
+                                     <th>Name</th> <th>Succ</th> <th>Fail</th> <th>Send Rate (TPS)</th> <th>Max Latency (s)</th> <th>Min Latency (s)</th> <th>Avg Latency (s)</th> <th>Throughput (TPS)</th>
+                                </tr>
+                                <tr>
+                                     <td>getCBSDInfo-low</td> <td>100</td> <td>0</td> <td>10.1</td> <td>0.05</td> <td>0.00</td> <td>0.00</td> <td>10.1</td>
+                                </tr>
+                            </table>
+                        <h3>Resource utilization for getCBSDInfo-low</h3>
+                            <h4>Resource monitor: prometheus</h4>
+                            <table style="min-width: 100%;">
+                                <tr>
+                                <table>
+                                    <tr>
+                                         <th>Metric</th> <th>Prometheus Query</th> <th>Name</th> <th>Value</th>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu CPU Usage (cores)</td> <td>sum(rate(container_cpu_usage_seconds_total{name&#x3D;~&quot;4node-qbft-validator[1-4]-1&quot;}[30s])) by (name)</td> <td>4node-qbft-validator1-1</td> <td>0.0392</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator2-1</td> <td>0.0537</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator3-1</td> <td>0.0464</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator4-1</td> <td>0.0504</td>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu Memory Usage (MB)</td> <td>sum(container_memory_usage_bytes{name&#x3D;~&quot;4node-qbft-validator[1-4]-1&quot;}) by (name)</td> <td>4node-qbft-validator1-1</td> <td>515</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator2-1</td> <td>505</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator3-1</td> <td>508</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator4-1</td> <td>515</td>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu Disk Usage (MB)</td> <td>sum(container_fs_usage_bytes{name&#x3D;~&quot;4node-qbft-validator[1-4]-1&quot;}) by (name)</td> <td>4node-qbft-validator1-1</td> <td>120</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator2-1</td> <td>120</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator3-1</td> <td>119</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator4-1</td> <td>120</td>
+                                    </tr>
+                                </table>
+                                </tr>
+                            </table>
+                            <div class="charting">
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_getCBSDInfo-low_4node-qbft-validator1-1_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_getCBSDInfo-low_4node-qbft-validator1-1_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu CPU Usage (cores)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;4node-qbft-validator1-1&quot;,&quot;4node-qbft-validator2-1&quot;,&quot;4node-qbft-validator3-1&quot;,&quot;4node-qbft-validator4-1&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;,&quot;rgb(179,50,0,0.6)&quot;,&quot;rgb(255,209,191,0.6)&quot;,&quot;rgb(255,163,128,0.6)&quot;],&quot;data&quot;:[&quot;0.0392&quot;,&quot;0.0537&quot;,&quot;0.0464&quot;,&quot;0.0504&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_getCBSDInfo-low_4node-qbft-validator1-1_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_getCBSDInfo-low_4node-qbft-validator1-1_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu Memory Usage (MB)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;4node-qbft-validator1-1&quot;,&quot;4node-qbft-validator2-1&quot;,&quot;4node-qbft-validator3-1&quot;,&quot;4node-qbft-validator4-1&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;,&quot;rgb(179,50,0,0.6)&quot;,&quot;rgb(255,209,191,0.6)&quot;,&quot;rgb(255,163,128,0.6)&quot;],&quot;data&quot;:[&quot;515&quot;,&quot;505&quot;,&quot;508&quot;,&quot;515&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_getCBSDInfo-low_4node-qbft-validator1-1_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_getCBSDInfo-low_4node-qbft-validator1-1_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu Disk Usage (MB)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;4node-qbft-validator1-1&quot;,&quot;4node-qbft-validator2-1&quot;,&quot;4node-qbft-validator3-1&quot;,&quot;4node-qbft-validator4-1&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;,&quot;rgb(179,50,0,0.6)&quot;,&quot;rgb(255,209,191,0.6)&quot;,&quot;rgb(255,163,128,0.6)&quot;],&quot;data&quot;:[&quot;120&quot;,&quot;120&quot;,&quot;119&quot;,&quot;120&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                            </div>
+            </div>
+
+            <div style="border-bottom: 1px solid #d9d9d9; padding-bottom: 10px;" id="getCBSDInfo-mid">
+                <h2>Benchmark round: getCBSDInfo-mid</h2>
+                <p></p>
+                <pre style="overflow: visible;white-space: pre-wrap;max-height:100%;">rateControl:
+  type: fixed-rate
+  opts:
+    tps: 25
+</pre>
+                        <h3>Performance metrics for getCBSDInfo-mid</h3>
+                            <table style="min-width: 100%;">
+                                <tr>
+                                     <th>Name</th> <th>Succ</th> <th>Fail</th> <th>Send Rate (TPS)</th> <th>Max Latency (s)</th> <th>Min Latency (s)</th> <th>Avg Latency (s)</th> <th>Throughput (TPS)</th>
+                                </tr>
+                                <tr>
+                                     <td>getCBSDInfo-mid</td> <td>500</td> <td>0</td> <td>25.1</td> <td>0.01</td> <td>0.00</td> <td>0.00</td> <td>25.0</td>
+                                </tr>
+                            </table>
+                        <h3>Resource utilization for getCBSDInfo-mid</h3>
+                            <h4>Resource monitor: prometheus</h4>
+                            <table style="min-width: 100%;">
+                                <tr>
+                                <table>
+                                    <tr>
+                                         <th>Metric</th> <th>Prometheus Query</th> <th>Name</th> <th>Value</th>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu CPU Usage (cores)</td> <td>sum(rate(container_cpu_usage_seconds_total{name&#x3D;~&quot;4node-qbft-validator[1-4]-1&quot;}[30s])) by (name)</td> <td>4node-qbft-validator1-1</td> <td>0.0410</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator2-1</td> <td>0.0373</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator3-1</td> <td>0.0456</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator4-1</td> <td>0.0358</td>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu Memory Usage (MB)</td> <td>sum(container_memory_usage_bytes{name&#x3D;~&quot;4node-qbft-validator[1-4]-1&quot;}) by (name)</td> <td>4node-qbft-validator1-1</td> <td>519</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator2-1</td> <td>506</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator3-1</td> <td>505</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator4-1</td> <td>516</td>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu Disk Usage (MB)</td> <td>sum(container_fs_usage_bytes{name&#x3D;~&quot;4node-qbft-validator[1-4]-1&quot;}) by (name)</td> <td>4node-qbft-validator1-1</td> <td>120</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator2-1</td> <td>120</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator3-1</td> <td>119</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator4-1</td> <td>120</td>
+                                    </tr>
+                                </table>
+                                </tr>
+                            </table>
+                            <div class="charting">
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_getCBSDInfo-mid_4node-qbft-validator1-1_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_getCBSDInfo-mid_4node-qbft-validator1-1_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu CPU Usage (cores)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;4node-qbft-validator1-1&quot;,&quot;4node-qbft-validator2-1&quot;,&quot;4node-qbft-validator3-1&quot;,&quot;4node-qbft-validator4-1&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;,&quot;rgb(179,50,0,0.6)&quot;,&quot;rgb(255,209,191,0.6)&quot;,&quot;rgb(255,163,128,0.6)&quot;],&quot;data&quot;:[&quot;0.0410&quot;,&quot;0.0373&quot;,&quot;0.0456&quot;,&quot;0.0358&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_getCBSDInfo-mid_4node-qbft-validator1-1_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_getCBSDInfo-mid_4node-qbft-validator1-1_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu Memory Usage (MB)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;4node-qbft-validator1-1&quot;,&quot;4node-qbft-validator2-1&quot;,&quot;4node-qbft-validator3-1&quot;,&quot;4node-qbft-validator4-1&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;,&quot;rgb(179,50,0,0.6)&quot;,&quot;rgb(255,209,191,0.6)&quot;,&quot;rgb(255,163,128,0.6)&quot;],&quot;data&quot;:[&quot;519&quot;,&quot;506&quot;,&quot;505&quot;,&quot;516&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_getCBSDInfo-mid_4node-qbft-validator1-1_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_getCBSDInfo-mid_4node-qbft-validator1-1_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu Disk Usage (MB)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;4node-qbft-validator1-1&quot;,&quot;4node-qbft-validator2-1&quot;,&quot;4node-qbft-validator3-1&quot;,&quot;4node-qbft-validator4-1&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;,&quot;rgb(179,50,0,0.6)&quot;,&quot;rgb(255,209,191,0.6)&quot;,&quot;rgb(255,163,128,0.6)&quot;],&quot;data&quot;:[&quot;120&quot;,&quot;120&quot;,&quot;119&quot;,&quot;120&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                            </div>
+            </div>
+
+            <div style="border-bottom: 1px solid #d9d9d9; padding-bottom: 10px;" id="getCBSDInfo-high">
+                <h2>Benchmark round: getCBSDInfo-high</h2>
+                <p></p>
+                <pre style="overflow: visible;white-space: pre-wrap;max-height:100%;">rateControl:
+  type: fixed-rate
+  opts:
+    tps: 50
+</pre>
+                        <h3>Performance metrics for getCBSDInfo-high</h3>
+                            <table style="min-width: 100%;">
+                                <tr>
+                                     <th>Name</th> <th>Succ</th> <th>Fail</th> <th>Send Rate (TPS)</th> <th>Max Latency (s)</th> <th>Min Latency (s)</th> <th>Avg Latency (s)</th> <th>Throughput (TPS)</th>
+                                </tr>
+                                <tr>
+                                     <td>getCBSDInfo-high</td> <td>1000</td> <td>0</td> <td>50.1</td> <td>0.02</td> <td>0.00</td> <td>0.00</td> <td>50.0</td>
+                                </tr>
+                            </table>
+                        <h3>Resource utilization for getCBSDInfo-high</h3>
+                            <h4>Resource monitor: prometheus</h4>
+                            <table style="min-width: 100%;">
+                                <tr>
+                                <table>
+                                    <tr>
+                                         <th>Metric</th> <th>Prometheus Query</th> <th>Name</th> <th>Value</th>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu CPU Usage (cores)</td> <td>sum(rate(container_cpu_usage_seconds_total{name&#x3D;~&quot;4node-qbft-validator[1-4]-1&quot;}[30s])) by (name)</td> <td>4node-qbft-validator1-1</td> <td>0.0373</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator2-1</td> <td>0.0498</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator3-1</td> <td>0.0468</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator4-1</td> <td>0.0517</td>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu Memory Usage (MB)</td> <td>sum(container_memory_usage_bytes{name&#x3D;~&quot;4node-qbft-validator[1-4]-1&quot;}) by (name)</td> <td>4node-qbft-validator1-1</td> <td>517</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator2-1</td> <td>506</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator3-1</td> <td>505</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator4-1</td> <td>503</td>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu Disk Usage (MB)</td> <td>sum(container_fs_usage_bytes{name&#x3D;~&quot;4node-qbft-validator[1-4]-1&quot;}) by (name)</td> <td>4node-qbft-validator1-1</td> <td>120</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator2-1</td> <td>120</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator3-1</td> <td>119</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator4-1</td> <td>121</td>
+                                    </tr>
+                                </table>
+                                </tr>
+                            </table>
+                            <div class="charting">
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_getCBSDInfo-high_4node-qbft-validator1-1_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_getCBSDInfo-high_4node-qbft-validator1-1_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu CPU Usage (cores)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;4node-qbft-validator1-1&quot;,&quot;4node-qbft-validator2-1&quot;,&quot;4node-qbft-validator3-1&quot;,&quot;4node-qbft-validator4-1&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;,&quot;rgb(179,50,0,0.6)&quot;,&quot;rgb(255,209,191,0.6)&quot;,&quot;rgb(255,163,128,0.6)&quot;],&quot;data&quot;:[&quot;0.0373&quot;,&quot;0.0498&quot;,&quot;0.0468&quot;,&quot;0.0517&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_getCBSDInfo-high_4node-qbft-validator1-1_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_getCBSDInfo-high_4node-qbft-validator1-1_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu Memory Usage (MB)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;4node-qbft-validator1-1&quot;,&quot;4node-qbft-validator2-1&quot;,&quot;4node-qbft-validator3-1&quot;,&quot;4node-qbft-validator4-1&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;,&quot;rgb(179,50,0,0.6)&quot;,&quot;rgb(255,209,191,0.6)&quot;,&quot;rgb(255,163,128,0.6)&quot;],&quot;data&quot;:[&quot;517&quot;,&quot;506&quot;,&quot;505&quot;,&quot;503&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_getCBSDInfo-high_4node-qbft-validator1-1_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_getCBSDInfo-high_4node-qbft-validator1-1_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu Disk Usage (MB)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;4node-qbft-validator1-1&quot;,&quot;4node-qbft-validator2-1&quot;,&quot;4node-qbft-validator3-1&quot;,&quot;4node-qbft-validator4-1&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;,&quot;rgb(179,50,0,0.6)&quot;,&quot;rgb(255,209,191,0.6)&quot;,&quot;rgb(255,163,128,0.6)&quot;],&quot;data&quot;:[&quot;120&quot;,&quot;120&quot;,&quot;119&quot;,&quot;121&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                            </div>
+            </div>
+
+            <div style="border-bottom: 1px solid #d9d9d9; padding-bottom: 10px;" id="getCBSDInfo-stress">
+                <h2>Benchmark round: getCBSDInfo-stress</h2>
+                <p></p>
+                <pre style="overflow: visible;white-space: pre-wrap;max-height:100%;">rateControl:
+  type: linear-rate
+  opts:
+    startingTps: 10
+    finishingTps: 100
+</pre>
+                        <h3>Performance metrics for getCBSDInfo-stress</h3>
+                            <table style="min-width: 100%;">
+                                <tr>
+                                     <th>Name</th> <th>Succ</th> <th>Fail</th> <th>Send Rate (TPS)</th> <th>Max Latency (s)</th> <th>Min Latency (s)</th> <th>Avg Latency (s)</th> <th>Throughput (TPS)</th>
+                                </tr>
+                                <tr>
+                                     <td>getCBSDInfo-stress</td> <td>1000</td> <td>0</td> <td>18.1</td> <td>0.02</td> <td>0.00</td> <td>0.00</td> <td>18.1</td>
+                                </tr>
+                            </table>
+                        <h3>Resource utilization for getCBSDInfo-stress</h3>
+                            <h4>Resource monitor: prometheus</h4>
+                            <table style="min-width: 100%;">
+                                <tr>
+                                <table>
+                                    <tr>
+                                         <th>Metric</th> <th>Prometheus Query</th> <th>Name</th> <th>Value</th>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu CPU Usage (cores)</td> <td>sum(rate(container_cpu_usage_seconds_total{name&#x3D;~&quot;4node-qbft-validator[1-4]-1&quot;}[30s])) by (name)</td> <td>4node-qbft-validator1-1</td> <td>0.0467</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator2-1</td> <td>0.0406</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator3-1</td> <td>0.0447</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator4-1</td> <td>0.0453</td>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu Memory Usage (MB)</td> <td>sum(container_memory_usage_bytes{name&#x3D;~&quot;4node-qbft-validator[1-4]-1&quot;}) by (name)</td> <td>4node-qbft-validator1-1</td> <td>518</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator2-1</td> <td>503</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator3-1</td> <td>506</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator4-1</td> <td>504</td>
+                                    </tr>
+                                    <tr>
+                                         <td>Besu Disk Usage (MB)</td> <td>sum(container_fs_usage_bytes{name&#x3D;~&quot;4node-qbft-validator[1-4]-1&quot;}) by (name)</td> <td>4node-qbft-validator1-1</td> <td>120</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator2-1</td> <td>120</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator3-1</td> <td>119</td>
+                                    </tr>
+                                    <tr>
+                                         <td></td> <td></td> <td>4node-qbft-validator4-1</td> <td>121</td>
+                                    </tr>
+                                </table>
+                                </tr>
+                            </table>
+                            <div class="charting">
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_getCBSDInfo-stress_4node-qbft-validator1-1_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_getCBSDInfo-stress_4node-qbft-validator1-1_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu CPU Usage (cores)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;4node-qbft-validator1-1&quot;,&quot;4node-qbft-validator2-1&quot;,&quot;4node-qbft-validator3-1&quot;,&quot;4node-qbft-validator4-1&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;,&quot;rgb(179,50,0,0.6)&quot;,&quot;rgb(255,209,191,0.6)&quot;,&quot;rgb(255,163,128,0.6)&quot;],&quot;data&quot;:[&quot;0.0467&quot;,&quot;0.0406&quot;,&quot;0.0447&quot;,&quot;0.0453&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_getCBSDInfo-stress_4node-qbft-validator1-1_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_getCBSDInfo-stress_4node-qbft-validator1-1_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu Memory Usage (MB)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;4node-qbft-validator1-1&quot;,&quot;4node-qbft-validator2-1&quot;,&quot;4node-qbft-validator3-1&quot;,&quot;4node-qbft-validator4-1&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;,&quot;rgb(179,50,0,0.6)&quot;,&quot;rgb(255,209,191,0.6)&quot;,&quot;rgb(255,163,128,0.6)&quot;],&quot;data&quot;:[&quot;518&quot;,&quot;503&quot;,&quot;506&quot;,&quot;504&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                                <div class="chart">
+                                    <canvas id="PrometheusMonitor_getCBSDInfo-stress_4node-qbft-validator1-1_horizontalBar0">
+                                        <script>plotChart("PrometheusMonitor_getCBSDInfo-stress_4node-qbft-validator1-1_horizontalBar0", "{&quot;type&quot;:&quot;horizontalBar&quot;,&quot;title&quot;:&quot;Besu Disk Usage (MB)&quot;,&quot;legend&quot;:false,&quot;labels&quot;:[&quot;4node-qbft-validator1-1&quot;,&quot;4node-qbft-validator2-1&quot;,&quot;4node-qbft-validator3-1&quot;,&quot;4node-qbft-validator4-1&quot;],&quot;datasets&quot;:[{&quot;backgroundColor&quot;:[&quot;rgb(255,71,0,0.6)&quot;,&quot;rgb(179,50,0,0.6)&quot;,&quot;rgb(255,209,191,0.6)&quot;,&quot;rgb(255,163,128,0.6)&quot;],&quot;data&quot;:[&quot;120&quot;,&quot;120&quot;,&quot;119&quot;,&quot;121&quot;]}]}")</script>
+                                    </canvas>
+                                </div>
+                            </div>
+            </div>
+
+            <div style="border-bottom: 1px solid #d9d9d9; padding-bottom: 10px;">
+                <h2>Test Environment</h2>
+                <h3>benchmark config</h3>
+                <pre id="benchmarkInfo" style="overflow: visible;white-space: pre-wrap;max-height:100%;">name: CBSDRegistry-benchmark
+description: Benchmark for CBSDRegistry smart contract
+workers:
+  type: local
+  number: 1
+rounds:
+  - label: registerCBSD-low
+    txNumber: 100
+    rateControl:
+      type: fixed-rate
+      opts:
+        tps: 10
+    workload:
+      module: benchmarks&#x2F;scenario&#x2F;CBSDRegistry&#x2F;register.js
+  - label: registerCBSD-lowmid
+    txNumber: 250
+    rateControl:
+      type: fixed-rate
+      opts:
+        tps: 15
+    workload:
+      module: benchmarks&#x2F;scenario&#x2F;CBSDRegistry&#x2F;register.js
+  - label: registerCBSD-midlow
+    txNumber: 350
+    rateControl:
+      type: fixed-rate
+      opts:
+        tps: 18
+    workload:
+      module: benchmarks&#x2F;scenario&#x2F;CBSDRegistry&#x2F;register.js
+  - label: registerCBSD-mid
+    txNumber: 500
+    rateControl:
+      type: fixed-rate
+      opts:
+        tps: 25
+    workload:
+      module: benchmarks&#x2F;scenario&#x2F;CBSDRegistry&#x2F;register.js
+  - label: registerCBSD-midmid
+    txNumber: 600
+    rateControl:
+      type: fixed-rate
+      opts:
+        tps: 30
+    workload:
+      module: benchmarks&#x2F;scenario&#x2F;CBSDRegistry&#x2F;register.js
+  - label: registerCBSD-midhigh
+    txNumber: 700
+    rateControl:
+      type: fixed-rate
+      opts:
+        tps: 35
+    workload:
+      module: benchmarks&#x2F;scenario&#x2F;CBSDRegistry&#x2F;register.js
+  - label: registerCBSD-prehigh
+    txNumber: 850
+    rateControl:
+      type: fixed-rate
+      opts:
+        tps: 42
+    workload:
+      module: benchmarks&#x2F;scenario&#x2F;CBSDRegistry&#x2F;register.js
+  - label: registerCBSD-high
+    txNumber: 1000
+    rateControl:
+      type: fixed-rate
+      opts:
+        tps: 50
+    workload:
+      module: benchmarks&#x2F;scenario&#x2F;CBSDRegistry&#x2F;register.js
+  - label: registerCBSD-stress
+    txNumber: 1000
+    rateControl:
+      type: linear-rate
+      opts:
+        startingTps: 10
+        finishingTps: 100
+    workload:
+      module: benchmarks&#x2F;scenario&#x2F;CBSDRegistry&#x2F;register.js
+  - label: updateGrantAmount-low
+    txNumber: 100
+    rateControl:
+      type: fixed-rate
+      opts:
+        tps: 10
+    workload:
+      module: benchmarks&#x2F;scenario&#x2F;CBSDRegistry&#x2F;updateGrant.js
+  - label: updateGrantAmount-mid
+    txNumber: 500
+    rateControl:
+      type: fixed-rate
+      opts:
+        tps: 25
+    workload:
+      module: benchmarks&#x2F;scenario&#x2F;CBSDRegistry&#x2F;updateGrant.js
+  - label: updateGrantAmount-high
+    txNumber: 1000
+    rateControl:
+      type: fixed-rate
+      opts:
+        tps: 50
+    workload:
+      module: benchmarks&#x2F;scenario&#x2F;CBSDRegistry&#x2F;updateGrant.js
+  - label: updateGrantAmount-stress
+    txNumber: 1000
+    rateControl:
+      type: linear-rate
+      opts:
+        startingTps: 10
+        finishingTps: 100
+    workload:
+      module: benchmarks&#x2F;scenario&#x2F;CBSDRegistry&#x2F;updateGrant.js
+  - label: updateStatus-low
+    txNumber: 100
+    rateControl:
+      type: fixed-rate
+      opts:
+        tps: 10
+    workload:
+      module: benchmarks&#x2F;scenario&#x2F;CBSDRegistry&#x2F;updateStatus.js
+  - label: updateStatus-mid
+    txNumber: 500
+    rateControl:
+      type: fixed-rate
+      opts:
+        tps: 25
+    workload:
+      module: benchmarks&#x2F;scenario&#x2F;CBSDRegistry&#x2F;updateStatus.js
+  - label: updateStatus-high
+    txNumber: 1000
+    rateControl:
+      type: fixed-rate
+      opts:
+        tps: 50
+    workload:
+      module: benchmarks&#x2F;scenario&#x2F;CBSDRegistry&#x2F;updateStatus.js
+  - label: updateStatus-stress
+    txNumber: 1000
+    rateControl:
+      type: linear-rate
+      opts:
+        startingTps: 10
+        finishingTps: 100
+    workload:
+      module: benchmarks&#x2F;scenario&#x2F;CBSDRegistry&#x2F;updateStatus.js
+  - label: getCBSDInfo-low
+    txNumber: 100
+    rateControl:
+      type: fixed-rate
+      opts:
+        tps: 10
+    workload:
+      module: benchmarks&#x2F;scenario&#x2F;CBSDRegistry&#x2F;query.js
+  - label: getCBSDInfo-mid
+    txNumber: 500
+    rateControl:
+      type: fixed-rate
+      opts:
+        tps: 25
+    workload:
+      module: benchmarks&#x2F;scenario&#x2F;CBSDRegistry&#x2F;query.js
+  - label: getCBSDInfo-high
+    txNumber: 1000
+    rateControl:
+      type: fixed-rate
+      opts:
+        tps: 50
+    workload:
+      module: benchmarks&#x2F;scenario&#x2F;CBSDRegistry&#x2F;query.js
+  - label: getCBSDInfo-stress
+    txNumber: 1000
+    rateControl:
+      type: linear-rate
+      opts:
+        startingTps: 10
+        finishingTps: 100
+    workload:
+      module: benchmarks&#x2F;scenario&#x2F;CBSDRegistry&#x2F;query.js
+</pre>
+                <h3>SUT</h3>
+                <pre id="sutdetails">not provided</pre>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

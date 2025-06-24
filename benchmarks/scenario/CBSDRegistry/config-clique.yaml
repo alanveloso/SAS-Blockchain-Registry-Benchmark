@@ -1,7 +1,7 @@
 simpleArgs: &simple-args
   numberOfAccounts: &number-of-accounts 50
   tps: &tps 50
-  workers: &workers 10
+  workers: &workers 1
 
 test:
   name: CBSDRegistry-benchmark
@@ -18,12 +18,52 @@ test:
           tps: 10
       workload:
         module: benchmarks/scenario/CBSDRegistry/register.js
+    - label: registerCBSD-lowmid
+      txNumber: 250
+      rateControl:
+        type: fixed-rate
+        opts:
+          tps: 15
+      workload:
+        module: benchmarks/scenario/CBSDRegistry/register.js
+    - label: registerCBSD-midlow
+      txNumber: 350
+      rateControl:
+        type: fixed-rate
+        opts:
+          tps: 18
+      workload:
+        module: benchmarks/scenario/CBSDRegistry/register.js
     - label: registerCBSD-mid
       txNumber: 500
       rateControl:
         type: fixed-rate
         opts:
           tps: 25
+      workload:
+        module: benchmarks/scenario/CBSDRegistry/register.js
+    - label: registerCBSD-midmid
+      txNumber: 600
+      rateControl:
+        type: fixed-rate
+        opts:
+          tps: 30
+      workload:
+        module: benchmarks/scenario/CBSDRegistry/register.js
+    - label: registerCBSD-midhigh
+      txNumber: 700
+      rateControl:
+        type: fixed-rate
+        opts:
+          tps: 35
+      workload:
+        module: benchmarks/scenario/CBSDRegistry/register.js
+    - label: registerCBSD-prehigh
+      txNumber: 850
+      rateControl:
+        type: fixed-rate
+        opts:
+          tps: 42
       workload:
         module: benchmarks/scenario/CBSDRegistry/register.js
     - label: registerCBSD-high

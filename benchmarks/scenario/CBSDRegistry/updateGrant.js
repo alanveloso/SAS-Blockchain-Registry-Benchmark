@@ -13,7 +13,12 @@ class UpdateGrantAmountWorkload extends CbsdBase {
 
         const args = [cbsdId, newGrantAmount];
         
-        await this.sutAdapter.sendRequests(this.createConnectorRequest('updateGrantAmount', args));
+        try {
+            await this.sutAdapter.sendRequests(this.createConnectorRequest('updateGrantAmount', args));
+        } catch (error) {
+            console.error(`❌ Erro ao atualizar grant para CBSD ${cbsdId}: ${error.message}`);
+        }
+        
     }
 }
 

@@ -9,6 +9,10 @@ class RegisterCbsdWorkload extends CbsdBase {
 
     async submitTransaction() {
         const cbsdId = Math.floor(Math.random() * 1000000);
+        // const workerIndex = Number.isInteger(this.workerIndex) ? this.workerIndex : 0;
+        // const txIndex = Number.isInteger(this.txIndex) ? this.txIndex : 0;
+
+        // const cbsdId = workerIndex * 1_000_000 + txIndex;
         const cbsdAddress = '0x' + Math.random().toString(16).substr(2, 40).padEnd(40, '0');
         const grantAmount = Math.floor(Math.random() * 1000);
 

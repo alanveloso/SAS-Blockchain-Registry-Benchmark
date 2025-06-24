@@ -1,0 +1,26 @@
+Usage:
+ caliper launch manager --caliper-bind-sut fabric:2.2 [other options]
+
+Options:
+  --help, -h           Show usage information  [booleano]
+  --version            Show version information  [booleano]
+  --caliper-bind-sut   The name and version of the platform to bind to  [string]
+  --caliper-bind-cwd   The working directory for performing the SDK install  [string]
+  --caliper-bind-args  Additional arguments to pass to "npm install". Use the "=" notation when setting this parameter  [string]
+  --caliper-bind-file  Yaml file to override default (supported) package versions when binding an SDK  [string]
+
+Error: Benchmark configuration file "/home/alanveloso/repos/SAS-Blockchain-Registry-Benchmark/benchmark.yaml" does not exist
+    at CaliperUtils.assertConfigurationFilePaths (/home/alanveloso/repos/SAS-Blockchain-Registry-Benchmark/node_modules/@hyperledger/caliper-core/lib/common/utils/caliper-utils.js:68:19)
+    at LaunchManager.handler (/home/alanveloso/repos/SAS-Blockchain-Registry-Benchmark/node_modules/@hyperledger/caliper-cli/lib/launch/lib/launchManager.js:32:22)
+    at module.exports.handler (/home/alanveloso/repos/SAS-Blockchain-Registry-Benchmark/node_modules/@hyperledger/caliper-cli/lib/launch/launchManagerCommand.js:46:44)
+    at Object.runCommand (/home/alanveloso/repos/SAS-Blockchain-Registry-Benchmark/node_modules/yargs/lib/command.js:240:40)
+    at Object.parseArgs [as _parseArgs] (/home/alanveloso/repos/SAS-Blockchain-Registry-Benchmark/node_modules/yargs/yargs.js:1154:41)
+    at Object.runCommand (/home/alanveloso/repos/SAS-Blockchain-Registry-Benchmark/node_modules/yargs/lib/command.js:198:30)
+    at Object.parseArgs [as _parseArgs] (/home/alanveloso/repos/SAS-Blockchain-Registry-Benchmark/node_modules/yargs/yargs.js:1154:41)
+    at Object.get [as argv] (/home/alanveloso/repos/SAS-Blockchain-Registry-Benchmark/node_modules/yargs/yargs.js:1088:21)
+    at Object.<anonymous> (/home/alanveloso/repos/SAS-Blockchain-Registry-Benchmark/node_modules/@hyperledger/caliper-cli/caliper.js:39:5)
+    at Module._compile (node:internal/modules/cjs/loader:1730:14)
+
+real	0m0,680s
+user	0m0,675s
+sys	0m0,129s
